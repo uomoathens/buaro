@@ -43,7 +43,17 @@ Verdict: the data show a clear heat effect on mortality.
 
 ## What explains the differences between areas
 
-The area features (census grid, Urban Atlas, Street Tree Layer) are not available yet, so this test has not run.
+Each area's heat effect is compared with one feature of the places where its residents live, measured on the Eurostat 1 km census grid and the Copernicus Urban Atlas 2021 and Street Tree Layer 2021.
+The test is a random-effects meta-regression across the seven areas, one feature at a time. It shows associations between areas, not proof of cause.
+
+| Feature | Range across areas | Change in extra deaths per +1°C, per 1 SD | 95% range | p | Share of area differences explained | Verdict |
+|---|---|---|---|---|---|---|
+| Street tree cover where people live | 0.8% to 8.1% | -0.93 pp | -1.87 to +0.01 | 0.052 | 65% | no clear link |
+| Dense, highly sealed urban fabric where people live | 28.4% to 64.0% | +0.14 pp | -1.31 to +1.59 | 0.818 | 0% | no clear link |
+| Built-up land where people live | 73.2% to 97.9% | -0.35 pp | -1.74 to +1.04 | 0.548 | 0% | no clear link |
+| Share of residents aged 65+ (census 2021) | 16.8% to 22.7% | -0.56 pp | -1.91 to +0.79 | 0.333 | 12% | no clear link |
+
+Verdict: no single feature separates the areas clearly with seven areas. The differences in heat risk remain unexplained at this level, which is why step 3 moves to 100 m surface temperature.
 
 ## Is Attica adapting?
 
