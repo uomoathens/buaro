@@ -49,6 +49,7 @@ The test is a random-effects meta-regression across the seven areas, one feature
 | Feature | Range across areas | Change in extra deaths per +1°C, per 1 SD | 95% range | p | Share of area differences explained | Verdict |
 |---|---|---|---|---|---|---|
 | Street tree cover where people live | 0.8% to 8.1% | -0.93 pp | -1.87 to +0.01 | 0.052 | 65% | no clear link |
+| Green urban areas where people live | 1.2% to 9.3% | -1.10 pp | -1.60 to -0.60 | 0.002 | 100% | lower heat risk where higher |
 | Dense, highly sealed urban fabric where people live | 28.4% to 64.0% | +0.14 pp | -1.31 to +1.59 | 0.818 | 0% | no clear link |
 | Built-up land where people live | 73.2% to 97.9% | -0.35 pp | -1.74 to +1.04 | 0.548 | 0% | no clear link |
 | Share of residents aged 65+ (census 2021) | 16.8% to 22.7% | -0.56 pp | -1.91 to +0.79 | 0.333 | 12% | no clear link |
@@ -58,10 +59,11 @@ Check: the Urban Atlas covers less than 80% of the residents of Western Attica, 
 | Feature | Change per 1 SD, without the low-coverage area | 95% range | p | Verdict |
 |---|---|---|---|---|
 | Street tree cover where people live | -0.94 pp | -2.04 to +0.15 | 0.076 | no clear link |
+| Green urban areas where people live | -1.13 pp | -1.69 to -0.56 | 0.005 | lower heat risk where higher |
 | Dense, highly sealed urban fabric where people live | +0.17 pp | -1.60 to +1.94 | 0.801 | no clear link |
 | Built-up land where people live | -0.26 pp | -1.96 to +1.43 | 0.687 | no clear link |
 
-Verdict: street tree cover where people live comes closest. Areas where it is one standard deviation higher show about 0.9 percentage points lower extra deaths per +1°C, and it accounts for 65% of the differences between areas, but with p = 0.052 and seven areas this is a signal, not a finding. Step 3 tests it at 100 m with satellite surface temperature.
+Verdict: green urban areas where people live is clearly linked to the differences in heat risk between areas.
 
 ## Is Attica adapting?
 
