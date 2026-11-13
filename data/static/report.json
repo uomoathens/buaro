@@ -1,0 +1,80 @@
+{
+  "run": "2026-11-13T16:32:00Z",
+  "nuts": {
+    "regions": [
+      "EL307",
+      "EL303",
+      "EL301",
+      "EL302",
+      "EL304",
+      "EL305",
+      "EL306"
+    ]
+  },
+  "census": {
+    "layers": [
+      {
+        "path": "data/raw/static/census_grid_2021/Eurostat_Census-GRID_2021_V3/ESTAT_Census_2021_V3.gpkg",
+        "features": 4595932,
+        "crs": "EPSG:3035",
+        "geometry": "Polygon",
+        "fields": [
+          "GRD_ID",
+          "T",
+          "M",
+          "F",
+          "Y_LT15",
+          "Y_1564",
+          "Y_GE65",
+          "EMP",
+          "NAT",
+          "EU_OTH",
+          "OTH",
+          "SAME",
+          "CHG_IN",
+          "CHG_OUT",
+          "LAND_SURFACE",
+          "POPULATED",
+          "CNTR_ID"
+        ],
+        "bounds": [
+          943000.0,
+          941000.0,
+          6505000.0,
+          5416000.0
+        ]
+      }
+    ],
+    "used": "data/raw/static/census_grid_2021/Eurostat_Census-GRID_2021_V3/ESTAT_Census_2021_V3.gpkg",
+    "cells": 3820,
+    "fields": [
+      "GRD_ID",
+      "T",
+      "M",
+      "F",
+      "Y_LT15",
+      "Y_1564",
+      "Y_GE65",
+      "EMP",
+      "NAT",
+      "EU_OTH",
+      "OTH",
+      "SAME",
+      "CHG_IN",
+      "CHG_OUT",
+      "LAND_SURFACE",
+      "POPULATED",
+      "CNTR_ID",
+      "NUTS_ID"
+    ]
+  },
+  "clms_auth": "ok",
+  "clms": {
+    "street_tree_layer_2021": {
+      "error": "403 Client Error: Forbidden for url: https://copernicus-fme.eea.europa.eu/fmedatadownload/results/15101.zip"
+    },
+    "urban_atlas_2021": {
+      "error": "403 Client Error: Forbidden for url: https://copernicus-fme.eea.europa.eu/fmedatadownload/results/15105.zip"
+    }
+  }
+}
