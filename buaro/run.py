@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 import yaml
 
-from . import backtest, climate, data, eurostat, model, report, site
+from . import backtest, climate, data, eurostat, model, modifiers, report, site
 
 
 def load_config(path):
@@ -154,6 +154,7 @@ def main(argv=None):
     parser.add_argument("--cache", default="data/raw")
     parser.add_argument("--end-date", default=None)
     parser.add_argument("--docs", default="docs")
+    parser.add_argument("--static", default="data/static")
     args = parser.parse_args(argv)
 
     config = load_config(args.config)
@@ -206,6 +207,7 @@ def main(argv=None):
     adaptation["robust"] = not flips
     adaptation["depends_on"] = flips
     response = summer_response(panel, vuln)
+    mods, areas = modifiers.analyse(vuln, modifiers.load(args.static))
     se = np.sqrt(pooled["pooled_var"])
     ref = config["reference"]
     ref_attica = ref["greece_heat_deaths_2024"] * ref["attica_population_2021"] / ref["greece_population_2021"]
@@ -231,6 +233,7 @@ def main(argv=None):
         "i2": pooled["i2"],
         "adaptation": adaptation,
         "reference_attica_2024": ref_attica,
+        "modifiers_available": bool(not mods.empty),
     }
 
     report.chart_vulnerability(vuln, out / "vulnerability.png")
@@ -250,6 +253,9 @@ def main(argv=None):
             {"item": "Weekly deaths", "source": f"Eurostat {dataset}", "link": f"{config['sources']['eurostat_api']}/{dataset}"},
             {"item": "Population by age", "source": f"Eurostat {config['sources']['population_dataset']}", "link": f"{config['sources']['eurostat_api']}/{config['sources']['population_dataset']}"},
             {"item": "Daily temperature", "source": "ERA5-Land reanalysis via Open-Meteo archive API", "link": config["sources"]["climate_api"]},
+            {"item": "Residents and residents aged 65+ per 1 km cell", "source": "Eurostat, Census 2021 population grid", "link": "https://ec.europa.eu/eurostat/en/web/gisco/geodata/population-distribution/population-grids"},
+            {"item": "Land use and sealing classes", "source": "Copernicus Land Monitoring Service, Urban Atlas 2021", "link": "https://land.copernicus.eu/en/products/urban-atlas"},
+            {"item": "Street tree cover", "source": "Copernicus Land Monitoring Service, Urban Atlas Street Tree Layer 2021", "link": "https://land.copernicus.eu/en/products/urban-atlas"},
             {"item": "Cross-check", "source": ref["label"], "link": "https://doi.org/10.1038/s41591-025-03954-7"},
         ]
     )
@@ -267,16 +273,18 @@ def main(argv=None):
             ("Adaptation test", pd.DataFrame([{k: (", ".join(map(str, v)) if isinstance(v, list) else v) for k, v in adaptation.items()}]), ["delta: change per year in the log relative risk per 1°C (reference year 2019). Negative means heat is becoming less deadly per degree."]),
             ("Adaptation robustness", robustness, ["The adaptation test repeated with one summer left out each time. The verdict counts as robust only if no single summer changes it."]),
             ("Summer response", response, ["Model-free check: summer excess deaths (weeks 26 to 36) above the calm-week level of the same year, per degree-week above the area thresholds."]),
+            ("Heat modifiers", mods, ["Random-effects meta-regression of each area's heat effect on one area feature at a time. change_pp_per_sd: change in extra deaths per +1°C, in percentage points, for one standard deviation of the feature across areas, with 95% range (t distribution). With seven areas this is an association between areas, not proof of cause."]),
+            ("Area exposure", areas, ["Area features weighted by the residents of each 1 km census cell (Eurostat Census 2021 grid) and measured on Copernicus Urban Atlas 2021 and its Street Tree Layer."]),
             ("Sources", sources, None),
         ],
     )
     panel_cols = ["geo", "week", "date", "year", "isoweek", "deaths", "tmax", "tmean", "tmax_lag1", "tmean_lag1", "population", "share_65plus", "pandemic"]
     report.workbook(out / "data_panel.xlsx", [("Panel", panel[panel_cols], ["Weekly deaths (Eurostat), ERA5-Land temperature and population used by the model."])])
-    text = report.summary_markdown(meta, vuln, summary, comparison, ref, response)
+    text = report.summary_markdown(meta, vuln, summary, comparison, ref, response, mods)
     (out / "SUMMARY.md").write_text(text, encoding="utf-8")
     report.write_meta(out / "run_metadata.json", meta)
-    site.build(args.docs, meta, vuln, summary, weekly, response, robustness, panel, regions,
-               files=[out / "buaro_attica_step1.xlsx", out / "data_panel.xlsx"])
+    site.build(args.docs, meta, vuln, summary, weekly, response, robustness, panel, regions, mods=mods, areas=areas,
+               files=[out / "buaro_attica_step1.xlsx", out / "data_panel.xlsx", Path(args.static) / "cells_attica.xlsx"])
     print(text)
     return meta
 

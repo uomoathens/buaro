@@ -11,6 +11,8 @@ SOURCES = [
     {"name": "Eurostat, demo_r_mwk3_t", "url": "https://ec.europa.eu/eurostat/databrowser/view/demo_r_mwk3_t/default/table?lang=en", "what": "deaths by week and NUTS 3 region"},
     {"name": "Eurostat, demo_r_pjangrp3", "url": "https://ec.europa.eu/eurostat/databrowser/view/demo_r_pjangrp3/default/table?lang=en", "what": "population by age group and NUTS 3 region"},
     {"name": "Copernicus Climate Change Service, ERA5-Land", "url": "https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land", "what": "daily temperature reanalysis, retrieved through the Open-Meteo archive API"},
+    {"name": "Eurostat, Census 2021 population grid", "url": "https://ec.europa.eu/eurostat/en/web/gisco/geodata/population-distribution/population-grids", "what": "residents and residents aged 65+ per 1 km cell"},
+    {"name": "Copernicus Land Monitoring Service, Urban Atlas 2021 and Street Tree Layer 2021", "url": "https://land.copernicus.eu/en/products/urban-atlas", "what": "land use, sealing classes and street tree cover for the Athens functional urban area"},
     {"name": "EuroMOMO, methods", "url": "https://www.euromomo.eu/how-it-works/methods", "what": "calm spring and autumn weeks as the basis of expected mortality"},
     {"name": "Janoš et al. (2025), Nature Medicine", "url": "https://doi.org/10.1038/s41591-025-03954-7", "what": "heat-related mortality in Europe during 2024, used as a cross-check"},
     {"name": "European Commission, COM(2026) 720", "url": "https://climate.ec.europa.eu/document/download/476ef20a-0c66-4be2-a104-70ba96622477_en?filename=com_2026_720_en.pdf", "what": "Communication on the EU Framework for Climate Resilience"},
@@ -61,7 +63,7 @@ def backtest_payload(weekly, winner):
     return out
 
 
-def build(docs_dir, meta, vuln, summary, weekly, response, robustness, panel, regions, files=()):
+def build(docs_dir, meta, vuln, summary, weekly, response, robustness, panel, regions, mods=None, areas=None, files=()):
     docs = Path(docs_dir)
     data_dir = docs / "data"
     data_dir.mkdir(parents=True, exist_ok=True)
@@ -87,6 +89,8 @@ def build(docs_dir, meta, vuln, summary, weekly, response, robustness, panel, re
         "best2024": clean(float(best2024.iloc[0])) if not best2024.empty else None,
         "improved": int((best["skill_score"] > 0).sum()) if not best.empty else 0,
         "tested": int(len(best)),
+        "mods": records(mods, ["covariate", "label", "min", "max", "change_pp_per_sd", "change_low", "change_high", "p_value", "explained_heterogeneity", "verdict"]),
+        "areaFeatures": records(areas, [c for c in (areas.columns if areas is not None else []) if c not in ("name_el",)]),
         "sources": SOURCES,
     }
     text = json.dumps(payload, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")

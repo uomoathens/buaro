@@ -183,11 +183,36 @@ def fmt(value, digits=0):
     return f"{value:,.{digits}f}"
 
 
-def summary_markdown(meta, vuln, summary, comparison, reference, response=None):
+def modifiers_markdown(mods):
+    lines = ["## What explains the differences between areas", ""]
+    if mods is None or mods.empty:
+        lines.append("The area features (census grid, Urban Atlas, Street Tree Layer) are not available yet, so this test has not run.")
+        lines.append("")
+        return lines
+    lines.append("Each area's heat effect is compared with one feature of the places where its residents live, measured on the Eurostat 1 km census grid and the Copernicus Urban Atlas 2021 and Street Tree Layer 2021.")
+    lines.append("The test is a random-effects meta-regression across the seven areas, one feature at a time. It shows associations between areas, not proof of cause.")
+    lines.append("")
+    lines.append("| Feature | Range across areas | Change in extra deaths per +1°C, per 1 SD | 95% range | p | Share of area differences explained | Verdict |")
+    lines.append("|---|---|---|---|---|---|---|")
+    for r in mods.itertuples():
+        scale = 100 if r.covariate.endswith(("_pop", "_census")) else 1
+        lines.append(f"| {r.label} | {fmt(r.min * scale, 1)}% to {fmt(r.max * scale, 1)}% | {r.change_pp_per_sd:+.2f} pp | {r.change_low:+.2f} to {r.change_high:+.2f} | {fmt(r.p_value, 3)} | {fmt(r.explained_heterogeneity * 100, 0)}% | {r.verdict} |")
+    lines.append("")
+    clear = mods[mods["verdict"] != "no clear link"]
+    if clear.empty:
+        lines.append("Verdict: no single feature separates the areas clearly with seven areas. The differences in heat risk remain unexplained at this level, which is why step 3 moves to 100 m surface temperature.")
+    else:
+        names = ", ".join(clear["label"].str.lower())
+        lines.append(f"Verdict: {names} {'is' if len(clear) == 1 else 'are'} clearly linked to the differences in heat risk between areas.")
+    lines.append("")
+    return lines
+
+
+def summary_markdown(meta, vuln, summary, comparison, reference, response=None, mods=None):
     winner = meta["baseline_selected"]
     best = summary[summary["baseline"] == winner] if not summary.empty else summary
     lines = []
-    lines.append("# BUARO results: Attica, step 1.1")
+    lines.append("# BUARO results: Attica, step 2")
     lines.append("")
     lines.append(f"Run date: {meta['run_date']}. Data up to week {meta['last_week']}. Deaths dataset: `{meta['deaths_dataset']}`.")
     lines.append("")
@@ -230,6 +255,7 @@ def summary_markdown(meta, vuln, summary, comparison, reference, response=None):
     lines.append("")
     lines.append("![Vulnerability](vulnerability.png)")
     lines.append("")
+    lines.extend(modifiers_markdown(mods))
     a = meta["adaptation"]
     lines.append("## Is Attica adapting?")
     lines.append("")
@@ -291,10 +317,11 @@ def summary_markdown(meta, vuln, summary, comparison, reference, response=None):
     lines.append("")
     lines.append("## Honest limits")
     lines.append("")
-    lines.append("- Deaths are weekly and by area (NUTS 3), not daily or by neighbourhood. Step 2 brings the 1 km census grid and satellite surface temperature.")
+    lines.append("- Deaths are weekly and by area (NUTS 3), not daily or by neighbourhood. The area features are summarised from the 1 km census grid; step 3 adds 100 m satellite surface temperature.")
     lines.append("- Temperature is ERA5-Land reanalysis (about 11 km), averaged over two points per area.")
     lines.append("- Pandemic weeks (2020-W10 to 2022-W26) are left out of training, because COVID-19 deaths would distort the heat signal.")
     lines.append("- The adaptation test assumes a straight-line change over time and has few post-pandemic summers. It is repeated with each summer left out, and a trend is only reported as evidence if no single summer changes the verdict.")
+    lines.append("- With seven areas, the comparison of heat risk with tree cover, sealing and age can show associations between areas only. Cause and effect is tested in step 3 at street scale.")
     lines.append("- The pooled estimates are empirical Bayes (random-effects shrinkage), a first step towards the full Bayesian layer of the framework.")
     lines.append("")
     return "\n".join(lines)

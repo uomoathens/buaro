@@ -2,6 +2,9 @@ name: BUARO pipeline
 
 on:
   workflow_dispatch:
+  workflow_run:
+    workflows: ["BUARO static data"]
+    types: [completed]
   schedule:
     - cron: "23 5 4 * *"
   push:
@@ -29,6 +32,8 @@ jobs:
     timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
 
       - uses: actions/setup-python@v5
         with:

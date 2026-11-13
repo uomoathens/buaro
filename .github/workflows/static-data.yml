@@ -2,6 +2,10 @@ name: BUARO static data
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "buaro/static_fetch.py"
 
 permissions:
   contents: write

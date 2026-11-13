@@ -97,14 +97,15 @@ Contains modified Copernicus Climate Change Service information. Neither the Eur
 - Temperature is reanalysis at about 11 km (0.1°), not street level.
 - Shrinkage is empirical Bayes, a first step towards the fully Bayesian layer of the framework.
 - The adaptation test assumes a straight-line change over time and has few post-pandemic summers, so it is a first signal, not proof.
+- With seven areas, the link between heat risk and tree cover, sealing or age is an association between areas, not proof of cause. Dense, highly sealed fabric means Urban Atlas classes 11100 (sealing above 80%) and 11210 (50% to 80%).
 - The comparison with published estimates is an order-of-magnitude check, not a validation: published studies use daily data and different models.
 
 ## Roadmap
 
 | Step | Book term | What it adds | Data |
 |---|---|---|---|
-| 1 and 1.1 (this release) | V(h, z) | Heat vulnerability by NUTS 3 area, adaptation test, tested on unseen summers | Eurostat, ERA5-Land |
-| 2 | E(z), A(z) | 1 km exposure (people aged 65+) and adaptive capacity (tree cover, sealed soil) | Eurostat Census Grid 2021, Urban Atlas Street Tree Layer 2021, Imperviousness |
+| 1 and 1.1 | V(h, z) | Heat vulnerability by NUTS 3 area, adaptation test, tested on unseen summers | Eurostat, ERA5-Land |
+| 2 (this release) | E(z), A(z) | 1 km exposure (residents and residents aged 65+) and adaptive capacity (street tree cover, green urban areas, sealed urban fabric), weighted by where people live, and a random-effects meta-regression of each area's heat effect on these features | Eurostat Census Grid 2021, Copernicus Urban Atlas 2021 and Street Tree Layer 2021 |
 | 3 | P(h \| θ) | Heat hazard under the 1.5°C, 2°C and 3°C reference levels of the Climate Resilience Law | C3S Atlas dataset (CMIP6, CORDEX-EUR-11) |
 | 4 | s*, C(s) | Ranking of measures (tree canopy, cool roofs) that holds across all three scenarios | Landsat surface temperature, published unit costs |
 

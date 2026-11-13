@@ -19,6 +19,12 @@ CLMS_FILES = {
 }
 REGIONS = ["EL301", "EL302", "EL303", "EL304", "EL305", "EL306", "EL307"]
 EQUAL_AREA = "EPSG:3035"
+CELLS = "cells_attica.xlsx"
+EXPOSURE = "exposure_by_nuts3.xlsx"
+DENSE = {"11100", "11210"}
+GREEN = {"14100"}
+WATER = {"50000"}
+FEATURES = ["tree_share", "green_urban_share", "dense_fabric_share", "artificial_share"]
 
 
 def find_values(obj, pattern):
@@ -218,8 +224,77 @@ def census_attica(raw, out, nuts):
     return {"layers": described, "used": target["path"], "cells": int(len(cells)), "fields": [c for c in cells.columns if c != "geometry"]}
 
 
-def clms_layer(client, name, spec, raw, out, nuts, sleep=time.sleep, previous=None):
-    if (Path(out) / f"{name}_by_nuts3.xlsx").exists():
+def pick_layer(name, layers):
+    layers = [Path(p) for p in layers]
+    if name == "street_tree_layer_2021":
+        for path in layers:
+            if "_STL_" in path.name.upper():
+                return path
+    return layers[0]
+
+
+def codes(series):
+    return series.astype(str).str.extract(r"(\d{5})")[0]
+
+
+def polygons(frame, columns):
+    frame = frame.to_crs(EQUAL_AREA)[columns + ["geometry"]].copy()
+    frame["geometry"] = frame.geometry.buffer(0)
+    return frame[~frame.geometry.is_empty]
+
+
+def cell_features(cells, ua, group, trees):
+    if "GRD_ID" not in cells.columns:
+        cells = cells.assign(GRD_ID=[f"cell{i}" for i in range(len(cells))])
+    grid = cells.to_crs(EQUAL_AREA)[["GRD_ID", "NUTS_ID", "T", "Y_GE65", "geometry"]].copy()
+    for column in ("T", "Y_GE65"):
+        values = pd.to_numeric(grid[column], errors="coerce")
+        grid[column] = values.where(values >= 0)
+    parts = gpd.overlay(polygons(ua, [group]), grid[["GRD_ID", "geometry"]], how="intersection", keep_geom_type=True)
+    parts["code"] = codes(parts[group])
+    parts["area"] = parts.geometry.area
+    area = parts.pivot_table(index="GRD_ID", columns="code", values="area", aggfunc="sum", fill_value=0.0)
+    pick = lambda test: area[[c for c in area.columns if test(c)]].sum(axis=1)
+    land = area.sum(axis=1) - pick(lambda c: c in WATER)
+    feats = pd.DataFrame({
+        "land_m2": land,
+        "green_urban_share": pick(lambda c: c in GREEN) / land,
+        "dense_fabric_share": pick(lambda c: c in DENSE) / land,
+        "artificial_share": pick(lambda c: str(c).startswith("1")) / land,
+    })
+    canopy = gpd.overlay(polygons(trees, []), grid[["GRD_ID", "geometry"]], how="intersection", keep_geom_type=True)
+    canopy = canopy.assign(area=canopy.geometry.area).groupby("GRD_ID")["area"].sum()
+    feats["tree_share"] = canopy.reindex(feats.index).fillna(0.0) / land
+    feats = feats[feats["land_m2"] > 0]
+    feats[FEATURES] = feats[FEATURES].clip(0, 1)
+    table = pd.DataFrame(grid.drop(columns="geometry")).merge(feats, left_on="GRD_ID", right_index=True, how="left")
+    return table[["GRD_ID", "NUTS_ID", "T", "Y_GE65", "land_m2"] + FEATURES]
+
+
+def exposure_by_region(table):
+    rows = []
+    for geo, g in table.groupby("NUTS_ID"):
+        people = g["T"].fillna(0)
+        older = g["Y_GE65"].fillna(0)
+        covered = g["land_m2"].notna()
+        row = {
+            "NUTS_ID": geo,
+            "cells": int(len(g)),
+            "population_census": float(people.sum()),
+            "population_65plus_census": float(older.sum()),
+            "share_65plus_census": float(older.sum() / people.sum()) if people.sum() > 0 else float("nan"),
+            "population_covered": float(people[covered].sum() / people.sum()) if people.sum() > 0 else float("nan"),
+        }
+        for f in FEATURES:
+            v = g.loc[covered, f]
+            for weight, suffix in ((people[covered], "pop"), (older[covered], "65plus")):
+                row[f"{f}_{suffix}"] = float((v * weight).sum() / weight.sum()) if weight.sum() > 0 else float("nan")
+        rows.append(row)
+    return pd.DataFrame(rows)
+
+
+def clms_layer(client, name, spec, raw, out, nuts, sleep=time.sleep, previous=None, force=False):
+    if not force and (Path(out) / f"{name}_by_nuts3.xlsx").exists():
         entry = dict(previous or {})
         entry["cached"] = True
         return entry
@@ -239,7 +314,7 @@ def clms_layer(client, name, spec, raw, out, nuts, sleep=time.sleep, previous=No
     entry["layers"] = [describe(p) for p in layers]
     if not layers:
         return entry
-    layer = gpd.read_file(layers[0])
+    layer = gpd.read_file(pick_layer(name, layers))
     group = class_column(layer.columns) if name == "urban_atlas_2021" else None
     table = by_region(layer, nuts, group)
     table.to_excel(Path(out) / f"{name}_by_nuts3.xlsx", index=False)
@@ -250,6 +325,33 @@ def clms_layer(client, name, spec, raw, out, nuts, sleep=time.sleep, previous=No
         pop.to_excel(Path(out) / f"{name}_population_by_class.xlsx", index=False)
     entry["rows"] = int(len(table))
     return entry
+
+
+def cached_cells(out, old):
+    try:
+        entry = json.loads(old.read_text(encoding="utf-8")).get("cells", {})
+    except Exception:
+        entry = {}
+    entry = dict(entry)
+    entry["cached"] = True
+    return entry
+
+
+def build_cells(entries, out):
+    try:
+        paths = {n: [l["path"] for l in entries.get(n, {}).get("layers", [])] for n in CLMS_FILES}
+        if not all(paths.values()):
+            return {"error": "layers missing"}
+        ua = gpd.read_file(pick_layer("urban_atlas_2021", paths["urban_atlas_2021"]))
+        trees = gpd.read_file(pick_layer("street_tree_layer_2021", paths["street_tree_layer_2021"]))
+        grid = gpd.read_file(Path(out) / "census_grid_attica.gpkg")
+        table = cell_features(grid, ua, class_column(ua.columns), trees)
+        table.to_excel(Path(out) / CELLS, index=False)
+        exposure = exposure_by_region(table)
+        exposure.to_excel(Path(out) / EXPOSURE, index=False)
+        return {"cells": int(len(table)), "cells_with_land": int(table["land_m2"].notna().sum()), "regions": int(len(exposure))}
+    except Exception as error:
+        return {"error": str(error)[:500]}
 
 
 def main(raw="data/raw/static", out="data/static", sleep=time.sleep):
@@ -286,11 +388,13 @@ def main(raw="data/raw/static", out="data/static", sleep=time.sleep):
             report["clms_auth"] = f"failed: {str(error)[:200]}"
         if report["clms_auth"] == "ok":
             report["clms"] = {}
+            ready = (Path(out) / CELLS).exists() and (Path(out) / EXPOSURE).exists()
             for name, spec in CLMS_FILES.items():
                 try:
-                    report["clms"][name] = clms_layer(client, name, spec, raw, out, nuts, sleep, previous.get(name))
+                    report["clms"][name] = clms_layer(client, name, spec, raw, out, nuts, sleep, previous.get(name), force=not ready)
                 except Exception as error:
                     report["clms"][name] = {"error": str(error)[:500]}
+            report["cells"] = cached_cells(out, old) if ready else build_cells(report["clms"], out)
     (Path(out) / "report.json").write_text(json.dumps(report, indent=2, ensure_ascii=False, default=str), encoding="utf-8")
     print(json.dumps({k: (v if not isinstance(v, dict) else list(v)) for k, v in report.items()}, indent=2, default=str))
     return report

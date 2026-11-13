@@ -131,3 +131,33 @@ def test_existing_outputs_send_no_new_requests(tmp_path):
 
     entry = static_fetch.clms_layer(Silent(), "urban_atlas_2021", static_fetch.CLMS_FILES["urban_atlas_2021"], tmp_path / "raw", out, None, previous={"rows": 147})
     assert entry == {"rows": 147, "cached": True}
+
+
+def test_cell_features_measure_known_shares():
+    cells = gpd.GeoDataFrame({"GRD_ID": ["a", "b"], "NUTS_ID": ["EL301", "EL302"], "T": [1000, -9999], "Y_GE65": [200, 0]},
+                             geometry=[box(0, 0, 1000, 1000), box(1000, 0, 2000, 1000)], crs="EPSG:3035")
+    ua = gpd.GeoDataFrame({"code_2021": ["11100", "14100", "50000", "11230"]},
+                          geometry=[box(0, 0, 500, 1000), box(500, 0, 800, 1000), box(800, 0, 1000, 1000), box(1000, 0, 2000, 1000)], crs="EPSG:3035")
+    trees = gpd.GeoDataFrame({"STL": [1]}, geometry=[box(0, 0, 400, 1000)], crs="EPSG:3035")
+    table = static_fetch.cell_features(cells, ua, "code_2021", trees).set_index("GRD_ID")
+    assert abs(table.loc["a", "land_m2"] - 800000) < 1
+    assert abs(table.loc["a", "dense_fabric_share"] - 0.625) < 1e-9
+    assert abs(table.loc["a", "green_urban_share"] - 0.375) < 1e-9
+    assert abs(table.loc["a", "tree_share"] - 0.5) < 1e-9
+    assert table.loc["b", "dense_fabric_share"] == 0 and table.loc["b", "artificial_share"] == 1
+    assert static_fetch.pd.isna(table.loc["b", "T"])
+    exposure = static_fetch.exposure_by_region(table).set_index("NUTS_ID")
+    assert abs(exposure.loc["EL301", "tree_share_pop"] - 0.5) < 1e-9
+    assert abs(exposure.loc["EL301", "share_65plus_census"] - 0.2) < 1e-9
+
+
+def test_cells_built_once(tmp_path, monkeypatch):
+    test_static_fetch_end_to_end(tmp_path, monkeypatch)
+    out = tmp_path / "static"
+    assert (out / "cells_attica.xlsx").exists() and (out / "exposure_by_nuts3.xlsx").exists()
+    report = json.loads((out / "report.json").read_text(encoding="utf-8"))
+    assert report["cells"]["cells"] > 0
+    monkeypatch.setattr(static_fetch.clms.Client, "__new__", lambda cls, *a, **k: type("Silent", (), {"post_request": lambda self, d: (_ for _ in ()).throw(AssertionError("request sent"))})())
+    again = static_fetch.main(raw=str(tmp_path / "raw"), out=str(out), sleep=lambda s: None)
+    assert again["cells"]["cached"] is True and again["cells"]["cells"] == report["cells"]["cells"]
+    assert all(v.get("cached") for v in again["clms"].values())

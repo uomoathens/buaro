@@ -83,6 +83,17 @@ footer{font-size:13px;color:var(--text-muted);margin-top:24px}
 <details><summary>Show as table</summary><div id="table-vuln"></div></details>
 </section>
 
+<section id="sec-mods">
+<h2>What explains the differences between areas</h2>
+<p class="lead">Each area's heat effect compared with the places where its residents live: street tree cover, green urban areas, dense sealed fabric and built-up land, weighted by the residents of each 1 km census cell, and the share aged 65+. One feature at a time, across the seven areas. These are associations between areas, not proof of cause.</p>
+<div class="chart" id="chart-mods"></div>
+<div class="verdict" id="verdict-mods"></div>
+<div class="controls" style="margin-top:16px"><label>Feature <select id="feature"></select></label></div>
+<p class="lead" style="margin:0 0 6px;font-size:13px">Each dot is one area: its own heat estimate, before pooling, with 95% range, against the chosen feature.</p>
+<div class="chart" id="chart-scatter"></div>
+<details><summary>Show as table</summary><div id="table-mods"></div><div id="table-areas"></div></details>
+</section>
+
 <section>
 <h2>Each summer's response to heat, without any model</h2>
 <p class="lead">Extra deaths in weeks 26 to 36 above the calm-week level of the same year, divided by the heat the summer brought (degree-weeks above the area thresholds). A lower bar means each degree of heat cost fewer lives.</p>
@@ -112,6 +123,7 @@ footer{font-size:13px;color:var(--text-muted);margin-top:24px}
 <ul class="src">
 <li><a href="data/buaro_attica_step1.xlsx">buaro_attica_step1.xlsx</a>: all results, by area, by week and by baseline.</li>
 <li><a href="data/data_panel.xlsx">data_panel.xlsx</a>: every weekly number the model used.</li>
+<li><a href="data/cells_attica.xlsx">cells_attica.xlsx</a>: every 1 km census cell with its residents, residents aged 65+, tree cover and land use.</li>
 </ul>
 <ul class="src" id="sources"></ul>
 </section>
@@ -199,6 +211,26 @@ const hit=el('rect',{x:-m.l,y:i*rowH,width:iw+m.l+m.r,height:rowH,fill:'transpar
 hit.addEventListener('mousemove',ev=>{const b=svg.getBoundingClientRect();showTip(host,r.tip,(x(r.v)+m.l)*b.width/W,ev.clientY-b.top)});hit.addEventListener('mouseleave',()=>hideTip(host))});
 }
 
+function scatterChart(host,opts){
+const W=1000,H=opts.height||340,m={l:64,r:24,t:16,b:44};
+const {svg,g,iw,ih}=frame(host,W,H,m);
+const pts=opts.points;if(!pts.length)return;
+const xs=pts.map(p=>p.x),ys=[];pts.forEach(p=>{ys.push(p.lo,p.hi)});
+let xt=nice(Math.min(...xs),Math.max(...xs),5),yt=nice(Math.min(...ys),Math.max(...ys),5);
+const xl=xt[0],xh=xt[xt.length-1],yl=yt[0],yh=yt[yt.length-1];
+const x=v=>(v-xl)/(xh-xl||1)*iw,y=v=>ih-(v-yl)/(yh-yl||1)*ih;
+yAxis(g,yt,y,iw,opts.yFmt);
+xt.forEach(v=>{const t=el('text',{x:x(v),y:ih+20,'text-anchor':'middle','font-size':12,fill:css('--text-muted')},g);t.textContent=opts.xFmt(v)});
+const xa=el('text',{x:iw/2,y:ih+38,'text-anchor':'middle','font-size':12,fill:css('--text-secondary')},g);xa.textContent=opts.xLabel;
+const c=css('--s1');const placed=[];
+pts.slice().sort((a,b)=>a.x-b.x).forEach(p=>{el('line',{x1:x(p.x),x2:x(p.x),y1:y(p.lo),y2:y(p.hi),stroke:c,'stroke-width':2,'stroke-linecap':'round',opacity:.55},g);
+el('circle',{cx:x(p.x),cy:y(p.y),r:7,fill:c,stroke:css('--surface-1'),'stroke-width':2},g);
+const right=x(p.x)>iw-150;let ly=y(p.y)+4;const lx=right?x(p.x)-11:x(p.x)+11;while(placed.some(q=>Math.abs(q.x-lx)<150&&Math.abs(q.y-ly)<15))ly+=15;placed.push({x:lx,y:ly});
+const t=el('text',{x:lx,y:ly,'text-anchor':right?'end':'start','font-size':12,fill:css('--text-secondary')},g);t.textContent=p.label;
+const hit=el('circle',{cx:x(p.x),cy:y(p.y),r:16,fill:'transparent'},g);
+hit.addEventListener('mousemove',ev=>{const b=svg.getBoundingClientRect();showTip(host,p.tip,(x(p.x)+m.l)*b.width/W,ev.clientY-b.top)});hit.addEventListener('mouseleave',()=>hideTip(host))});
+}
+
 const M=D.meta;const A=M.adaptation;
 document.getElementById('meta').textContent='Data up to week '+M.last_week+' · Run on '+M.run_date+' · Deaths: Eurostat '+M.deaths_dataset+' · Temperature: ERA5-Land';
 
@@ -239,6 +271,22 @@ function vuln(){const rows=D.vuln.slice().sort((a,b)=>b.rr_per_degree-a.rr_per_d
 dotChart(document.getElementById('chart-vuln'),{rows,tickFmt:v=>fmt(v,0)+'%'});
 table('table-vuln',['Area','Per +1°C','95% range','Threshold (°C)','Aged 65+'],D.vuln.slice().sort((a,b)=>b.rr_per_degree-a.rr_per_degree).map(r=>[r.name_en,pct(r.rr_per_degree),pct(r.rr_low)+' to '+pct(r.rr_high),fmt(r.threshold_c,1),r.share_65plus!=null?fmt(r.share_65plus*100,1)+'%':'n/a']))}
 
+const featSel=document.getElementById('feature');
+(D.mods||[]).forEach(r=>{const o=document.createElement('option');o.value=r.covariate;o.textContent=r.label;featSel.appendChild(o)});
+function mods(){const sec=document.getElementById('sec-mods');const R=D.mods||[];
+if(!R.length){sec.querySelector('#chart-mods').innerHTML='';document.getElementById('verdict-mods').textContent='The area features are not available yet, so this test has not run.';featSel.parentNode.style.display='none';return}
+const rows=R.map(r=>({label:r.label.replace(' where people live','').replace(' (census 2021)',''),v:r.change_pp_per_sd,lo:r.change_low,hi:r.change_high,valueLabel:(r.change_pp_per_sd>=0?'+':'')+fmt(r.change_pp_per_sd,2)+' pp',color:r.verdict==='no clear link'?css('--text-muted'):css('--s2'),tip:'<b>'+r.label+'</b>'+tipRow(null,'Range across areas',fmt(r.min*100,1)+'% to '+fmt(r.max*100,1)+'%')+tipRow(null,'Change per 1 SD',fmt(r.change_pp_per_sd,2)+' pp')+tipRow(null,'95% range',fmt(r.change_low,2)+' to '+fmt(r.change_high,2))+tipRow(null,'p',fmt(r.p_value,3))+tipRow(null,'Differences explained',fmt(r.explained_heterogeneity*100,0)+'%')+tipRow(null,'Verdict',r.verdict)}));
+dotChart(document.getElementById('chart-mods'),{rows,left:300,tickFmt:v=>fmt(v,1)});
+const clear=R.filter(r=>r.verdict!=='no clear link');
+document.getElementById('verdict-mods').textContent=(clear.length?'Clearly linked to the differences in heat risk: '+clear.map(r=>r.label.toLowerCase()+' ('+r.verdict+')').join('; ')+'.':'No single feature separates the areas clearly with seven areas. Step 3 moves to 100 m surface temperature to test cause and effect at street scale.')+' Scale: change in extra deaths per +1°C, in percentage points, for one standard deviation of the feature across areas.';
+const f=featSel.value||R[0].covariate;const lab=R.find(r=>r.covariate===f).label;
+const pts=(D.areaFeatures||[]).filter(a=>a[f]!=null).map(a=>{const e=Math.exp(a.beta_region),l=Math.exp(a.beta_region-1.96*a.se_region),h=Math.exp(a.beta_region+1.96*a.se_region);return {x:a[f]*100,y:(e-1)*100,lo:(l-1)*100,hi:(h-1)*100,label:a.name_en,tip:'<b>'+a.name_en+'</b>'+tipRow(null,lab,fmt(a[f]*100,1)+'%')+tipRow(null,'Per +1°C, this area alone',pct(e))+tipRow(null,'95% range',pct(l)+' to '+pct(h))+tipRow(null,'Per +1°C, after pooling',pct(a.rr_per_degree))}});
+scatterChart(document.getElementById('chart-scatter'),{points:pts,xLabel:lab+' (%)',xFmt:v=>fmt(v,0)+'%',yFmt:v=>fmt(v,1)+'%'});
+table('table-mods',['Feature','Range across areas','Change per 1 SD (pp)','95% range','p','Differences explained','Verdict'],R.map(r=>[r.label,fmt(r.min*100,1)+'% to '+fmt(r.max*100,1)+'%',fmt(r.change_pp_per_sd,2),fmt(r.change_low,2)+' to '+fmt(r.change_high,2),fmt(r.p_value,3),fmt(r.explained_heterogeneity*100,0)+'%',r.verdict]));
+const cols=R.map(r=>r.covariate);
+table('table-areas',['Area','Per +1°C'].concat(R.map(r=>r.label)),(D.areaFeatures||[]).map(a=>[a.name_en,pct(a.rr_per_degree)].concat(cols.map(c=>a[c]!=null?fmt(a[c]*100,1)+'%':'n/a'))))}
+featSel.addEventListener('change',mods);
+
 function response(){const R=D.response;const c=css('--s1');
 barChart(document.getElementById('chart-response'),{categories:R.map(r=>String(r.year)),series:[{name:'Extra deaths per degree-week',values:R.map(r=>r.excess_per_degree_week),color:c}],labels:true,ydec:0,height:280,tip:(i)=>{const r=R[i];return '<b>Summer '+r.year+'</b>'+tipRow(null,'Extra deaths per degree-week',fmt(r.excess_per_degree_week,1))+tipRow(null,'Extra deaths, weeks 26 to 36',fmt(r.summer_excess_deaths))+tipRow(null,'Degree-weeks of heat',fmt(r.degree_weeks_above_threshold,1))+tipRow(null,'Hottest week, mean max',fmt(r.hottest_week_tmax,1)+' °C')}});
 table('table-response',['Summer','Extra deaths, weeks 26 to 36','Degree-weeks','Extra deaths per degree-week','Hottest week (°C)'],R.map(r=>[r.year,fmt(r.summer_excess_deaths),fmt(r.degree_weeks_above_threshold,1),fmt(r.excess_per_degree_week,1),fmt(r.hottest_week_tmax,1)]))}
@@ -259,7 +307,7 @@ table('table-compare',['Baseline','Summer','Recorded deaths','Forecast with heat
 document.getElementById('sources').innerHTML=D.sources.map(s=>'<li><a href="'+s.url+'">'+s.name+'</a>: '+s.what+'</li>').join('');
 document.getElementById('footer').textContent='Framework: D. Sargiotis, AI for Planetary Resilience, Springer Nature Switzerland, 2027. Contains modified Copernicus Climate Change Service information. Neither the European Commission nor ECMWF is responsible for any use of this information.';
 
-function redraw(){tiles();summer();vuln();response();loo();compare()}
+function redraw(){tiles();summer();vuln();mods();response();loo();compare()}
 yearSel.addEventListener('change',summer);areaSel.addEventListener('change',summer);
 let rt;window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(redraw,150)});
 if(window.matchMedia)window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',redraw);

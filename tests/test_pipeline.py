@@ -168,7 +168,14 @@ def test_iso_weeks_complete_only():
 def test_full_pipeline_recovers_known_effect(fake_world):
     out = fake_world / "results"
     docs = fake_world / "docs"
-    meta = run.main(["--config", str(ROOT / "config" / "attica.yaml"), "--out", str(out), "--cache", str(fake_world / "cache"), "--end-date", "2025-10-31", "--docs", str(docs)])
+    static = fake_world / "static"
+    static.mkdir()
+    rows = []
+    for i, (g, b) in enumerate(sorted(TRUE_BETA.items())):
+        rows.append({"NUTS_ID": g, "tree_share_pop": 0.15 - 2.0 * b, "dense_fabric_share_pop": 0.3 + 0.01 * ((i * 3) % 7),
+                     "share_65plus_census": SHARE_65[g], "population_census": POPULATION[g], "population_covered": 1.0})
+    pd.DataFrame(rows).to_excel(static / "exposure_by_nuts3.xlsx", index=False)
+    meta = run.main(["--config", str(ROOT / "config" / "attica.yaml"), "--out", str(out), "--cache", str(fake_world / "cache"), "--end-date", "2025-10-31", "--docs", str(docs), "--static", str(static)])
     html = (docs / "index.html").read_text(encoding="utf-8")
     assert "__DATA__" not in html
     payload = json.loads(html.split('<script id="payload" type="application/json">')[1].split("</script>")[0])
@@ -189,6 +196,11 @@ def test_full_pipeline_recovers_known_effect(fake_world):
     assert set(summary["baseline"]) == {"serfling", "euromomo"}
     assert (summary[summary["baseline"] == meta["baseline_selected"]]["skill_score"] > 0).all()
     assert meta["adaptation"]["verdict"] == "no clear change"
+    mods = pd.read_excel(out / "buaro_attica_step1.xlsx", sheet_name="Heat modifiers", skiprows=2).set_index("covariate")
+    assert mods.loc["tree_share_pop", "change_pp_per_sd"] < 0
+    assert {m["covariate"] for m in payload["mods"]} >= {"tree_share_pop", "dense_fabric_share_pop", "share_65plus_census"}
+    assert len(payload["areaFeatures"]) == 7
+    assert "What explains the differences between areas" in (out / "SUMMARY.md").read_text(encoding="utf-8")
     panel = pd.read_excel(out / "data_panel.xlsx", sheet_name="Panel", skiprows=2)
     assert set(panel["geo"]) == set(TRUE_BETA)
     for name in ["SUMMARY.md", "vulnerability.png", "skill.png", "backtest_2024.png", "baseline_comparison.png", "run_metadata.json", "data_panel.xlsx"]:
