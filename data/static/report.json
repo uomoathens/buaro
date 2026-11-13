@@ -1,5 +1,5 @@
 {
-  "run": "2026-11-13T16:32:00Z",
+  "run": "2026-11-13T16:42:52Z",
   "nuts": {
     "regions": [
       "EL307",
@@ -9,43 +9,11 @@
       "EL304",
       "EL305",
       "EL306"
-    ]
+    ],
+    "cached": true
   },
   "census": {
-    "layers": [
-      {
-        "path": "data/raw/static/census_grid_2021/Eurostat_Census-GRID_2021_V3/ESTAT_Census_2021_V3.gpkg",
-        "features": 4595932,
-        "crs": "EPSG:3035",
-        "geometry": "Polygon",
-        "fields": [
-          "GRD_ID",
-          "T",
-          "M",
-          "F",
-          "Y_LT15",
-          "Y_1564",
-          "Y_GE65",
-          "EMP",
-          "NAT",
-          "EU_OTH",
-          "OTH",
-          "SAME",
-          "CHG_IN",
-          "CHG_OUT",
-          "LAND_SURFACE",
-          "POPULATED",
-          "CNTR_ID"
-        ],
-        "bounds": [
-          943000.0,
-          941000.0,
-          6505000.0,
-          5416000.0
-        ]
-      }
-    ],
-    "used": "data/raw/static/census_grid_2021/Eurostat_Census-GRID_2021_V3/ESTAT_Census_2021_V3.gpkg",
+    "cached": true,
     "cells": 3820,
     "fields": [
       "GRD_ID",
@@ -71,10 +39,180 @@
   "clms_auth": "ok",
   "clms": {
     "street_tree_layer_2021": {
-      "error": "403 Client Error: Forbidden for url: https://copernicus-fme.eea.europa.eu/fmedatadownload/results/15101.zip"
+      "request": {
+        "status": 201,
+        "body": {
+          "ErrorTaskIds": [],
+          "TaskIds": [
+            {
+              "TaskID": "30709277636"
+            }
+          ]
+        },
+        "tasks": [
+          "30709277636"
+        ]
+      },
+      "wait": {
+        "state": "done",
+        "urls": [
+          "https://copernicus-fme.eea.europa.eu/fmedatadownload/results/15110.zip"
+        ],
+        "history": [
+          {
+            "http": 200,
+            "status": [
+              "Queued"
+            ]
+          },
+          {
+            "http": 200,
+            "status": [
+              "Finished_ok"
+            ]
+          }
+        ],
+        "body": {
+          "Datasets": [
+            {
+              "DatasetID": "efc14569ae0548148a1eba237ea2df14",
+              "DatasetPath": "",
+              "DatasetSource": "EEA",
+              "DatasetTitle": "Urban Atlas Street Tree Layer 2021 (vector), Europe, 3-yearly",
+              "FileID": "f91d4546-ca91-4f09-8e53-02157ee4aa79",
+              "FilePath": "SDpcVXJiYW5fQXRsYXNcVXJiYW5fQXRsYXNcU3RyZWV0X1RyZWVfTGF5ZXIoU1RMKV8yMDIxXERhdGFcZGF0YS1kZXRhaWxzXENMTVNfVUFfU1RMX1MyMDIxX1YwMDVoYV9FTDAwMUwxX0FUSElOQV8wMzAzNV9WMDFfUjAyXzIwMjUxMTIxLnppcA==",
+              "FileStructure": "Tiled dataset"
+            }
+          ],
+          "DownloadURL": "https://copernicus-fme.eea.europa.eu/fmedatadownload/results/15110.zip",
+          "FMETaskId": 15110,
+          "FileSize": 2736168,
+          "FinalizationDateTime": "2026-11-13T16:42:58.921158+00:00",
+          "Message": "Download process finished successfully",
+          "RegistrationDateTime": "2026-11-13T16:42:55.864705+00:00",
+          "Status": "Finished_ok"
+        }
+      },
+      "download": [
+        {
+          "attempt": 5,
+          "auth": false,
+          "status": 403
+        },
+        {
+          "attempt": 5,
+          "auth": true,
+          "status": 403
+        },
+        {
+          "attempt": 6,
+          "auth": false,
+          "status": 403
+        },
+        {
+          "attempt": 6,
+          "auth": true,
+          "status": 403
+        },
+        {
+          "attempt": 7,
+          "auth": false,
+          "status": 403
+        },
+        {
+          "attempt": 7,
+          "auth": true,
+          "status": 403
+        }
+      ]
     },
     "urban_atlas_2021": {
-      "error": "403 Client Error: Forbidden for url: https://copernicus-fme.eea.europa.eu/fmedatadownload/results/15105.zip"
+      "request": {
+        "status": 201,
+        "body": {
+          "ErrorTaskIds": [],
+          "TaskIds": [
+            {
+              "TaskID": "18668848201"
+            }
+          ]
+        },
+        "tasks": [
+          "18668848201"
+        ]
+      },
+      "wait": {
+        "state": "done",
+        "urls": [
+          "https://copernicus-fme.eea.europa.eu/fmedatadownload/results/15115.zip"
+        ],
+        "history": [
+          {
+            "http": 200,
+            "status": [
+              "Queued"
+            ]
+          },
+          {
+            "http": 200,
+            "status": [
+              "Finished_ok"
+            ]
+          }
+        ],
+        "body": {
+          "Datasets": [
+            {
+              "DatasetID": "52717fed21404857a943c1ef92e505ab",
+              "DatasetPath": "",
+              "DatasetSource": "EEA",
+              "DatasetTitle": "Urban Atlas Land Cover/Land Use 2021 (vector), Europe, 3-yearly",
+              "FileID": "acc22b3c-ef21-4a98-9d49-0b39257ebe3c",
+              "FilePath": "SDpcVXJiYW5fQXRsYXNcVXJiYW5fQXRsYXNcVXJiYW5fQXRsYXMoVUEpXzIwMjFcRGF0YVxkYXRhLWRldGFpbHNcQ0xNU19VQV9MQ1VfUzIwMjFfVjAyNWhhX0VMMDAxTDFfQVRISU5BXzAzMDM1X1YwMV9SMDBfMjAyNDEyMTMuemlw",
+              "FileStructure": "Tiled dataset"
+            }
+          ],
+          "DownloadURL": "https://copernicus-fme.eea.europa.eu/fmedatadownload/results/15115.zip",
+          "FMETaskId": 15115,
+          "FileSize": 66270591,
+          "FinalizationDateTime": "2026-11-13T16:52:12.040099+00:00",
+          "Message": "Download process finished successfully",
+          "RegistrationDateTime": "2026-11-13T16:52:05.870886+00:00",
+          "Status": "Finished_ok"
+        }
+      },
+      "download": [
+        {
+          "attempt": 5,
+          "auth": false,
+          "status": 403
+        },
+        {
+          "attempt": 5,
+          "auth": true,
+          "status": 403
+        },
+        {
+          "attempt": 6,
+          "auth": false,
+          "status": 403
+        },
+        {
+          "attempt": 6,
+          "auth": true,
+          "status": 403
+        },
+        {
+          "attempt": 7,
+          "auth": false,
+          "status": 403
+        },
+        {
+          "attempt": 7,
+          "auth": true,
+          "status": 403
+        }
+      ]
     }
   }
 }
