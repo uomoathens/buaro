@@ -1,0 +1,50 @@
+name: BUARO step 2 data probe
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "buaro/probe.py"
+      - "buaro/clms.py"
+      - ".github/workflows/probe-step2.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: buaro-probe
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - name: Install
+        run: pip install -r requirements.txt
+
+      - name: Probe data sources
+        env:
+          CLMS_SERVICE_KEY: ${{ secrets.CLMS_SERVICE_KEY }}
+        run: python -m buaro.probe
+
+      - name: Commit probe report
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898237+github-actions[bot]@users.noreply.github.com"
+          git add data/probe
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
+            git commit --allow-empty-message -m ""
+            git pull --rebase
+            git push
+          fi

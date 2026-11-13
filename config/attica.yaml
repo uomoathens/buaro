@@ -1,0 +1,76 @@
+study:
+  name: Attica
+  country: EL
+  nuts2: EL30
+  start_year: 2015
+  pandemic_exclusion:
+    start: 2020-W10
+    end: 2022-W26
+  backtest_years: [2023, 2024, 2025]
+  summer_weeks: [23, 39]
+  threshold_percentiles: [60, 65, 70, 75, 80, 85, 90]
+  fourier_harmonics: 3
+  min_training_weeks: 150
+  euromomo:
+    stable_weeks: [[16, 25], [37, 44]]
+    model_weeks: [16, 44]
+    harmonics: 1
+
+regions:
+  - code: EL301
+    name_en: Northern Athens
+    name_el: Βόρειος Τομέας Αθηνών
+    points:
+      - [38.0569, 23.8086]
+      - [38.0217, 23.7984]
+  - code: EL302
+    name_en: Western Athens
+    name_el: Δυτικός Τομέας Αθηνών
+    points:
+      - [38.0154, 23.6919]
+      - [37.9925, 23.6781]
+  - code: EL303
+    name_en: Central Athens
+    name_el: Κεντρικός Τομέας Αθηνών
+    points:
+      - [37.9838, 23.7275]
+      - [37.9767, 23.7700]
+  - code: EL304
+    name_en: Southern Athens
+    name_el: Νότιος Τομέας Αθηνών
+    points:
+      - [37.9556, 23.7020]
+      - [37.8650, 23.7530]
+  - code: EL305
+    name_en: Eastern Attica
+    name_el: Ανατολική Αττική
+    points:
+      - [38.0833, 23.7333]
+      - [37.9000, 23.8667]
+  - code: EL306
+    name_en: Western Attica
+    name_el: Δυτική Αττική
+    points:
+      - [38.0414, 23.5428]
+      - [37.9964, 23.3444]
+  - code: EL307
+    name_en: Piraeus, Islands
+    name_el: Πειραιάς, Νήσοι
+    points:
+      - [37.9420, 23.6465]
+      - [37.9667, 23.6500]
+
+sources:
+  deaths_datasets: [demo_r_mwk3_t, demo_r_mwk3_ts]
+  deaths_age_dataset: demo_r_mwk3_20
+  population_dataset: demo_r_pjangrp3
+  eurostat_api: https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data
+  climate_api: https://archive-api.open-meteo.com/v1/archive
+  climate_model: era5_land
+
+reference:
+  label: ISGlobal (Janoš et al. 2025, Nature Medicine), Greece, summer 2024
+  greece_heat_deaths_2024: 5980
+  greece_population_2021: 10482487
+  attica_population_2021: 3814064
+  note: Order-of-magnitude cross-check only. ISGlobal uses daily data and a different model; weekly data are known to underestimate heat mortality by 5% to 20%.

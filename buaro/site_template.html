@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>BUARO: heat and mortality in Attica</title>
+<style>
+.viz-root{color-scheme:light;--surface-0:#f4f3f0;--surface-1:#fcfcfb;--border:#e4e3df;--text-primary:#0b0b0b;--text-secondary:#52514e;--text-muted:#7a7973;--grid:#ebeae6;--s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--s7:#6250d6;--band:rgba(42,120,214,.12)}
+@media (prefers-color-scheme:dark){:root:where(:not([data-theme="light"])) .viz-root{color-scheme:dark;--surface-0:#121211;--surface-1:#1a1a19;--border:#33332f;--text-primary:#f0efec;--text-secondary:#c3c2b7;--text-muted:#94938a;--grid:#2a2a27;--s1:#3987e5;--s2:#d95926;--s3:#199e70;--s7:#9085e9;--band:rgba(57,135,229,.18)}}
+:root[data-theme="dark"] .viz-root{color-scheme:dark;--surface-0:#121211;--surface-1:#1a1a19;--border:#33332f;--text-primary:#f0efec;--text-secondary:#c3c2b7;--text-muted:#94938a;--grid:#2a2a27;--s1:#3987e5;--s2:#d95926;--s3:#199e70;--s7:#9085e9;--band:rgba(57,135,229,.18)}
+*{box-sizing:border-box}
+body{margin:0}
+.viz-root{background:var(--surface-0);color:var(--text-primary);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;min-height:100vh}
+.wrap{max-width:1080px;margin:0 auto;padding:32px 20px 64px}
+header h1{font-size:28px;line-height:1.2;margin:0 0 8px;letter-spacing:-.01em}
+header p{margin:0;color:var(--text-secondary);max-width:760px}
+.meta{font-size:13px;color:var(--text-muted);margin-top:10px}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:28px 0}
+.tile{background:var(--surface-1);border:1px solid var(--border);border-radius:12px;padding:16px}
+.tile .label{font-size:13px;color:var(--text-secondary)}
+.tile .value{font-size:30px;font-weight:600;margin:4px 0 2px;letter-spacing:-.01em}
+.tile .sub{font-size:13px;color:var(--text-muted)}
+section{background:var(--surface-1);border:1px solid var(--border);border-radius:12px;padding:20px;margin:16px 0}
+section h2{font-size:19px;margin:0 0 4px}
+section .lead{color:var(--text-secondary);margin:0 0 14px;max-width:820px}
+.controls{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin:0 0 12px}
+.controls label{font-size:13px;color:var(--text-secondary);display:flex;gap:8px;align-items:center}
+select{font:inherit;font-size:14px;padding:6px 10px;border-radius:8px;border:1px solid var(--border);background:var(--surface-0);color:var(--text-primary)}
+.legend{display:flex;flex-wrap:wrap;gap:16px;font-size:13px;color:var(--text-secondary);margin:4px 0 8px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:16px;height:3px;border-radius:2px;display:inline-block}
+.sw.dash{background:none!important;border-top:3px dashed}
+.chart{position:relative;width:100%}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.tip{position:absolute;pointer-events:none;background:var(--surface-1);border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-size:13px;box-shadow:0 4px 14px rgba(0,0,0,.12);opacity:0;transition:opacity .08s;min-width:150px;z-index:5}
+.tip b{display:block;margin-bottom:4px}
+.tip .row{display:flex;justify-content:space-between;gap:14px;color:var(--text-secondary)}
+.tip .row i{display:inline-block;width:10px;height:3px;border-radius:2px;margin-right:6px;vertical-align:middle}
+.verdict{border-left:4px solid var(--s1);padding:8px 12px;background:var(--surface-0);border-radius:0 8px 8px 0;margin:10px 0 0}
+details{margin-top:10px}
+summary{cursor:pointer;color:var(--text-secondary);font-size:13px}
+table{border-collapse:collapse;width:100%;font-size:13px;margin-top:8px}
+th,td{text-align:right;padding:5px 8px;border-bottom:1px solid var(--border)}
+th:first-child,td:first-child{text-align:left}
+th{color:var(--text-secondary);font-weight:600}
+a{color:var(--s1)}
+ul.src{padding-left:18px;margin:6px 0}
+ul.src li{margin:4px 0}
+footer{font-size:13px;color:var(--text-muted);margin-top:24px}
+.toggle{float:right;font-size:13px}
+</style>
+</head>
+<body>
+<div class="viz-root">
+<div class="wrap">
+<header>
+<span class="toggle"><label>Theme <select id="theme"><option value="">System</option><option value="light">Light</option><option value="dark">Dark</option></select></label></span>
+<h1>How deadly is heat in Attica, and is it changing?</h1>
+<p>BUARO turns the Bayesian Urban Adaptation and Resilience Optimization Model of <em>AI for Planetary Resilience</em> (D. Sargiotis, Springer, 2027) into open software that learns from official European data. This page is rebuilt automatically every time the pipeline runs.</p>
+<div class="meta" id="meta"></div>
+</header>
+
+<div class="tiles" id="tiles"></div>
+
+<section>
+<h2>Explore a summer</h2>
+<p class="lead">Weekly deaths and weekly mean maximum temperature. For the summers used in the forecast test, the forecasts made with data up to 31 May are shown too. Hover for values.</p>
+<div class="controls">
+<label>Year <select id="year"></select></label>
+<label>Area <select id="area"></select></label>
+</div>
+<div class="legend" id="legend-deaths"></div>
+<div class="chart" id="chart-deaths"></div>
+<div class="legend" id="legend-temp"></div>
+<div class="chart" id="chart-temp"></div>
+<details><summary>Show as table</summary><div id="table-summer"></div></details>
+</section>
+
+<section>
+<h2>How vulnerable each area is</h2>
+<p class="lead">Extra weekly deaths for each 1°C of weekly mean maximum temperature above the local heat threshold, with 95% range. Hover for details.</p>
+<div class="chart" id="chart-vuln"></div>
+<details><summary>Show as table</summary><div id="table-vuln"></div></details>
+</section>
+
+<section>
+<h2>Each summer's response to heat, without any model</h2>
+<p class="lead">Extra deaths in weeks 26 to 36 above the calm-week level of the same year, divided by the heat the summer brought (degree-weeks above the area thresholds). A lower bar means each degree of heat cost fewer lives.</p>
+<div class="chart" id="chart-response"></div>
+<details><summary>Show as table</summary><div id="table-response"></div></details>
+</section>
+
+<section>
+<h2>Is Attica adapting?</h2>
+<p class="lead">The yearly trend in the heat effect, estimated again with each summer left out. A trend only counts as evidence if no single summer changes the verdict.</p>
+<div class="chart" id="chart-loo"></div>
+<div class="verdict" id="verdict-adapt"></div>
+<details><summary>Show as table</summary><div id="table-loo"></div></details>
+</section>
+
+<section>
+<h2>Forecasting summers the model has never seen</h2>
+<p class="lead">Typical weekly error (RMSE) of the summer forecast, for the two ways of setting the normal level of deaths. Lower is better. The baseline is chosen by a rule fixed in advance: lowest mean error over all tested summers.</p>
+<div class="legend" id="legend-compare"></div>
+<div class="chart" id="chart-compare"></div>
+<details><summary>Show as table</summary><div id="table-compare"></div></details>
+</section>
+
+<section>
+<h2>Data and sources</h2>
+<p class="lead">Every number on this page can be checked against these files and official sources.</p>
+<ul class="src">
+<li><a href="data/buaro_attica_step1.xlsx">buaro_attica_step1.xlsx</a>: all results, by area, by week and by baseline.</li>
+<li><a href="data/data_panel.xlsx">data_panel.xlsx</a>: every weekly number the model used.</li>
+</ul>
+<ul class="src" id="sources"></ul>
+</section>
+
+<footer id="footer"></footer>
+</div>
+</div>
+<script id="payload" type="application/json">__DATA__</script>
+<script>
+(function(){
+const D=JSON.parse(document.getElementById('payload').textContent);
+const root=document.documentElement;
+const themeSel=document.getElementById('theme');
+themeSel.addEventListener('change',()=>{if(themeSel.value){root.setAttribute('data-theme',themeSel.value)}else{root.removeAttribute('data-theme')}redraw()});
+const css=n=>getComputedStyle(document.querySelector('.viz-root')).getPropertyValue(n).trim();
+const fmt=(v,d=0)=>v==null||!isFinite(v)?'n/a':Number(v).toLocaleString('en-GB',{minimumFractionDigits:d,maximumFractionDigits:d});
+const pct=(rr,d=1)=>(rr>=1?'+':'')+fmt((rr-1)*100,d)+'%';
+const NS='http://www.w3.org/2000/svg';
+const el=(t,a,p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e};
+const nice=(lo,hi,n=5)=>{const span=hi-lo||1;const step0=span/n;const mag=Math.pow(10,Math.floor(Math.log10(step0)));const err=step0/mag;const step=(err>=7.5?10:err>=3.5?5:err>=1.5?2:1)*mag;const a=Math.floor(lo/step)*step,b=Math.ceil(hi/step)*step;const t=[];for(let v=a;v<=b+step/2;v+=step)t.push(+v.toFixed(10));return t};
+const BASE={serfling:'All-weeks baseline',euromomo:'EuroMOMO-style baseline'};
+
+function tipFor(host){let t=host.querySelector('.tip');if(!t){t=document.createElement('div');t.className='tip';host.appendChild(t)}return t}
+function showTip(host,html,x,y){const t=tipFor(host);t.innerHTML=html;t.style.opacity=1;const w=host.clientWidth;const tw=t.offsetWidth;let left=x+14;if(left+tw>w)left=x-tw-14;t.style.left=Math.max(0,left)+'px';t.style.top=Math.max(0,y-10)+'px'}
+function hideTip(host){const t=host.querySelector('.tip');if(t)t.style.opacity=0}
+function tipRow(color,label,value){return '<div class="row"><span>'+(color?'<i style="background:'+color+'"></i>':'')+label+'</span><span>'+value+'</span></div>'}
+function legend(id,items){const L=document.getElementById(id);L.innerHTML='';items.forEach(it=>{const s=document.createElement('span');const sw=document.createElement('i');sw.className='sw'+(it.dash?' dash':'');if(it.dash)sw.style.borderColor=it.color;else sw.style.background=it.color;s.appendChild(sw);s.appendChild(document.createTextNode(it.label));L.appendChild(s)})}
+function table(id,head,rows){const H='<table><thead><tr>'+head.map(h=>'<th>'+h+'</th>').join('')+'</tr></thead><tbody>'+rows.map(r=>'<tr>'+r.map(c=>'<td>'+c+'</td>').join('')+'</tr>').join('')+'</tbody></table>';document.getElementById(id).innerHTML=H}
+
+function frame(host,W,H,m){host.querySelectorAll('svg').forEach(s=>s.remove());const svg=el('svg',{viewBox:'0 0 '+W+' '+H,role:'img'});host.insertBefore(svg,host.firstChild);return {svg,iw:W-m.l-m.r,ih:H-m.t-m.b,g:el('g',{transform:'translate('+m.l+','+m.t+')'},svg)}}
+function yAxis(g,ticks,y,iw,fmtf){ticks.forEach(v=>{el('line',{x1:0,x2:iw,y1:y(v),y2:y(v),stroke:css('--grid'),'stroke-width':1},g);const t=el('text',{x:-8,y:y(v)+4,'text-anchor':'end','font-size':12,fill:css('--text-muted')},g);t.textContent=fmtf(v)})}
+
+function lineChart(host,opts){
+const W=1000,H=opts.height||300,m={l:56,r:16,t:12,b:32};
+const {svg,g,iw,ih}=frame(host,W,H,m);
+const xs=opts.x;const n=xs.length;
+const all=[];opts.series.forEach(s=>s.values.forEach(v=>{if(v!=null&&isFinite(v))all.push(v)}));(opts.extra||[]).forEach(v=>all.push(v));
+if(!all.length)return;
+let lo=Math.min(...all),hi=Math.max(...all);const pad=(hi-lo)*.08||1;lo-=pad;hi+=pad;
+const ticks=nice(lo,hi,5);lo=ticks[0];hi=ticks[ticks.length-1];
+const x=i=>n<=1?iw/2:i*iw/(n-1);const y=v=>ih-(v-lo)/(hi-lo)*ih;
+yAxis(g,ticks,y,iw,v=>fmt(v,opts.ydec||0));
+const every=Math.max(1,Math.ceil(n/12));
+xs.forEach((lab,i)=>{if(i%every===0){const t=el('text',{x:x(i),y:ih+20,'text-anchor':'middle','font-size':12,fill:css('--text-muted')},g);t.textContent=lab}});
+(opts.hlines||[]).forEach(h=>{el('line',{x1:0,x2:iw,y1:y(h.value),y2:y(h.value),stroke:css('--text-muted'),'stroke-width':1.5,'stroke-dasharray':'2 4'},g);const t=el('text',{x:iw-4,y:y(h.value)-6,'text-anchor':'end','font-size':12,fill:css('--text-secondary')},g);t.textContent=h.label});
+opts.series.forEach(s=>{let d='';let pen=false;s.values.forEach((v,i)=>{if(v==null||!isFinite(v)){pen=false;return}d+=(pen?'L':'M')+x(i).toFixed(1)+','+y(v).toFixed(1);pen=true});el('path',{d,fill:'none',stroke:s.color,'stroke-width':2,'stroke-linejoin':'round','stroke-linecap':'round','stroke-dasharray':s.dash?'6 4':''},g);if(s.markers){s.values.forEach((v,i)=>{if(v!=null&&isFinite(v))el('circle',{cx:x(i),cy:y(v),r:3.5,fill:s.color,stroke:css('--surface-1'),'stroke-width':2},g)})}});
+const cross=el('line',{x1:0,x2:0,y1:0,y2:ih,stroke:css('--text-muted'),'stroke-width':1,opacity:0},g);
+const dots=opts.series.map(s=>el('circle',{r:5,fill:s.color,stroke:css('--surface-1'),'stroke-width':2,opacity:0},g));
+const hit=el('rect',{x:0,y:0,width:iw,height:ih,fill:'transparent'},g);
+const move=ev=>{const r=svg.getBoundingClientRect();const sx=(ev.clientX-r.left)*W/r.width-m.l;const i=Math.max(0,Math.min(n-1,Math.round(n<=1?0:sx/iw*(n-1))));cross.setAttribute('x1',x(i));cross.setAttribute('x2',x(i));cross.setAttribute('opacity',1);let html='<b>'+(opts.tipTitle?opts.tipTitle(i):xs[i])+'</b>';opts.series.forEach((s,k)=>{const v=s.values[i];if(v!=null&&isFinite(v)){dots[k].setAttribute('cx',x(i));dots[k].setAttribute('cy',y(v));dots[k].setAttribute('opacity',1);html+=tipRow(s.color,s.name,fmt(v,s.dec||0)+(s.unit||''))}else dots[k].setAttribute('opacity',0)});const px=(x(i)+m.l)*r.width/W;const py=(ev.clientY-r.top);showTip(host,html,px,py)};
+hit.addEventListener('mousemove',move);hit.addEventListener('mouseleave',()=>{cross.setAttribute('opacity',0);dots.forEach(d=>d.setAttribute('opacity',0));hideTip(host)});
+}
+
+function barChart(host,opts){
+const W=1000,H=opts.height||300,m={l:56,r:16,t:20,b:36};
+const {svg,g,iw,ih}=frame(host,W,H,m);
+const cats=opts.categories;const groups=opts.series;
+const all=[0];groups.forEach(s=>s.values.forEach(v=>{if(v!=null&&isFinite(v))all.push(v)}));
+const ticks=nice(Math.min(...all),Math.max(...all)*1.1,5);const lo=ticks[0],hi=ticks[ticks.length-1];
+const y=v=>ih-(v-lo)/(hi-lo)*ih;
+yAxis(g,ticks,y,iw,v=>fmt(v,opts.ydec||0));
+const band=iw/cats.length;const inner=band*.7;const bw=(inner-(groups.length-1)*2)/groups.length;
+el('line',{x1:0,x2:iw,y1:y(0),y2:y(0),stroke:css('--text-muted'),'stroke-width':1},g);
+cats.forEach((c,i)=>{const t=el('text',{x:i*band+band/2,y:ih+22,'text-anchor':'middle','font-size':12,fill:css('--text-muted')},g);t.textContent=c;
+groups.forEach((s,k)=>{const v=s.values[i];if(v==null||!isFinite(v))return;const x0=i*band+(band-inner)/2+k*(bw+2);const y0=y(Math.max(0,v)),y1=y(Math.min(0,v));const h=Math.max(1,y1-y0);const r=Math.min(4,bw/2,h);
+const d=v>=0?'M'+x0+','+(y0+h)+'V'+(y0+r)+'Q'+x0+','+y0+' '+(x0+r)+','+y0+'H'+(x0+bw-r)+'Q'+(x0+bw)+','+y0+' '+(x0+bw)+','+(y0+r)+'V'+(y0+h)+'Z':'M'+x0+','+y0+'V'+(y0+h-r)+'Q'+x0+','+(y0+h)+' '+(x0+r)+','+(y0+h)+'H'+(x0+bw-r)+'Q'+(x0+bw)+','+(y0+h)+' '+(x0+bw)+','+(y0+h-r)+'V'+y0+'Z';
+el('path',{d,fill:s.color},g);if(opts.labels){const t=el('text',{x:x0+bw/2,y:(v>=0?y0-6:y0+h+14),'text-anchor':'middle','font-size':12,fill:css('--text-secondary')},g);t.textContent=fmt(v,opts.ydec||0)}
+const hit=el('rect',{x:x0-2,y:0,width:bw+4,height:ih,fill:'transparent'},g);
+hit.addEventListener('mousemove',ev=>{const r=svg.getBoundingClientRect();showTip(host,opts.tip(i,k),(x0+bw/2+m.l)*r.width/W,ev.clientY-r.top)});hit.addEventListener('mouseleave',()=>hideTip(host))})});
+}
+
+function dotChart(host,opts){
+const rows=opts.rows;const rowH=40;const W=1000,m={l:opts.left||170,r:rows.some(r=>r.flag)?190:70,t:10,b:36};const H=m.t+m.b+rows.length*rowH;
+const {svg,g,iw,ih}=frame(host,W,H,m);
+const all=[0];rows.forEach(r=>{all.push(r.lo,r.hi)});
+const ticks=nice(Math.min(...all),Math.max(...all),5);const lo=ticks[0],hi=ticks[ticks.length-1];
+const x=v=>(v-lo)/(hi-lo)*iw;
+ticks.forEach(v=>{el('line',{x1:x(v),x2:x(v),y1:0,y2:ih,stroke:css('--grid'),'stroke-width':1},g);const t=el('text',{x:x(v),y:ih+20,'text-anchor':'middle','font-size':12,fill:css('--text-muted')},g);t.textContent=opts.tickFmt(v)});
+el('line',{x1:x(0),x2:x(0),y1:0,y2:ih,stroke:css('--text-secondary'),'stroke-width':1.5},g);
+rows.forEach((r,i)=>{const cy=i*rowH+rowH/2;const t=el('text',{x:-12,y:cy+4,'text-anchor':'end','font-size':13,fill:css('--text-primary')},g);t.textContent=r.label;
+el('line',{x1:x(r.lo),x2:x(r.hi),y1:cy,y2:cy,stroke:r.color||css('--s1'),'stroke-width':2.5,'stroke-linecap':'round'},g);
+el('circle',{cx:x(r.v),cy,r:6,fill:r.color||css('--s1'),stroke:css('--surface-1'),'stroke-width':2},g);
+const lab=el('text',{x:x(r.hi)+8,y:cy+4,'font-size':12,fill:css('--text-secondary')},g);lab.textContent=r.valueLabel+(r.flag?'  '+r.flag:'');
+const hit=el('rect',{x:-m.l,y:i*rowH,width:iw+m.l+m.r,height:rowH,fill:'transparent'},g);
+hit.addEventListener('mousemove',ev=>{const b=svg.getBoundingClientRect();showTip(host,r.tip,(x(r.v)+m.l)*b.width/W,ev.clientY-b.top)});hit.addEventListener('mouseleave',()=>hideTip(host))});
+}
+
+const M=D.meta;const A=M.adaptation;
+document.getElementById('meta').textContent='Data up to week '+M.last_week+' · Run on '+M.run_date+' · Deaths: Eurostat '+M.deaths_dataset+' · Temperature: ERA5-Land';
+
+function tiles(){const T=document.getElementById('tiles');const b=D.best2024;
+const items=[
+{label:'Extra deaths per +1°C above the heat threshold',value:pct(M.pooled_rr),sub:'95% range '+pct(M.pooled_rr_low)+' to '+pct(M.pooled_rr_high)+', all of Attica'},
+{label:'Heat-attributable deaths, summer 2024',value:b?fmt(b):'n/a',sub:'ISGlobal, scaled to Attica: about '+fmt(M.reference_attica_2024)},
+{label:'Summers where heat improved the forecast',value:D.improved+' of '+D.tested,sub:'Each forecast made with data up to 31 May'},
+{label:'Adaptation over time',value:A.verdict==='no clear change'?'No clear change':(A.robust?(A.verdict==='decreasing'?'Decreasing':'Increasing'):'Not robust'),sub:A.robust||A.verdict==='no clear change'?'Checked with each summer left out':'Depends on summer '+(A.depends_on||[]).join(', ')}];
+T.innerHTML=items.map(it=>'<div class="tile"><div class="label">'+it.label+'</div><div class="value">'+it.value+'</div><div class="sub">'+it.sub+'</div></div>').join('')}
+
+const areas=[{code:'ALL',name:'All of Attica'}].concat(D.areas);
+const yearSel=document.getElementById('year'),areaSel=document.getElementById('area');
+D.years.forEach(y=>{const o=document.createElement('option');o.value=y;o.textContent=y+(D.backtestYears.includes(y)?' (forecast test)':'');yearSel.appendChild(o)});
+areas.forEach(a=>{const o=document.createElement('option');o.value=a.code;o.textContent=a.name;areaSel.appendChild(o)});
+yearSel.value=D.backtestYears.length?D.backtestYears[D.backtestYears.length-1]:D.years[D.years.length-1];
+
+function seriesFor(year,area){const weeks=[];for(let w=14;w<=44;w++)weeks.push(w);
+const pick=code=>D.panel[code];const codes=area==='ALL'?D.areas.map(a=>a.code):[area];
+const deaths=[],tmax=[],thr=[];
+weeks.forEach(w=>{let s=0,t=0,c=0,ok=true;codes.forEach(code=>{const P=pick(code);const k=year+'-W'+String(w).padStart(2,'0');const i=P.index[k];if(i==null){ok=false;return}s+=P.deaths[i];t+=P.tmax[i];c++});deaths.push(ok&&c?s:null);tmax.push(ok&&c?t/c:null)});
+const th=codes.map(c=>D.thresholds[c]).filter(v=>v!=null);const thrv=th.length?th.reduce((a,b)=>a+b,0)/th.length:null;
+const fw=[],fo=[];const BT=D.backtest;
+weeks.forEach(w=>{const k=year+'-W'+String(w).padStart(2,'0');let a=0,b=0,c=0;codes.forEach(code=>{const r=BT[code]&&BT[code][k];if(r){a+=r[0];b+=r[1];c++}});fw.push(c===codes.length?a:null);fo.push(c===codes.length?b:null)});
+return {weeks,deaths,tmax,thr:thrv,fw,fo}}
+
+function summer(){const year=+yearSel.value,area=areaSel.value;const S=seriesFor(year,area);const labels=S.weeks.map(w=>'W'+w);
+const c1=css('--s1'),c2=css('--s2'),c3=css('--s3'),c7=css('--s7');const hasF=S.fw.some(v=>v!=null);
+const ser=[{name:'Recorded deaths',values:S.deaths,color:c1,markers:true}];if(hasF){ser.push({name:'Forecast with heat',values:S.fw,color:c2});ser.push({name:'Forecast without heat',values:S.fo,color:c3,dash:true})}
+legend('legend-deaths',ser.map(s=>({label:s.name,color:s.color,dash:s.dash})));
+const wk=i=>{const w=S.weeks[i];const d=new Date(Date.UTC(year,0,4));const day=(d.getUTCDay()+6)%7;d.setUTCDate(d.getUTCDate()-day+(w-1)*7);return 'Week '+w+', from '+d.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric',timeZone:'UTC'})};
+lineChart(document.getElementById('chart-deaths'),{x:labels,series:ser,height:300,tipTitle:wk});
+legend('legend-temp',[{label:'Weekly mean maximum temperature (°C)',color:c7},{label:'Heat threshold',color:css('--text-muted'),dash:true}]);
+lineChart(document.getElementById('chart-temp'),{x:labels,series:[{name:'Mean max temperature',values:S.tmax,color:c7,dec:1,unit:' °C'}],height:200,ydec:0,hlines:S.thr!=null?[{value:S.thr,label:'Threshold '+fmt(S.thr,1)+' °C'}]:[],extra:S.thr!=null?[S.thr]:[],tipTitle:wk});
+table('table-summer',['Week','Recorded deaths','Forecast with heat','Forecast without heat','Mean max temperature (°C)'],S.weeks.map((w,i)=>[w,fmt(S.deaths[i]),fmt(S.fw[i]),fmt(S.fo[i]),fmt(S.tmax[i],1)]))}
+
+function vuln(){const rows=D.vuln.slice().sort((a,b)=>b.rr_per_degree-a.rr_per_degree).map(r=>({label:r.name_en,v:(r.rr_per_degree-1)*100,lo:(r.rr_low-1)*100,hi:(r.rr_high-1)*100,valueLabel:pct(r.rr_per_degree),tip:'<b>'+r.name_en+'</b>'+tipRow(null,'Per +1°C',pct(r.rr_per_degree))+tipRow(null,'95% range',pct(r.rr_low)+' to '+pct(r.rr_high))+tipRow(null,'Heat threshold',fmt(r.threshold_c,1)+' °C')+tipRow(null,'Aged 65+',r.share_65plus!=null?fmt(r.share_65plus*100,1)+'%':'n/a')}));
+dotChart(document.getElementById('chart-vuln'),{rows,tickFmt:v=>fmt(v,0)+'%'});
+table('table-vuln',['Area','Per +1°C','95% range','Threshold (°C)','Aged 65+'],D.vuln.slice().sort((a,b)=>b.rr_per_degree-a.rr_per_degree).map(r=>[r.name_en,pct(r.rr_per_degree),pct(r.rr_low)+' to '+pct(r.rr_high),fmt(r.threshold_c,1),r.share_65plus!=null?fmt(r.share_65plus*100,1)+'%':'n/a']))}
+
+function response(){const R=D.response;const c=css('--s1');
+barChart(document.getElementById('chart-response'),{categories:R.map(r=>String(r.year)),series:[{name:'Extra deaths per degree-week',values:R.map(r=>r.excess_per_degree_week),color:c}],labels:true,ydec:0,height:280,tip:(i)=>{const r=R[i];return '<b>Summer '+r.year+'</b>'+tipRow(null,'Extra deaths per degree-week',fmt(r.excess_per_degree_week,1))+tipRow(null,'Extra deaths, weeks 26 to 36',fmt(r.summer_excess_deaths))+tipRow(null,'Degree-weeks of heat',fmt(r.degree_weeks_above_threshold,1))+tipRow(null,'Hottest week, mean max',fmt(r.hottest_week_tmax,1)+' °C')}});
+table('table-response',['Summer','Extra deaths, weeks 26 to 36','Degree-weeks','Extra deaths per degree-week','Hottest week (°C)'],R.map(r=>[r.year,fmt(r.summer_excess_deaths),fmt(r.degree_weeks_above_threshold,1),fmt(r.excess_per_degree_week,1),fmt(r.hottest_week_tmax,1)]))}
+
+function loo(){const L=D.robustness;const k=100*10;
+const rows=[{label:'All summers',v:A.delta*k,lo:A.delta_low*k,hi:A.delta_high*k,valueLabel:fmt(A.delta*k,2),color:css('--s2'),tip:'<b>All summers</b>'+tipRow(null,'Trend',fmt(A.delta*k,2))+tipRow(null,'95% range',fmt(A.delta_low*k,2)+' to '+fmt(A.delta_high*k,2))}].concat(L.map(r=>({label:'Without '+r.left_out_summer,v:r.delta*k,lo:r.delta_low*k,hi:r.delta_high*k,valueLabel:fmt(r.delta*k,2),flag:r.verdict!==A.verdict?'changes the verdict':'',tip:'<b>Summer '+r.left_out_summer+' left out</b>'+tipRow(null,'Trend',fmt(r.delta*k,2))+tipRow(null,'95% range',fmt(r.delta_low*k,2)+' to '+fmt(r.delta_high*k,2))+tipRow(null,'Verdict',r.verdict)})));
+dotChart(document.getElementById('chart-loo'),{rows,left:150,tickFmt:v=>fmt(v,1)});
+let txt;if(A.verdict==='no clear change')txt='No clear change over time can be shown yet with the data available.';else if(A.robust)txt=A.verdict==='decreasing'?'Heat is becoming less deadly per degree, whichever summer is left out. This is measurable evidence of adaptation.':'Heat is becoming more deadly per degree, whichever summer is left out.';else txt='Not robust. The trend points to heat becoming '+(A.verdict==='decreasing'?'less':'more')+' deadly per degree, but it disappears when the summer of '+(A.depends_on||[]).join(', ')+' is left out. One unusual summer is not evidence of adaptation, so no claim is made yet.';
+document.getElementById('verdict-adapt').textContent=txt+' Scale: change per decade in the log relative risk per 1°C, ×100.';
+table('table-loo',['Summer left out','Trend','95% range','Verdict'],[['None',fmt(A.delta*k,2),fmt(A.delta_low*k,2)+' to '+fmt(A.delta_high*k,2),A.verdict]].concat(L.map(r=>[r.left_out_summer,fmt(r.delta*k,2),fmt(r.delta_low*k,2)+' to '+fmt(r.delta_high*k,2),r.verdict])))}
+
+function compare(){const S=D.summary;const years=[...new Set(S.map(r=>r.year))].sort();const kinds=['serfling','euromomo'].filter(k=>S.some(r=>r.baseline===k));const col={serfling:css('--s3'),euromomo:css('--s1')};
+const ser=kinds.map(k=>({name:BASE[k]+(k===M.baseline_selected?' (selected)':''),color:col[k],values:years.map(y=>{const r=S.find(r=>r.baseline===k&&r.year===y);return r?r.rmse_with_heat:null})}));
+legend('legend-compare',ser.map(s=>({label:s.name,color:s.color})));
+barChart(document.getElementById('chart-compare'),{categories:years.map(String),series:ser,labels:true,height:280,tip:(i,k)=>{const r=S.find(r=>r.baseline===kinds[k]&&r.year===years[i]);return '<b>Summer '+years[i]+'</b>'+tipRow(ser[k].color,BASE[kinds[k]],'')+tipRow(null,'Weekly error with heat',fmt(r.rmse_with_heat,1))+tipRow(null,'Weekly error without heat',fmt(r.rmse_without_heat,1))+tipRow(null,'Skill score',fmt(r.skill_score,2))+tipRow(null,'Recorded deaths',fmt(r.observed_deaths))+tipRow(null,'Heat-attributable',fmt(r.heat_attributable_deaths))}});
+table('table-compare',['Baseline','Summer','Recorded deaths','Forecast with heat','Forecast without heat','Weekly error with heat','Skill score'],S.map(r=>[BASE[r.baseline],r.year,fmt(r.observed_deaths),fmt(r.predicted_with_heat),fmt(r.predicted_without_heat),fmt(r.rmse_with_heat,1),fmt(r.skill_score,2)]))}
+
+document.getElementById('sources').innerHTML=D.sources.map(s=>'<li><a href="'+s.url+'">'+s.name+'</a>: '+s.what+'</li>').join('');
+document.getElementById('footer').textContent='Framework: D. Sargiotis, AI for Planetary Resilience, Springer Nature Switzerland, 2027. Contains modified Copernicus Climate Change Service information. Neither the European Commission nor ECMWF is responsible for any use of this information.';
+
+function redraw(){tiles();summer();vuln();response();loo();compare()}
+yearSel.addEventListener('change',summer);areaSel.addEventListener('change',summer);
+let rt;window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(redraw,150)});
+if(window.matchMedia)window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',redraw);
+redraw();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+name: BUARO pipeline
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "23 5 4 * *"
+  push:
+    branches: [main]
+    paths:
+      - "buaro/**"
+      - "!buaro/probe.py"
+      - "!buaro/clms.py"
+      - "!buaro/static_fetch.py"
+      - "config/**"
+      - "tests/**"
+      - "requirements.txt"
+      - ".github/workflows/pipeline.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: buaro-pipeline
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - name: Install
+        run: pip install -r requirements.txt
+
+      - name: Tests
+        run: python -m pytest -q
+
+      - name: Run pipeline on real data
+        run: python -m buaro.run --config config/attica.yaml --out results --cache data/raw --docs docs
+
+      - name: Commit results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898237+github-actions[bot]@users.noreply.github.com"
+          git add results docs
+          if git diff --cached --quiet; then
+            echo "No changes in results"
+          else
+            git commit --allow-empty-message -m ""
+            git pull --rebase
+            git push
+          fi

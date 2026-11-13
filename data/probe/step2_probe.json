@@ -1,0 +1,3267 @@
+{
+  "run": "2026-11-13T16:03:16Z",
+  "key_fields": [
+    "client_id",
+    "ip_range",
+    "issued",
+    "key_id",
+    "private_key",
+    "title",
+    "token_uri",
+    "user_id"
+  ],
+  "auth": "ok",
+  "datarequest_search": {
+    "status": 200,
+    "body": "{}"
+  },
+  "catalogue": {
+    "Street Tree Layer 2021": [
+      {
+        "title": "Urban Atlas Street Tree Layer 2021 (vector), Europe, 3-yearly",
+        "id": "https://land.copernicus.eu/api/en/products/urban-atlas/street-tree-layer-stl-2021",
+        "UID": "efc14569ae0548148a1eba237ea2df14",
+        "dataset_full_format": "GDB",
+        "dataset_download_information": {
+          "items": [
+            {
+              "@id": "8481f66b-f80a-4ba9-b7a2-4a3dce6ca446",
+              "full_path": "https://csv.dataspace.copernicus.eu/CLMS/land_cover_use_in_priority_areas/urban_atlas/clms_ua_street-tree-layer_europe_V005ha_3yearly_v1/",
+              "full_source": "CDSE_CSV",
+              "name": "VECTOR"
+            }
+          ]
+        },
+        "downloadable_files_count": 744,
+        "downloadable_files_keys": [
+          "@id",
+          "area",
+          "file",
+          "format",
+          "path",
+          "resolution",
+          "size",
+          "source",
+          "title",
+          "type",
+          "urban area",
+          "version",
+          "year"
+        ],
+        "downloadable_files_athens": [
+          {
+            "@id": "f91d4546-ca91-4f09-8e53-02157ee4aa79",
+            "area": "Greece",
+            "file": "CLMS_UA_STL_S2021_V005ha_EL001L1_ATHINA_03035_V01_R02_20251121",
+            "format": "FGB",
+            "path": "H:\\Urban_Atlas\\Urban_Atlas\\Street_Tree_Layer(STL)_2021\\Data\\data-details\\CLMS_UA_STL_S2021_V005ha_EL001L1_ATHINA_03035_V01_R02_20251121.zip",
+            "resolution": "",
+            "size": "2.78 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Vector",
+            "urban area": "ATHINA",
+            "version": "v01",
+            "year": ""
+          }
+        ],
+        "downloadable_files_sample": [
+          {
+            "@id": "bc9fda71-f3ca-478a-8cbd-cebc783cacd2",
+            "area": "Europe",
+            "file": "STL_2021_3035_eu",
+            "format": "FGB",
+            "path": "H:\\Urban_Atlas\\Urban_Atlas\\Street_Tree_Layer(STL)_2021\\Data\\data-details\\STL_2021_3035_eu.zip",
+            "resolution": "",
+            "size": "828 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Vector",
+            "urban area": "",
+            "version": "v01",
+            "year": ""
+          },
+          {
+            "@id": "4d5c2645-83a2-4f8d-87d5-dda0e9e74231",
+            "area": "Albania",
+            "file": "CLMS_UA_STL_S2021_V005ha_AL001L1_TIRANA_03035_V01_R02_20251121",
+            "format": "FGB",
+            "path": "H:\\Urban_Atlas\\Urban_Atlas\\Street_Tree_Layer(STL)_2021\\Data\\data-details\\CLMS_UA_STL_S2021_V005ha_AL001L1_TIRANA_03035_V01_R02_20251121.zip",
+            "resolution": "",
+            "size": "1.06 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Vector",
+            "urban area": "TIRANA",
+            "version": "v01",
+            "year": ""
+          },
+          {
+            "@id": "07b5d95b-22f3-4220-a2cb-dbb8d180f574",
+            "area": "Albania",
+            "file": "CLMS_UA_STL_S2021_V005ha_AL003L1_ELBASAN_03035_V01_R02_20251121",
+            "format": "FGB",
+            "path": "H:\\Urban_Atlas\\Urban_Atlas\\Street_Tree_Layer(STL)_2021\\Data\\data-details\\CLMS_UA_STL_S2021_V005ha_AL003L1_ELBASAN_03035_V01_R02_20251121.zip",
+            "resolution": "",
+            "size": "0.63 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Vector",
+            "urban area": "ELBASAN",
+            "version": "v01",
+            "year": ""
+          }
+        ]
+      },
+      {
+        "title": "Urban Atlas Street Tree Layer 2018 (vector), Europe, 6-yearly",
+        "id": "https://land.copernicus.eu/api/en/products/urban-atlas/street-tree-layer-stl-2018",
+        "UID": "c784cdbe0e5c41fa8051449ced377921",
+        "dataset_full_format": "GDB",
+        "dataset_download_information": {
+          "items": [
+            {
+              "@id": "6109b116-f20b-4d2c-9ff2-1c45c60a9014",
+              "full_format": "GPKG",
+              "full_path": "H:\\Urban_Atlas\\Urban_Atlas\\Street_Tree_Layer(STL)_2018\\Data\\data-master\\STL_2018_GPKG_NUTS3",
+              "full_source": "EEA",
+              "name": "VECTOR",
+              "wekeo_choices": ""
+            }
+          ]
+        },
+        "downloadable_files_count": 789,
+        "downloadable_files_keys": [
+          "@id",
+          "Urban area",
+          "area",
+          "file",
+          "format",
+          "path",
+          "resolution",
+          "size",
+          "source",
+          "title",
+          "type",
+          "version",
+          "year"
+        ],
+        "downloadable_files_athens": [
+          {
+            "@id": "03f53277-60eb-4c38-9459-60915c5ef024",
+            "Urban area": "Athina   ",
+            "area": "Greece",
+            "file": "EL001L1_ATHINA_UA2018_STL_v012",
+            "format": "GPKG",
+            "path": "H:\\Urban_Atlas\\Urban_Atlas\\Street_Tree_Layer(STL)_2018\\Data\\data-details\\EL001L1_ATHINA_UA2018_STL_v012.zip",
+            "resolution": "",
+            "size": "131 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Vector",
+            "version": "v012",
+            "year": ""
+          }
+        ],
+        "downloadable_files_sample": [
+          {
+            "@id": "f483f235-901b-4704-8e87-d26bf41af52e",
+            "Urban area": "",
+            "area": "Europe",
+            "file": "STL_2018_3035_eu.zip",
+            "format": "GPKG",
+            "path": "H:\\Urban_Atlas\\Urban_Atlas\\Street_Tree_Layer(STL)_2018\\Data\\data-details\\STL_2018_3035_eu.zip",
+            "resolution": "",
+            "size": "36 GB",
+            "source": "EEA",
+            "title": "",
+            "type": "Vector",
+            "version": "v012",
+            "year": ""
+          },
+          {
+            "@id": "8457b14f-40d3-49a9-b3eb-0ced9839f70a",
+            "Urban area": "Tirana   ",
+            "area": "Albania",
+            "file": "AL001L1_TIRANA_UA2018_STL_v012",
+            "format": "GPKG",
+            "path": "H:\\Urban_Atlas\\Urban_Atlas\\Street_Tree_Layer(STL)_2018\\Data\\data-details\\AL001L1_TIRANA_UA2018_STL_v012.zip",
+            "resolution": "",
+            "size": "58 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Vector",
+            "version": "v012",
+            "year": ""
+          },
+          {
+            "@id": "91d85a69-0e26-4315-a1c0-4cde21a80ca3",
+            "Urban area": "Elbasan   ",
+            "area": "Albania",
+            "file": "AL003L1_ELBASAN_UA2018_STL_v012",
+            "format": "GPKG",
+            "path": "H:\\Urban_Atlas\\Urban_Atlas\\Street_Tree_Layer(STL)_2018\\Data\\data-details\\AL003L1_ELBASAN_UA2018_STL_v012.zip",
+            "resolution": "",
+            "size": "27 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Vector",
+            "version": "v012",
+            "year": ""
+          }
+        ]
+      },
+      {
+        "title": "Urban Atlas Land Cover/Land Use 2018 (vector), Europe, 3-yearly",
+        "id": "https://land.copernicus.eu/api/en/products/urban-atlas/urban-atlas-2018",
+        "UID": "70903c20fc2a4a90ad200bc95a7557d4",
+        "dataset_full_format": "GDB",
+        "dataset_download_information": {
+          "items": []
+        },
+        "downloadable_files_count": 765,
+        "downloadable_files_keys": [
+          "@id",
+          "area",
+          "file",
+          "format",
+          "path",
+          "resolution ",
+          "size",
+          "source",
+          "title",
+          "type",
+          "urban area",
+          "version",
+          "year"
+        ],
+        "downloadable_files_athens": [
+          {
+            "@id": "a559701d-1537-4395-8752-89a9efe2cd72",
+            "area": "Greece",
+            "file": "CLMS_UA_LCU_S2018_V025ha_EL001L1_ATHINA_03035_V01_R00_20241213",
+            "format": "FGB",
+            "path": "H:\\Urban_Atlas\\Urban_Atlas\\Urban_Atlas(UA)_2018\\Data\\data-details\\CLMS_UA_LCU_S2018_V025ha_EL001L1_ATHINA_03035_V01_R00_20241213.zip",
+            "resolution ": "",
+            "size": "64,4 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Vector",
+            "urban area": "ATHINA",
+            "version": "v01",
+            "year": ""
+          }
+        ],
+        "downloadable_files_sample": [
+          {
+            "@id": "a212b0c9-0c4e-442f-b6c1-003625ed9cc6",
+            "area": "Albania",
+            "file": "CLMS_UA_LCU_S2018_V025ha_AL001L1_TIRANA_03035_V01_R01_20250620",
+            "format": "FGB",
+            "path": "H:\\Urban_Atlas\\Urban_Atlas\\Urban_Atlas(UA)_2018\\Data\\data-details\\CLMS_UA_LCU_S2018_V025ha_AL001L1_TIRANA_03035_V01_R01_20250620.zip",
+            "resolution ": "",
+            "size": "34,7 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Vector",
+            "urban area": "TIRANA",
+            "version": "v01",
+            "year": ""
+          },
+          {
+            "@id": "c277ff43-1f46-402a-838c-755fec5bcdf8",
+            "area": "Albania",
+            "file": "CLMS_UA_LCU_S2018_V025ha_AL003L1_ELBASAN_03035_V01_R01_20250620",
+            "format": "FGB",
+            "path": "H:\\Urban_Atlas\\Urban_Atlas\\Urban_Atlas(UA)_2018\\Data\\data-details\\CLMS_UA_LCU_S2018_V025ha_AL003L1_ELBASAN_03035_V01_R01_20250620.zip",
+            "resolution ": "",
+            "size": "21,5 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Vector",
+            "urban area": "ELBASAN",
+            "version": "v01",
+            "year": ""
+          },
+          {
+            "@id": "c196af24-2d65-4980-b86f-9cf463e7594b",
+            "area": "Albania",
+            "file": "CLMS_UA_LCU_S2018_V025ha_AL004L1_SHKODER_03035_V01_R00_20240809",
+            "format": "FGB",
+            "path": "H:\\Urban_Atlas\\Urban_Atlas\\Urban_Atlas(UA)_2018\\Data\\data-details\\CLMS_UA_LCU_S2018_V025ha_AL004L1_SHKODER_03035_V01_R00_20240809.zip",
+            "resolution ": "",
+            "size": "20,7 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Vector",
+            "urban area": "SHKODER",
+            "version": "v01",
+            "year": ""
+          }
+        ]
+      }
+    ],
+    "Urban Atlas 2021": [
+      {
+        "title": "Urban Atlas Street Tree Layer 2021 (vector), Europe, 3-yearly",
+        "id": "https://land.copernicus.eu/api/en/products/urban-atlas/street-tree-layer-stl-2021",
+        "UID": "efc14569ae0548148a1eba237ea2df14",
+        "dataset_full_format": "GDB",
+        "dataset_download_information": {
+          "items": [
+            {
+              "@id": "8481f66b-f80a-4ba9-b7a2-4a3dce6ca446",
+              "full_path": "https://csv.dataspace.copernicus.eu/CLMS/land_cover_use_in_priority_areas/urban_atlas/clms_ua_street-tree-layer_europe_V005ha_3yearly_v1/",
+              "full_source": "CDSE_CSV",
+              "name": "VECTOR"
+            }
+          ]
+        },
+        "downloadable_files_count": 744,
+        "downloadable_files_keys": [
+          "@id",
+          "area",
+          "file",
+          "format",
+          "path",
+          "resolution",
+          "size",
+          "source",
+          "title",
+          "type",
+          "urban area",
+          "version",
+          "year"
+        ],
+        "downloadable_files_athens": [
+          {
+            "@id": "f91d4546-ca91-4f09-8e53-02157ee4aa79",
+            "area": "Greece",
+            "file": "CLMS_UA_STL_S2021_V005ha_EL001L1_ATHINA_03035_V01_R02_20251121",
+            "format": "FGB",
+            "path": "H:\\Urban_Atlas\\Urban_Atlas\\Street_Tree_Layer(STL)_2021\\Data\\data-details\\CLMS_UA_STL_S2021_V005ha_EL001L1_ATHINA_03035_V01_R02_20251121.zip",
+            "resolution": "",
+            "size": "2.78 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Vector",
+            "urban area": "ATHINA",
+            "version": "v01",
+            "year": ""
+          }
+        ],
+        "downloadable_files_sample": [
+          {
+            "@id": "bc9fda71-f3ca-478a-8cbd-cebc783cacd2",
+            "area": "Europe",
+            "file": "STL_2021_3035_eu",
+            "format": "FGB",
+            "path": "H:\\Urban_Atlas\\Urban_Atlas\\Street_Tree_Layer(STL)_2021\\Data\\data-details\\STL_2021_3035_eu.zip",
+            "resolution": "",
+            "size": "828 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Vector",
+            "urban area": "",
+            "version": "v01",
+            "year": ""
+          },
+          {
+            "@id": "4d5c2645-83a2-4f8d-87d5-dda0e9e74231",
+            "area": "Albania",
+            "file": "CLMS_UA_STL_S2021_V005ha_AL001L1_TIRANA_03035_V01_R02_20251121",
+            "format": "FGB",
+            "path": "H:\\Urban_Atlas\\Urban_Atlas\\Street_Tree_Layer(STL)_2021\\Data\\data-details\\CLMS_UA_STL_S2021_V005ha_AL001L1_TIRANA_03035_V01_R02_20251121.zip",
+            "resolution": "",
+            "size": "1.06 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Vector",
+            "urban area": "TIRANA",
+            "version": "v01",
+            "year": ""
+          },
+          {
+            "@id": "07b5d95b-22f3-4220-a2cb-dbb8d180f574",
+            "area": "Albania",
+            "file": "CLMS_UA_STL_S2021_V005ha_AL003L1_ELBASAN_03035_V01_R02_20251121",
+            "format": "FGB",
+            "path": "H:\\Urban_Atlas\\Urban_Atlas\\Street_Tree_Layer(STL)_2021\\Data\\data-details\\CLMS_UA_STL_S2021_V005ha_AL003L1_ELBASAN_03035_V01_R02_20251121.zip",
+            "resolution": "",
+            "size": "0.63 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Vector",
+            "urban area": "ELBASAN",
+            "version": "v01",
+            "year": ""
+          }
+        ]
+      },
+      {
+        "title": "Urban Atlas Land Cover/Land Use 2021 (vector), Europe, 3-yearly",
+        "id": "https://land.copernicus.eu/api/en/products/urban-atlas/urban-atlas-2021",
+        "UID": "52717fed21404857a943c1ef92e505ab",
+        "dataset_full_format": "GDB",
+        "dataset_download_information": {
+          "items": [
+            {
+              "@id": "4b261bbc-5a04-4404-8c02-154ad142dad8",
+              "full_source": "CDSE_VECTOR",
+              "name": "VECTOR"
+            }
+          ]
+        },
+        "downloadable_files_count": 791,
+        "downloadable_files_keys": [
+          "@id",
+          "area",
+          "file",
+          "format",
+          "path",
+          "resolution",
+          "size",
+          "source",
+          "title",
+          "type",
+          "urban area",
+          "version",
+          "year"
+        ],
+        "downloadable_files_athens": [
+          {
+            "@id": "acc22b3c-ef21-4a98-9d49-0b39257ebe3c",
+            "area": "Greece",
+            "file": "CLMS_UA_LCU_S2021_V025ha_EL001L1_ATHINA_03035_V01_R00_20241213",
+            "format": "FGB",
+            "path": "H:\\Urban_Atlas\\Urban_Atlas\\Urban_Atlas(UA)_2021\\Data\\data-details\\CLMS_UA_LCU_S2021_V025ha_EL001L1_ATHINA_03035_V01_R00_20241213.zip",
+            "resolution": "",
+            "size": "64,4 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Vector",
+            "urban area": "ATHINA",
+            "version": "v01",
+            "year": ""
+          }
+        ],
+        "downloadable_files_sample": [
+          {
+            "@id": "275bb52b-dbea-477a-b181-44410e2167fd",
+            "area": "Albania",
+            "file": "CLMS_UA_LCU_S2021_V025ha_AL001L1_TIRANA_03035_V01_R01_20250620",
+            "format": "FGB",
+            "path": "H:\\Urban_Atlas\\Urban_Atlas\\Urban_Atlas(UA)_2021\\Data\\data-details\\CLMS_UA_LCU_S2021_V025ha_AL001L1_TIRANA_03035_V01_R01_20250620.zip",
+            "resolution": "",
+            "size": "34,8 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Vector",
+            "urban area": "TIRANA",
+            "version": "v01",
+            "year": ""
+          },
+          {
+            "@id": "86b4c834-9384-41af-b9b5-02461b783f59",
+            "area": "Albania",
+            "file": "CLMS_UA_LCU_S2021_V025ha_AL003L1_ELBASAN_03035_V01_R01_20250620",
+            "format": "FGB",
+            "path": "H:\\Urban_Atlas\\Urban_Atlas\\Urban_Atlas(UA)_2021\\Data\\data-details\\CLMS_UA_LCU_S2021_V025ha_AL003L1_ELBASAN_03035_V01_R01_20250620.zip",
+            "resolution": "",
+            "size": "21,6 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Vector",
+            "urban area": "ELBASAN",
+            "version": "v01",
+            "year": ""
+          },
+          {
+            "@id": "5710b920-8c4e-4804-881a-ae75f835e461",
+            "area": "Albania",
+            "file": "CLMS_UA_LCU_S2021_V025ha_AL004L1_SHKODER_03035_V01_R00_20240809",
+            "format": "FGB",
+            "path": "H:\\Urban_Atlas\\Urban_Atlas\\Urban_Atlas(UA)_2021\\Data\\data-details\\CLMS_UA_LCU_S2021_V025ha_AL004L1_SHKODER_03035_V01_R00_20240809.zip",
+            "resolution": "",
+            "size": "20,7 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Vector",
+            "urban area": "SHKODER",
+            "version": "v01",
+            "year": ""
+          }
+        ]
+      },
+      {
+        "title": "Urban Atlas Building Block Height 2021 (raster 10 m), Europe, 3-yearly",
+        "id": "https://land.copernicus.eu/api/en/products/urban-atlas/building-height-2021",
+        "UID": "14574a219d1b47799c5234c8f100541d",
+        "dataset_full_format": "Geotiff",
+        "dataset_download_information": {
+          "items": [
+            {
+              "@id": "e15c300f-435b-43c4-a710-42c65d7da3fd",
+              "byoc_collection": "62887e25-816e-4f4e-be0e-5e0f5a6640c9",
+              "full_format": {
+                "title": "Geotiff",
+                "token": "Geotiff"
+              },
+              "full_path": "https://csv.dataspace.copernicus.eu/CLMS/land_cover_use_in_priority_areas/urban_atlas/clms_ua_building-height_europe_10m_3yearly_v1/",
+              "full_source": "CDSE_CSV",
+              "name": "RASTER",
+              "wekeo_choices": ""
+            }
+          ]
+        },
+        "downloadable_files_count": 871,
+        "downloadable_files_keys": [
+          "@id"
+        ],
+        "downloadable_files_athens": [],
+        "downloadable_files_sample": [
+          {
+            "@id": "64d1b4b3-74ed-42b8-9884-14aea6191b18"
+          },
+          {
+            "@id": "f2e825dd-2fbc-436c-a948-1307a86d8ce0"
+          },
+          {
+            "@id": "096f3a6d-99c7-4846-ae21-bc5f3a3210d1"
+          }
+        ]
+      },
+      {
+        "title": "Urban Atlas Land Cover/Land Use Change 2018-2021 (vector), Europe, 3-yearly",
+        "id": "https://land.copernicus.eu/api/en/products/urban-atlas/urban-atlas-change-2018-2021",
+        "UID": "8ebe9d4bc4d348bb9ee20eb9f4337b19",
+        "dataset_full_format": "GDB",
+        "dataset_download_information": {
+          "items": [
+            {
+              "@id": "cc7ddd63-95f2-4f38-91f3-c00124ecf412",
+              "full_path": "https://csv.dataspace.copernicus.eu/CLMS/land_cover_use_in_priority_areas/urban_atlas/clms_ua_land-cover-land-use-change_europe_V010ha_3yearly_v1/",
+              "full_source": "CDSE_CSV",
+              "name": "VECTOR"
+            }
+          ]
+        },
+        "downloadable_files_count": 765,
+        "downloadable_files_keys": [
+          "@id",
+          "area",
+          "file",
+          "format",
+          "path",
+          "resolution",
+          "size",
+          "source",
+          "title",
+          "type",
+          "urban area",
+          "version",
+          "year"
+        ],
+        "downloadable_files_athens": [
+          {
+            "@id": "7ccc2c5f-5c11-4c0d-8996-e460770e9299",
+            "area": "Greece",
+            "file": "CLMS_UA_LCUC_C2018-2021_V010ha_EL001L1_ATHINA_03035_V01_R00_20241213",
+            "format": "FGB",
+            "path": "H:\\Urban_Atlas\\Urban_Atlas\\Urban_Atlas_Change(UA_CHA)_2018-2021\\Data\\data-details\\CLMS_UA_LCUC_C2018-2021_V010ha_EL001L1_ATHINA_03035_V01_R00_20241213.zip",
+            "resolution": "",
+            "size": "0,1 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Vector",
+            "urban area": "ATHINA",
+            "version": "v01",
+            "year": ""
+          }
+        ],
+        "downloadable_files_sample": [
+          {
+            "@id": "0a9940ac-6e1e-4b28-a231-ce2cc0371480",
+            "area": "Europe",
+            "file": "UA_CHA_1821_3035_eu",
+            "format": "FGB",
+            "path": "H:\\Urban_Atlas\\Urban_Atlas\\Urban_Atlas_Change(UA_CHA)_2018-2021\\Data\\data-details\\UA_CHA_1821_3035_eu.zip",
+            "resolution": "",
+            "size": "98,3 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Vector",
+            "urban area": "",
+            "version": "v01",
+            "year": ""
+          },
+          {
+            "@id": "3ce6a468-b5d1-4b40-9f05-c83a8ac7dbcb",
+            "area": "Albania",
+            "file": "CLMS_UA_LCUC_C2018-2021_V010ha_AL003L1_ELBASAN_03035_V01_R01_20250620",
+            "format": "FGB",
+            "path": "H:\\Urban_Atlas\\Urban_Atlas\\Urban_Atlas_Change(UA_CHA)_2018-2021\\Data\\data-details\\CLMS_UA_LCUC_C2018-2021_V010ha_AL003L1_ELBASAN_03035_V01_R01_20250620.zip",
+            "resolution": "",
+            "size": "0,1 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Vector",
+            "urban area": "ELBASAN",
+            "version": "v01",
+            "year": ""
+          },
+          {
+            "@id": "68c4c827-7f5f-4379-a329-5d7bba770a6f",
+            "area": "Albania",
+            "file": "CLMS_UA_LCUC_C2018-2021_V010ha_AL004L1_SHKODER_03035_V01_R00_20240809",
+            "format": "FGB",
+            "path": "H:\\Urban_Atlas\\Urban_Atlas\\Urban_Atlas_Change(UA_CHA)_2018-2021\\Data\\data-details\\CLMS_UA_LCUC_C2018-2021_V010ha_AL004L1_SHKODER_03035_V01_R00_20240809.zip",
+            "resolution": "",
+            "size": "0,1 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Vector",
+            "urban area": "SHKODER",
+            "version": "v01",
+            "year": ""
+          }
+        ]
+      },
+      {
+        "title": "Urban Atlas Street Tree Layer 2018 (vector), Europe, 6-yearly",
+        "id": "https://land.copernicus.eu/api/en/products/urban-atlas/street-tree-layer-stl-2018",
+        "UID": "c784cdbe0e5c41fa8051449ced377921",
+        "dataset_full_format": "GDB",
+        "dataset_download_information": {
+          "items": [
+            {
+              "@id": "6109b116-f20b-4d2c-9ff2-1c45c60a9014",
+              "full_format": "GPKG",
+              "full_path": "H:\\Urban_Atlas\\Urban_Atlas\\Street_Tree_Layer(STL)_2018\\Data\\data-master\\STL_2018_GPKG_NUTS3",
+              "full_source": "EEA",
+              "name": "VECTOR",
+              "wekeo_choices": ""
+            }
+          ]
+        },
+        "downloadable_files_count": 789,
+        "downloadable_files_keys": [
+          "@id",
+          "Urban area",
+          "area",
+          "file",
+          "format",
+          "path",
+          "resolution",
+          "size",
+          "source",
+          "title",
+          "type",
+          "version",
+          "year"
+        ],
+        "downloadable_files_athens": [
+          {
+            "@id": "03f53277-60eb-4c38-9459-60915c5ef024",
+            "Urban area": "Athina   ",
+            "area": "Greece",
+            "file": "EL001L1_ATHINA_UA2018_STL_v012",
+            "format": "GPKG",
+            "path": "H:\\Urban_Atlas\\Urban_Atlas\\Street_Tree_Layer(STL)_2018\\Data\\data-details\\EL001L1_ATHINA_UA2018_STL_v012.zip",
+            "resolution": "",
+            "size": "131 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Vector",
+            "version": "v012",
+            "year": ""
+          }
+        ],
+        "downloadable_files_sample": [
+          {
+            "@id": "f483f235-901b-4704-8e87-d26bf41af52e",
+            "Urban area": "",
+            "area": "Europe",
+            "file": "STL_2018_3035_eu.zip",
+            "format": "GPKG",
+            "path": "H:\\Urban_Atlas\\Urban_Atlas\\Street_Tree_Layer(STL)_2018\\Data\\data-details\\STL_2018_3035_eu.zip",
+            "resolution": "",
+            "size": "36 GB",
+            "source": "EEA",
+            "title": "",
+            "type": "Vector",
+            "version": "v012",
+            "year": ""
+          },
+          {
+            "@id": "8457b14f-40d3-49a9-b3eb-0ced9839f70a",
+            "Urban area": "Tirana   ",
+            "area": "Albania",
+            "file": "AL001L1_TIRANA_UA2018_STL_v012",
+            "format": "GPKG",
+            "path": "H:\\Urban_Atlas\\Urban_Atlas\\Street_Tree_Layer(STL)_2018\\Data\\data-details\\AL001L1_TIRANA_UA2018_STL_v012.zip",
+            "resolution": "",
+            "size": "58 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Vector",
+            "version": "v012",
+            "year": ""
+          },
+          {
+            "@id": "91d85a69-0e26-4315-a1c0-4cde21a80ca3",
+            "Urban area": "Elbasan   ",
+            "area": "Albania",
+            "file": "AL003L1_ELBASAN_UA2018_STL_v012",
+            "format": "GPKG",
+            "path": "H:\\Urban_Atlas\\Urban_Atlas\\Street_Tree_Layer(STL)_2018\\Data\\data-details\\AL003L1_ELBASAN_UA2018_STL_v012.zip",
+            "resolution": "",
+            "size": "27 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Vector",
+            "version": "v012",
+            "year": ""
+          }
+        ]
+      },
+      {
+        "title": "Urban Atlas Land Cover/Land Use Change 2012-2018 (vector), Europe, 6-yearly",
+        "id": "https://land.copernicus.eu/api/en/products/urban-atlas/urban-atlas-change-2012-2018",
+        "UID": "b256b19833e0413986caa7d5e8ce4adf",
+        "dataset_full_format": "GDB",
+        "dataset_download_information": {
+          "items": [
+            {
+              "@id": "2d758cfa-b4f1-4be1-9413-e71ac87eb860",
+              "full_format": "GPKG",
+              "full_path": "H:\\Urban_Atlas\\Urban_Atlas\\Urban_Atlas_Change(UA_CHA)_2012-2018\\Data\\data-master\\UA_Change_1218_GPKG_NUTS3",
+              "full_source": "EEA",
+              "name": "VECTOR",
+              "wekeo_choices": ""
+            }
+          ]
+        },
+        "downloadable_files_count": 786,
+        "downloadable_files_keys": [
+          "@id",
+          "area",
+          "file",
+          "format",
+          "path",
+          "resolution",
+          "size",
+          "source",
+          "title",
+          "type",
+          "urban area",
+          "version",
+          "year"
+        ],
+        "downloadable_files_athens": [
+          {
+            "@id": "ed8b8ddb-c003-4e59-b913-360036ec3aba",
+            "area": "Greece",
+            "file": "EL001L1_ATHINA_change_2012_2018_v012",
+            "format": "GPKG",
+            "path": "H:\\Urban_Atlas\\Urban_Atlas\\Urban_Atlas_Change(UA_CHA)_2012-2018\\Data\\data-details\\EL001L1_ATHINA_change_2012_2018_v012.zip",
+            "resolution": "",
+            "size": "18 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Vector",
+            "urban area": "Athina   ",
+            "version": "v012",
+            "year": ""
+          }
+        ],
+        "downloadable_files_sample": [
+          {
+            "@id": "c7bda8aa-6878-4a1e-a627-f2a8162d6866",
+            "area": "Europe",
+            "file": "UA_CHA_1218_3035_eu",
+            "format": "GPKG",
+            "path": "H:\\Urban_Atlas\\Urban_Atlas\\Urban_Atlas_Change(UA_CHA)_2012-2018\\Data\\data-details\\UA_CHA_1218_3035_eu.zip",
+            "resolution": "",
+            "size": "11 GB",
+            "source": "EEA",
+            "title": "",
+            "type": "Vector",
+            "urban area": "",
+            "version": "v012",
+            "year": ""
+          },
+          {
+            "@id": "85a11f63-15f1-4dff-95a6-0530f2cbc797",
+            "area": "Albania",
+            "file": "AL001L1_TIRANA_change_2012_2018_v012",
+            "format": "GPKG",
+            "path": "H:\\Urban_Atlas\\Urban_Atlas\\Urban_Atlas_Change(UA_CHA)_2012-2018\\Data\\data-details\\AL001L1_TIRANA_change_2012_2018_v012.zip",
+            "resolution": "",
+            "size": "18 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Vector",
+            "urban area": "Tirana   ",
+            "version": "v012",
+            "year": ""
+          },
+          {
+            "@id": "93092e22-2f50-4832-bc10-1164be30f667",
+            "area": "Albania",
+            "file": "AL003L1_ELBASAN_change_2012_2018_v012",
+            "format": "GPKG",
+            "path": "H:\\Urban_Atlas\\Urban_Atlas\\Urban_Atlas_Change(UA_CHA)_2012-2018\\Data\\data-details\\AL003L1_ELBASAN_change_2012_2018_v012.zip",
+            "resolution": "",
+            "size": "13 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Vector",
+            "urban area": "Elbasan   ",
+            "version": "v012",
+            "year": ""
+          }
+        ]
+      },
+      {
+        "title": "Urban Atlas Land Cover/Land Use 2018 (vector), Europe, 3-yearly",
+        "id": "https://land.copernicus.eu/api/en/products/urban-atlas/urban-atlas-2018",
+        "UID": "70903c20fc2a4a90ad200bc95a7557d4",
+        "dataset_full_format": "GDB",
+        "dataset_download_information": {
+          "items": []
+        },
+        "downloadable_files_count": 765,
+        "downloadable_files_keys": [
+          "@id",
+          "area",
+          "file",
+          "format",
+          "path",
+          "resolution ",
+          "size",
+          "source",
+          "title",
+          "type",
+          "urban area",
+          "version",
+          "year"
+        ],
+        "downloadable_files_athens": [
+          {
+            "@id": "a559701d-1537-4395-8752-89a9efe2cd72",
+            "area": "Greece",
+            "file": "CLMS_UA_LCU_S2018_V025ha_EL001L1_ATHINA_03035_V01_R00_20241213",
+            "format": "FGB",
+            "path": "H:\\Urban_Atlas\\Urban_Atlas\\Urban_Atlas(UA)_2018\\Data\\data-details\\CLMS_UA_LCU_S2018_V025ha_EL001L1_ATHINA_03035_V01_R00_20241213.zip",
+            "resolution ": "",
+            "size": "64,4 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Vector",
+            "urban area": "ATHINA",
+            "version": "v01",
+            "year": ""
+          }
+        ],
+        "downloadable_files_sample": [
+          {
+            "@id": "a212b0c9-0c4e-442f-b6c1-003625ed9cc6",
+            "area": "Albania",
+            "file": "CLMS_UA_LCU_S2018_V025ha_AL001L1_TIRANA_03035_V01_R01_20250620",
+            "format": "FGB",
+            "path": "H:\\Urban_Atlas\\Urban_Atlas\\Urban_Atlas(UA)_2018\\Data\\data-details\\CLMS_UA_LCU_S2018_V025ha_AL001L1_TIRANA_03035_V01_R01_20250620.zip",
+            "resolution ": "",
+            "size": "34,7 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Vector",
+            "urban area": "TIRANA",
+            "version": "v01",
+            "year": ""
+          },
+          {
+            "@id": "c277ff43-1f46-402a-838c-755fec5bcdf8",
+            "area": "Albania",
+            "file": "CLMS_UA_LCU_S2018_V025ha_AL003L1_ELBASAN_03035_V01_R01_20250620",
+            "format": "FGB",
+            "path": "H:\\Urban_Atlas\\Urban_Atlas\\Urban_Atlas(UA)_2018\\Data\\data-details\\CLMS_UA_LCU_S2018_V025ha_AL003L1_ELBASAN_03035_V01_R01_20250620.zip",
+            "resolution ": "",
+            "size": "21,5 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Vector",
+            "urban area": "ELBASAN",
+            "version": "v01",
+            "year": ""
+          },
+          {
+            "@id": "c196af24-2d65-4980-b86f-9cf463e7594b",
+            "area": "Albania",
+            "file": "CLMS_UA_LCU_S2018_V025ha_AL004L1_SHKODER_03035_V01_R00_20240809",
+            "format": "FGB",
+            "path": "H:\\Urban_Atlas\\Urban_Atlas\\Urban_Atlas(UA)_2018\\Data\\data-details\\CLMS_UA_LCU_S2018_V025ha_AL004L1_SHKODER_03035_V01_R00_20240809.zip",
+            "resolution ": "",
+            "size": "20,7 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Vector",
+            "urban area": "SHKODER",
+            "version": "v01",
+            "year": ""
+          }
+        ]
+      },
+      {
+        "title": "Riparian Zones Land Cover/Land Use 2012 (vector), Europe, 6-yearly",
+        "id": "https://land.copernicus.eu/api/en/products/riparian-zones/rz-land-cover-land-use-2012",
+        "UID": "dbd63b32556f4811856de52757877f3e",
+        "dataset_full_format": "GDB",
+        "dataset_download_information": {
+          "items": [
+            {
+              "@id": "b8b541a0-1d90-47d8-83ed-5633fec78592",
+              "full_format": {
+                "title": "GDB",
+                "token": "GDB"
+              },
+              "full_path": "H:\\Riparian_Zones\\Riparian_Zones\\LandCover_LandUse(LCLU)\\Riparian_Zones(RZ)_2012\\Data\\data-master\\RZ_LCLU_2012.gdb",
+              "full_source": "EEA",
+              "name": "VECTOR",
+              "wekeo_choices": ""
+            }
+          ]
+        },
+        "downloadable_files_count": 44,
+        "downloadable_files_keys": [
+          "@id",
+          "area",
+          "catchment names",
+          "file",
+          "format",
+          "path",
+          "resolution",
+          "size",
+          "source",
+          "title",
+          "type",
+          "version",
+          "year"
+        ],
+        "downloadable_files_athens": [],
+        "downloadable_files_sample": [
+          {
+            "@id": "860d4bc0-ee11-456c-8f36-02482ab97ce3",
+            "area": "Europe",
+            "catchment names": "",
+            "file": "RZ_2012_eu",
+            "format": "Shapefile",
+            "path": "H:\\Riparian_Zones\\Riparian_Zones\\LandCover_LandUse(LCLU)\\Riparian_Zones(RZ)_2012\\Data\\data-details\\RZ_2012_eu.zip",
+            "resolution": "",
+            "size": "5 GB",
+            "source": "EEA",
+            "title": "",
+            "type": "Vector",
+            "version": "",
+            "year": ""
+          },
+          {
+            "@id": "55a19e75-cb50-4346-a8ad-d027f153fd25",
+            "area": "DU001A",
+            "catchment names": "Aegean Islands, Black Sea Basin District, Turkey West ",
+            "file": "rpz_DU001A_2012",
+            "format": "Shapefile",
+            "path": "H:\\Riparian_Zones\\Riparian_Zones\\LandCover_LandUse(LCLU)\\Riparian_Zones(RZ)_2012\\Data\\data-details\\rpz_DU001A_2012.zip",
+            "resolution": "",
+            "size": "62 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Vector",
+            "version": "",
+            "year": ""
+          },
+          {
+            "@id": "08b2b4da-1e0e-4bf1-9611-c671cd79690e",
+            "area": "DU002A",
+            "catchment names": "Attica, Crete, Eastern Peloponnese, Eastern Sterea Ellada, Seman, Thessalia, Western Macedonia, Western Sterea Ellada ",
+            "file": "rpz_DU002A_2012",
+            "format": "Shapefile",
+            "path": "H:\\Riparian_Zones\\Riparian_Zones\\LandCover_LandUse(LCLU)\\Riparian_Zones(RZ)_2012\\Data\\data-details\\rpz_DU002A_2012.zip",
+            "resolution": "",
+            "size": "69 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Vector",
+            "version": "",
+            "year": ""
+          }
+        ]
+      }
+    ],
+    "Imperviousness Density 2021": [
+      {
+        "title": "Imperviousness Density 2021 (raster 10 m and 100 m), Europe, 3-yearly",
+        "id": "https://land.copernicus.eu/api/en/products/high-resolution-layer-imperviousness/imperviousness-density-2021",
+        "UID": "8bb4a8cf757c4c92b900f507b45ba501",
+        "dataset_full_format": null,
+        "dataset_download_information": {
+          "items": [
+            {
+              "@id": "42cc194d-fa7e-4dca-8adc-ca5448c9a111",
+              "collection": "Imperviousness Density 10 m",
+              "full_format": "Geotiff",
+              "full_path": "EO:EEA:DAT:HRL:IMP",
+              "full_source": "WEKEO",
+              "name": "RASTER",
+              "wekeo_choices": "{\"datasetId\":\"EO:EEA:DAT:HRL:IMP\",\"boundingBoxValues\":[{\"name\":\"bbox\",\"bbox\":[@xmin,@ymin,@xmax,@ymax]}],\"dateRangeSelectValues\":[{\"name\":\"year\",\"value\":\"2021\"}],\"resolution\":[{\"name\":\"resolution\",\"value\":\"10m\"}],\"stringChoiceValues\":[{\"name\":\"productType\",\"value\":\"Imperviousness Density\"}]}"
+            },
+            {
+              "@id": "454d566e-4297-4935-a2e9-ce94211ef539",
+              "collection": "Imperviousness Density 100 m",
+              "full_format": "Geotiff",
+              "full_path": "EO:EEA:DAT:HRL:IMP",
+              "full_source": "WEKEO",
+              "name": "RASTER",
+              "wekeo_choices": "{\"datasetId\":\"EO:EEA:DAT:HRL:IMP\",\"boundingBoxValues\":[{\"name\":\"bbox\",\"bbox\":[@xmin,@ymin,@xmax,@ymax]}],\"dateRangeSelectValues\":[{\"name\":\"year\",\"value\":\"2021\"}],\"resolution\":[{\"name\":\"resolution\",\"value\":\"100m\"}],\"stringChoiceValues\":[{\"name\":\"productType\",\"value\":\"Imperviousness Density\"}]}"
+            },
+            {
+              "@id": "9ba27609-97e8-4cb4-ac72-ced7917b0c22",
+              "collection": "Confidence layer for Imperviousness Density 10m",
+              "full_format": "Geotiff",
+              "full_path": "EO:EEA:DAT:HRL:IMP",
+              "full_source": "WEKEO",
+              "name": "RASTER",
+              "wekeo_choices": "{\"datasetId\":\"EO:EEA:DAT:HRL:IMP\",\"boundingBoxValues\":[{\"name\":\"bbox\",\"bbox\":[@xmin,@ymin,@xmax,@ymax]}],\"dateRangeSelectValues\":[{\"name\":\"year\",\"value\":\"2021\"}],\"resolution\":[{\"name\":\"resolution\",\"value\":\"10m\"}],\"stringChoiceValues\":[{\"name\":\"productType\",\"value\":\"Confidence layer for Imperviousness Density\"}]}"
+            }
+          ]
+        },
+        "downloadable_files_count": 1,
+        "downloadable_files_keys": [
+          "@id",
+          "area",
+          "file",
+          "format",
+          "path",
+          "resolution",
+          "size",
+          "source",
+          "title",
+          "type",
+          "version",
+          "year"
+        ],
+        "downloadable_files_athens": [],
+        "downloadable_files_sample": [
+          {
+            "@id": "4124af92-d850-4447-b030-df37295a1263",
+            "area": "",
+            "file": "",
+            "format": "",
+            "path": "",
+            "resolution": "",
+            "size": "",
+            "source": "",
+            "title": "",
+            "type": "",
+            "version": "",
+            "year": ""
+          }
+        ]
+      },
+      {
+        "title": "Imperviousness Density 2024 (raster 10 m and 100 m), Europe, 3-yearly",
+        "id": "https://land.copernicus.eu/api/en/products/high-resolution-layer-imperviousness/imperviousness-density-2024",
+        "UID": "0b1406290f6948c6b8cfac829119610b",
+        "dataset_full_format": null,
+        "dataset_download_information": {
+          "items": [
+            {
+              "@id": "42cc194d-fa7e-4dca-8adc-ca5448c9a111",
+              "collection": "Imperviousness Density 10 m",
+              "full_format": "Geotiff",
+              "full_path": "EO:EEA:DAT:HRL:IMP",
+              "full_source": "WEKEO",
+              "name": "RASTER",
+              "wekeo_choices": "{\"datasetId\":\"EO:EEA:DAT:HRL:IMP\",\"boundingBoxValues\":[{\"name\":\"bbox\",\"bbox\":[@xmin,@ymin,@xmax,@ymax]}],\"dateRangeSelectValues\":[{\"name\":\"year\",\"value\":\"2024\"}],\"resolution\":[{\"name\":\"resolution\",\"value\":\"10m\"}],\"stringChoiceValues\":[{\"name\":\"productType\",\"value\":\"Imperviousness Density\"}]}"
+            },
+            {
+              "@id": "454d566e-4297-4935-a2e9-ce94211ef539",
+              "collection": "Imperviousness Density 100 m",
+              "full_format": "Geotiff",
+              "full_path": "EO:EEA:DAT:HRL:IMP",
+              "full_source": "WEKEO",
+              "name": "RASTER",
+              "wekeo_choices": "{\"datasetId\":\"EO:EEA:DAT:HRL:IMP\",\"boundingBoxValues\":[{\"name\":\"bbox\",\"bbox\":[@xmin,@ymin,@xmax,@ymax]}],\"dateRangeSelectValues\":[{\"name\":\"year\",\"value\":\"2024\"}],\"resolution\":[{\"name\":\"resolution\",\"value\":\"100m\"}],\"stringChoiceValues\":[{\"name\":\"productType\",\"value\":\"Imperviousness Density\"}]}"
+            },
+            {
+              "@id": "9ba27609-97e8-4cb4-ac72-ced7917b0c22",
+              "collection": "Confidence layer for Imperviousness Density 10m",
+              "full_format": "Geotiff",
+              "full_path": "EO:EEA:DAT:HRL:IMP",
+              "full_source": "WEKEO",
+              "name": "RASTER",
+              "wekeo_choices": "{\"datasetId\":\"EO:EEA:DAT:HRL:IMP\",\"boundingBoxValues\":[{\"name\":\"bbox\",\"bbox\":[@xmin,@ymin,@xmax,@ymax]}],\"dateRangeSelectValues\":[{\"name\":\"year\",\"value\":\"2024\"}],\"resolution\":[{\"name\":\"resolution\",\"value\":\"10m\"}],\"stringChoiceValues\":[{\"name\":\"productType\",\"value\":\"Confidence layer for Imperviousness Density\"}]}"
+            }
+          ]
+        },
+        "downloadable_files_count": 1,
+        "downloadable_files_keys": [
+          "@id",
+          "area",
+          "file",
+          "format",
+          "path",
+          "resolution",
+          "size",
+          "source",
+          "title",
+          "type",
+          "version",
+          "year"
+        ],
+        "downloadable_files_athens": [],
+        "downloadable_files_sample": [
+          {
+            "@id": "4124af92-d850-4447-b030-df37295a1263",
+            "area": "",
+            "file": "",
+            "format": "",
+            "path": "",
+            "resolution": "",
+            "size": "",
+            "source": "",
+            "title": "",
+            "type": "",
+            "version": "",
+            "year": ""
+          }
+        ]
+      },
+      {
+        "title": "Imperviousness Change 2018-2021 (raster 20 m and 100 m), Europe, 3-yearly",
+        "id": "https://land.copernicus.eu/api/en/products/high-resolution-layer-imperviousness/imperviousness-density-change-2018-2021",
+        "UID": "7dcd5fd1cd444abf9f952ed2ebf27838",
+        "dataset_full_format": null,
+        "dataset_download_information": {
+          "items": [
+            {
+              "@id": "fbef9665-15c8-46a1-afd5-364f288ab782",
+              "collection": "Imperviousness Change 20 m",
+              "full_format": "Geotiff",
+              "full_path": "EO:EEA:DAT:HRL:IMP",
+              "full_source": "WEKEO",
+              "name": "RASTER",
+              "wekeo_choices": "{\"datasetId\":\"EO:EEA:DAT:HRL:IMP\",\"boundingBoxValues\":[{\"name\":\"bbox\",\"bbox\":[@xmin,@ymin,@xmax,@ymax]}],\"dateRangeSelectValues\":[{\"name\":\"year\",\"value\":\"2018-2021\"}],\"resolution\":[{\"name\":\"resolution\",\"value\":\"20m\"}],\"stringChoiceValues\":[{\"name\":\"productType\",\"value\":\"Imperviousness Change\"}]}"
+            },
+            {
+              "@id": "06216e03-dea8-45fa-8cac-227deeb89b53",
+              "collection": "Imperviousness Change 100 m",
+              "full_format": "Geotiff",
+              "full_path": "EO:EEA:DAT:HRL:IMP",
+              "full_source": "WEKEO",
+              "name": "RASTER",
+              "wekeo_choices": "{\"datasetId\":\"EO:EEA:DAT:HRL:IMP\",\"boundingBoxValues\":[{\"name\":\"bbox\",\"bbox\":[@xmin,@ymin,@xmax,@ymax]}],\"dateRangeSelectValues\":[{\"name\":\"year\",\"value\":\"2018-2021\"}],\"resolution\":[{\"name\":\"resolution\",\"value\":\"100m\"}],\"stringChoiceValues\":[{\"name\":\"productType\",\"value\":\"Imperviousness Change\"}]}"
+            },
+            {
+              "@id": "ac9fdf05-cca3-41db-a7d1-67ec9704eeb5",
+              "collection": "Imperviousness Change Support layer 20 m",
+              "full_format": "Geotiff",
+              "full_path": "EO:EEA:DAT:HRL:IMP",
+              "full_source": "WEKEO",
+              "name": "RASTER",
+              "wekeo_choices": "{\"datasetId\":\"EO:EEA:DAT:HRL:IMP\",\"boundingBoxValues\":[{\"name\":\"bbox\",\"bbox\":[@xmin,@ymin,@xmax,@ymax]}],\"dateRangeSelectValues\":[{\"name\":\"year\",\"value\":\"2018-2021\"}],\"resolution\":[{\"name\":\"resolution\",\"value\":\"20m\"}],\"stringChoiceValues\":[{\"name\":\"productType\",\"value\":\"Imperviousness Change Support layer\"}]}"
+            },
+            {
+              "@id": "cbfa194c-92c7-4f81-83ef-1a23a8b101e4",
+              "collection": "Imperviousness Change Support layer 100 m",
+              "full_format": "Geotiff",
+              "full_path": "EO:EEA:DAT:HRL:IMP",
+              "full_source": "WEKEO",
+              "name": "RASTER",
+              "wekeo_choices": "{\"datasetId\":\"EO:EEA:DAT:HRL:IMP\",\"boundingBoxValues\":[{\"name\":\"bbox\",\"bbox\":[@xmin,@ymin,@xmax,@ymax]}],\"dateRangeSelectValues\":[{\"name\":\"year\",\"value\":\"2018-2021\"}],\"resolution\":[{\"name\":\"resolution\",\"value\":\"100m\"}],\"stringChoiceValues\":[{\"name\":\"productType\",\"value\":\"Imperviousness Change Support layer\"}]}"
+            }
+          ]
+        },
+        "downloadable_files_count": 1,
+        "downloadable_files_keys": [
+          "@id",
+          "area",
+          "file",
+          "format",
+          "path",
+          "resolution",
+          "size",
+          "source",
+          "title",
+          "type",
+          "version",
+          "year"
+        ],
+        "downloadable_files_athens": [],
+        "downloadable_files_sample": [
+          {
+            "@id": "d4acaa7e-4a43-4282-8642-81c45bfe8758",
+            "area": "",
+            "file": "",
+            "format": "",
+            "path": "",
+            "resolution": "",
+            "size": "",
+            "source": "",
+            "title": "",
+            "type": "",
+            "version": "",
+            "year": ""
+          }
+        ]
+      },
+      {
+        "title": "Imperviousness Change 2021-2024 (raster 20 m, 100 m), Europe, 3-yearly",
+        "id": "https://land.copernicus.eu/api/en/products/high-resolution-layer-imperviousness/imperviousness-change-2021-2024",
+        "UID": "d4c5990c7e4e4103848c45b2599a11c0",
+        "dataset_full_format": null,
+        "dataset_download_information": {
+          "items": [
+            {
+              "@id": "fbef9665-15c8-46a1-afd5-364f288ab782",
+              "collection": "Imperviousness Change 20 m",
+              "full_format": "Geotiff",
+              "full_path": "EO:EEA:DAT:HRL:IMP",
+              "full_source": "WEKEO",
+              "name": "RASTER",
+              "wekeo_choices": "{\"datasetId\":\"EO:EEA:DAT:HRL:IMP\",\"boundingBoxValues\":[{\"name\":\"bbox\",\"bbox\":[@xmin,@ymin,@xmax,@ymax]}],\"dateRangeSelectValues\":[{\"name\":\"year\",\"value\":\"2021-2024\"}],\"resolution\":[{\"name\":\"resolution\",\"value\":\"20m\"}],\"stringChoiceValues\":[{\"name\":\"productType\",\"value\":\"Imperviousness Change\"}]}"
+            },
+            {
+              "@id": "06216e03-dea8-45fa-8cac-227deeb89b53",
+              "collection": "Imperviousness Change 100 m",
+              "full_format": "Geotiff",
+              "full_path": "EO:EEA:DAT:HRL:IMP",
+              "full_source": "WEKEO",
+              "name": "RASTER",
+              "wekeo_choices": "{\"datasetId\":\"EO:EEA:DAT:HRL:IMP\",\"boundingBoxValues\":[{\"name\":\"bbox\",\"bbox\":[@xmin,@ymin,@xmax,@ymax]}],\"dateRangeSelectValues\":[{\"name\":\"year\",\"value\":\"2021-2024\"}],\"resolution\":[{\"name\":\"resolution\",\"value\":\"100m\"}],\"stringChoiceValues\":[{\"name\":\"productType\",\"value\":\"Imperviousness Change\"}]}"
+            },
+            {
+              "@id": "ac9fdf05-cca3-41db-a7d1-67ec9704eeb5",
+              "collection": "Imperviousness Change Support layer 20 m",
+              "full_format": "Geotiff",
+              "full_path": "EO:EEA:DAT:HRL:IMP",
+              "full_source": "WEKEO",
+              "name": "RASTER",
+              "wekeo_choices": "{\"datasetId\":\"EO:EEA:DAT:HRL:IMP\",\"boundingBoxValues\":[{\"name\":\"bbox\",\"bbox\":[@xmin,@ymin,@xmax,@ymax]}],\"dateRangeSelectValues\":[{\"name\":\"year\",\"value\":\"2021-2024\"}],\"resolution\":[{\"name\":\"resolution\",\"value\":\"20m\"}],\"stringChoiceValues\":[{\"name\":\"productType\",\"value\":\"Imperviousness Change Support layer\"}]}"
+            },
+            {
+              "@id": "cbfa194c-92c7-4f81-83ef-1a23a8b101e4",
+              "collection": "Imperviousness Change Support layer 100 m",
+              "full_format": "Geotiff",
+              "full_path": "EO:EEA:DAT:HRL:IMP",
+              "full_source": "WEKEO",
+              "name": "RASTER",
+              "wekeo_choices": "{\"datasetId\":\"EO:EEA:DAT:HRL:IMP\",\"boundingBoxValues\":[{\"name\":\"bbox\",\"bbox\":[@xmin,@ymin,@xmax,@ymax]}],\"dateRangeSelectValues\":[{\"name\":\"year\",\"value\":\"2021-2024\"}],\"resolution\":[{\"name\":\"resolution\",\"value\":\"100m\"}],\"stringChoiceValues\":[{\"name\":\"productType\",\"value\":\"Imperviousness Change Support layer\"}]}"
+            }
+          ]
+        },
+        "downloadable_files_count": 1,
+        "downloadable_files_keys": [
+          "@id",
+          "area",
+          "file",
+          "format",
+          "path",
+          "resolution",
+          "size",
+          "source",
+          "title",
+          "type",
+          "version",
+          "year"
+        ],
+        "downloadable_files_athens": [],
+        "downloadable_files_sample": [
+          {
+            "@id": "d4acaa7e-4a43-4282-8642-81c45bfe8758",
+            "area": "",
+            "file": "",
+            "format": "",
+            "path": "",
+            "resolution": "",
+            "size": "",
+            "source": "",
+            "title": "",
+            "type": "",
+            "version": "",
+            "year": ""
+          }
+        ]
+      },
+      {
+        "title": "Imperviousness Change Classified 2018-2021 (raster 20 m), Europe, 3-yearly",
+        "id": "https://land.copernicus.eu/api/en/products/high-resolution-layer-imperviousness/imperviousness-change-classified-2018-2021",
+        "UID": "e3696fcc9bda4514b42ee140b7ccb863",
+        "dataset_full_format": null,
+        "dataset_download_information": {
+          "items": [
+            {
+              "@id": "5ce069a3-2d5f-4cd9-88d2-1e8af4950d21",
+              "collection": "Imperviousness Classified Change ",
+              "full_format": "Geotiff",
+              "full_path": "EO:EEA:DAT:HRL:IMP",
+              "full_source": "WEKEO",
+              "name": "RASTER",
+              "wekeo_choices": "{\"datasetId\":\"EO:EEA:DAT:HRL:IMP\",\"boundingBoxValues\":[{\"name\":\"bbox\",\"bbox\":[@xmin,@ymin,@xmax,@ymax]}],\"dateRangeSelectValues\":[{\"name\":\"year\",\"value\":\"2018-2021\"}],\"resolution\":[{\"name\":\"resolution\",\"value\":\"20m\"}],\"stringChoiceValues\":[{\"name\":\"productType\",\"value\":\"Imperviousness Change Classified\"}]}"
+            },
+            {
+              "@id": "f7bb5345-1a05-4551-9c89-00afe33b7fa5",
+              "collection": "Imperviousness Classified Change Support layer",
+              "full_format": "Geotiff",
+              "full_path": "EO:EEA:DAT:HRL:IMP",
+              "full_source": "WEKEO",
+              "name": "RASTER",
+              "wekeo_choices": "{\"datasetId\":\"EO:EEA:DAT:HRL:IMP\",\"boundingBoxValues\":[{\"name\":\"bbox\",\"bbox\":[@xmin,@ymin,@xmax,@ymax]}],\"dateRangeSelectValues\":[{\"name\":\"year\",\"value\":\"2018-2021\"}],\"resolution\":[{\"name\":\"resolution\",\"value\":\"20m\"}],\"stringChoiceValues\":[{\"name\":\"productType\",\"value\":\"Imperviousness Change Classified Support layer\"}]}"
+            }
+          ]
+        },
+        "downloadable_files_count": 1,
+        "downloadable_files_keys": [
+          "@id",
+          "area",
+          "file",
+          "format",
+          "path",
+          "resolution",
+          "size",
+          "source",
+          "title",
+          "type",
+          "version",
+          "year"
+        ],
+        "downloadable_files_athens": [],
+        "downloadable_files_sample": [
+          {
+            "@id": "4d3bd3a3-0345-4112-af7a-c31668961055",
+            "area": "",
+            "file": "",
+            "format": "",
+            "path": "",
+            "resolution": "",
+            "size": "",
+            "source": "",
+            "title": "",
+            "type": "",
+            "version": "",
+            "year": ""
+          }
+        ]
+      },
+      {
+        "title": "Imperviousness Change Classified 2021-2024 (raster 20 m), Europe, 3-yearly",
+        "id": "https://land.copernicus.eu/api/en/products/high-resolution-layer-imperviousness/imperviousness-change-classified-2021-2024",
+        "UID": "6c4977afebb546d69c551dfdf43c21a8",
+        "dataset_full_format": null,
+        "dataset_download_information": {
+          "items": [
+            {
+              "@id": "5ce069a3-2d5f-4cd9-88d2-1e8af4950d21",
+              "collection": "Imperviousness Classified Change ",
+              "full_format": "Geotiff",
+              "full_path": "EO:EEA:DAT:HRL:IMP",
+              "full_source": "WEKEO",
+              "name": "RASTER",
+              "wekeo_choices": "{\"datasetId\":\"EO:EEA:DAT:HRL:IMP\",\"boundingBoxValues\":[{\"name\":\"bbox\",\"bbox\":[@xmin,@ymin,@xmax,@ymax]}],\"dateRangeSelectValues\":[{\"name\":\"year\",\"value\":\"2021-2024\"}],\"resolution\":[{\"name\":\"resolution\",\"value\":\"20m\"}],\"stringChoiceValues\":[{\"name\":\"productType\",\"value\":\"Imperviousness Change Classified\"}]}"
+            },
+            {
+              "@id": "f7bb5345-1a05-4551-9c89-00afe33b7fa5",
+              "collection": "Imperviousness Classified Change Support layer",
+              "full_format": "Geotiff",
+              "full_path": "EO:EEA:DAT:HRL:IMP",
+              "full_source": "WEKEO",
+              "name": "RASTER",
+              "wekeo_choices": "{\"datasetId\":\"EO:EEA:DAT:HRL:IMP\",\"boundingBoxValues\":[{\"name\":\"bbox\",\"bbox\":[@xmin,@ymin,@xmax,@ymax]}],\"dateRangeSelectValues\":[{\"name\":\"year\",\"value\":\"2021-2024\"}],\"resolution\":[{\"name\":\"resolution\",\"value\":\"20m\"}],\"stringChoiceValues\":[{\"name\":\"productType\",\"value\":\"Imperviousness Change Classified Support layer\"}]}"
+            }
+          ]
+        },
+        "downloadable_files_count": 1,
+        "downloadable_files_keys": [
+          "@id",
+          "area",
+          "file",
+          "format",
+          "path",
+          "resolution",
+          "size",
+          "source",
+          "title",
+          "type",
+          "version",
+          "year"
+        ],
+        "downloadable_files_athens": [],
+        "downloadable_files_sample": [
+          {
+            "@id": "4d3bd3a3-0345-4112-af7a-c31668961055",
+            "area": "",
+            "file": "",
+            "format": "",
+            "path": "",
+            "resolution": "",
+            "size": "",
+            "source": "",
+            "title": "",
+            "type": "",
+            "version": "",
+            "year": ""
+          }
+        ]
+      },
+      {
+        "title": "Impervious Built-Up 2021 (raster 10 m and 100 m), Europe, 3-yearly",
+        "id": "https://land.copernicus.eu/api/en/products/high-resolution-layer-imperviousness/impervious-built-up-2021",
+        "UID": "d8c0a075728546a1908ef5a3b2b49f63",
+        "dataset_full_format": null,
+        "dataset_download_information": {
+          "items": [
+            {
+              "@id": "ca8d6a1d-5212-4ec3-a8ff-f8e5699caec3",
+              "collection": "Impervious Built-up 10 m",
+              "full_format": "Geotiff",
+              "full_path": "EO:EEA:DAT:HRL:IMP",
+              "full_source": "WEKEO",
+              "name": "RASTER",
+              "wekeo_choices": "{\"datasetId\":\"EO:EEA:DAT:HRL:IMP\",\"boundingBoxValues\":[{\"name\":\"bbox\",\"bbox\":[@xmin,@ymin,@xmax,@ymax]}],\"dateRangeSelectValues\":[{\"name\":\"year\",\"value\":\"2021\"}],\"resolution\":[{\"name\":\"resolution\",\"value\":\"10m\"}],\"stringChoiceValues\":[{\"name\":\"productType\",\"value\":\"Impervious Built-up\"}]}"
+            },
+            {
+              "@id": "c5d55571-a417-4f34-a3b8-4a556a3142fc",
+              "collection": "Share of Built-up 100 m",
+              "full_format": "Geotiff",
+              "full_path": "EO:EEA:DAT:HRL:IMP",
+              "full_source": "WEKEO",
+              "name": "RASTER",
+              "wekeo_choices": "{\"datasetId\":\"EO:EEA:DAT:HRL:IMP\",\"boundingBoxValues\":[{\"name\":\"bbox\",\"bbox\":[@xmin,@ymin,@xmax,@ymax]}],\"dateRangeSelectValues\":[{\"name\":\"year\",\"value\":\"2021\"}],\"resolution\":[{\"name\":\"resolution\",\"value\":\"100m\"}],\"stringChoiceValues\":[{\"name\":\"productType\",\"value\":\"Share of Built-up\"}]}"
+            },
+            {
+              "@id": "22d43eb3-1e0e-4a4c-8ef6-210cb384b1bb",
+              "collection": "Confidence layer for Impervious Built-up 10m",
+              "full_format": "Geotiff",
+              "full_path": "EO:EEA:DAT:HRL:IMP",
+              "full_source": "WEKEO",
+              "name": "RASTER",
+              "wekeo_choices": "{\"datasetId\":\"EO:EEA:DAT:HRL:IMP\",\"boundingBoxValues\":[{\"name\":\"bbox\",\"bbox\":[@xmin,@ymin,@xmax,@ymax]}],\"dateRangeSelectValues\":[{\"name\":\"year\",\"value\":\"2021\"}],\"resolution\":[{\"name\":\"resolution\",\"value\":\"10m\"}],\"stringChoiceValues\":[{\"name\":\"productType\",\"value\":\"Confidence layer for Impervious Built-up\"}]}"
+            }
+          ]
+        },
+        "downloadable_files_count": 1,
+        "downloadable_files_keys": [
+          "@id",
+          "area",
+          "file",
+          "format",
+          "path",
+          "resolution",
+          "size",
+          "source",
+          "title",
+          "type",
+          "version",
+          "year"
+        ],
+        "downloadable_files_athens": [],
+        "downloadable_files_sample": [
+          {
+            "@id": "9dd0a58a-ef49-48ab-bf00-78a5d04cb6a3",
+            "area": "",
+            "file": "",
+            "format": "",
+            "path": "",
+            "resolution": "",
+            "size": "",
+            "source": "",
+            "title": "",
+            "type": "",
+            "version": "",
+            "year": ""
+          }
+        ]
+      },
+      {
+        "title": "Impervious Built-Up 2024 (raster 10 m and 100 m), Europe, 3-yearly",
+        "id": "https://land.copernicus.eu/api/en/products/high-resolution-layer-imperviousness/impervious-built-up-2024",
+        "UID": "b1511383b60043f084c108740a2aa8f6",
+        "dataset_full_format": null,
+        "dataset_download_information": {
+          "items": [
+            {
+              "@id": "ca8d6a1d-5212-4ec3-a8ff-f8e5699caec3",
+              "collection": "Impervious Built-up 10 m",
+              "full_format": "Geotiff",
+              "full_path": "EO:EEA:DAT:HRL:IMP",
+              "full_source": "WEKEO",
+              "name": "RASTER",
+              "wekeo_choices": "{\"datasetId\":\"EO:EEA:DAT:HRL:IMP\",\"boundingBoxValues\":[{\"name\":\"bbox\",\"bbox\":[@xmin,@ymin,@xmax,@ymax]}],\"dateRangeSelectValues\":[{\"name\":\"year\",\"value\":\"2024\"}],\"resolution\":[{\"name\":\"resolution\",\"value\":\"10m\"}],\"stringChoiceValues\":[{\"name\":\"productType\",\"value\":\"Impervious Built-up\"}]}"
+            },
+            {
+              "@id": "c5d55571-a417-4f34-a3b8-4a556a3142fc",
+              "collection": "Share of Built-up 100 m",
+              "full_format": "Geotiff",
+              "full_path": "EO:EEA:DAT:HRL:IMP",
+              "full_source": "WEKEO",
+              "name": "RASTER",
+              "wekeo_choices": "{\"datasetId\":\"EO:EEA:DAT:HRL:IMP\",\"boundingBoxValues\":[{\"name\":\"bbox\",\"bbox\":[@xmin,@ymin,@xmax,@ymax]}],\"dateRangeSelectValues\":[{\"name\":\"year\",\"value\":\"2024\"}],\"resolution\":[{\"name\":\"resolution\",\"value\":\"100m\"}],\"stringChoiceValues\":[{\"name\":\"productType\",\"value\":\"Share of Built-up\"}]}"
+            },
+            {
+              "@id": "22d43eb3-1e0e-4a4c-8ef6-210cb384b1bb",
+              "collection": "Confidence layer for Impervious Built-up 10m",
+              "full_format": "Geotiff",
+              "full_path": "EO:EEA:DAT:HRL:IMP",
+              "full_source": "WEKEO",
+              "name": "RASTER",
+              "wekeo_choices": "{\"datasetId\":\"EO:EEA:DAT:HRL:IMP\",\"boundingBoxValues\":[{\"name\":\"bbox\",\"bbox\":[@xmin,@ymin,@xmax,@ymax]}],\"dateRangeSelectValues\":[{\"name\":\"year\",\"value\":\"2024\"}],\"resolution\":[{\"name\":\"resolution\",\"value\":\"10m\"}],\"stringChoiceValues\":[{\"name\":\"productType\",\"value\":\"Confidence layer for Impervious Built-up\"}]}"
+            }
+          ]
+        },
+        "downloadable_files_count": 1,
+        "downloadable_files_keys": [
+          "@id",
+          "area",
+          "file",
+          "format",
+          "path",
+          "resolution",
+          "size",
+          "source",
+          "title",
+          "type",
+          "version",
+          "year"
+        ],
+        "downloadable_files_athens": [],
+        "downloadable_files_sample": [
+          {
+            "@id": "9dd0a58a-ef49-48ab-bf00-78a5d04cb6a3",
+            "area": "",
+            "file": "",
+            "format": "",
+            "path": "",
+            "resolution": "",
+            "size": "",
+            "source": "",
+            "title": "",
+            "type": "",
+            "version": "",
+            "year": ""
+          }
+        ]
+      },
+      {
+        "title": "Small Woody Features 2021 (vector/raster 5 m and 100 m), Europe, 3-yearly",
+        "id": "https://land.copernicus.eu/api/en/products/high-resolution-layer-small-landscape-features/small-woody-features-2021",
+        "UID": "685a975274554d4ca70f6374fdcc632a",
+        "dataset_full_format": "Geotiff",
+        "dataset_download_information": {
+          "items": [
+            {
+              "@id": "5a41d86b-c0e0-4d0e-81ab-a8758916e2be",
+              "collection": "SWF-5 m",
+              "full_format": "Geotiff",
+              "full_path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Small_Woody_Features\\HRL_Small_Woody_Features(SWF)_2021\\Data\\Data-master\\SWF_2021_raster_005m_tiled",
+              "full_source": "EEA",
+              "name": "RASTER"
+            },
+            {
+              "@id": "c9ed6bf6-4a43-4561-a328-a725e34b1098",
+              "collection": "SWF-100 m",
+              "full_format": "Geotiff",
+              "full_path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Small_Woody_Features\\HRL_Small_Woody_Features(SWF)_2021\\Data\\Data-master\\SWF_2021_raster_100m_tiled",
+              "full_source": "EEA",
+              "name": "RASTER"
+            },
+            {
+              "@id": "fb2505b6-32a8-4310-ab0b-ce9e90adde88",
+              "collection": "Crop Mask-5 m",
+              "full_format": "Geotiff",
+              "full_path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Small_Woody_Features\\HRL_Small_Woody_Features(SWF)_2021\\Data\\Data-master\\CM_2021_raster_005m_tiled",
+              "full_source": "EEA",
+              "name": "RASTER"
+            },
+            {
+              "@id": "b9abf96f-ab53-4134-943e-5dfd29ae140e",
+              "collection": "Forest Mask-5m",
+              "full_format": "Geotiff",
+              "full_path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Small_Woody_Features\\HRL_Small_Woody_Features(SWF)_2021\\Data\\Data-master\\FM_2021_raster_005m_tiled",
+              "full_source": "EEA",
+              "name": "RASTER"
+            }
+          ]
+        },
+        "downloadable_files_count": 1813,
+        "downloadable_files_keys": [
+          "@id",
+          "Collection",
+          "Countries",
+          "Grid",
+          "file",
+          "format",
+          "path",
+          "resolution",
+          "size",
+          "source",
+          "type",
+          "version"
+        ],
+        "downloadable_files_athens": [],
+        "downloadable_files_sample": [
+          {
+            "@id": "0111e185-1669-4bcd-b13b-004be32f9041",
+            "Collection": "Crop Mask",
+            "Countries": "Europe",
+            "Grid": "",
+            "file": "CM_S2021_005m_eu_03035_V01_R03",
+            "format": "Geotiff",
+            "path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Small_Woody_Features\\HRL_Small_Woody_Features(SWF)_2021\\Data\\Data-details\\CM_S2021_005m_eu_03035_V01_R03.zip",
+            "resolution": "5 m",
+            "size": "5 GB",
+            "source": "EEA",
+            "type": "Raster",
+            "version": "V01_R03"
+          },
+          {
+            "@id": "77f084bc-20f5-4750-9fd8-96a08b1d667f",
+            "Collection": "Forest Mask",
+            "Countries": "Europe",
+            "Grid": "",
+            "file": "FM_S2021_005m_eu_03035_V01_R03",
+            "format": "Geotiff",
+            "path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Small_Woody_Features\\HRL_Small_Woody_Features(SWF)_2021\\Data\\Data-details\\FM_S2021_005m_eu_03035_V01_R03.zip",
+            "resolution": "5 m",
+            "size": "5 GB",
+            "source": "EEA",
+            "type": "Raster",
+            "version": "V01_R03"
+          },
+          {
+            "@id": "5fc8af5e-eb1f-4a58-b394-c1112c798621",
+            "Collection": "SWF",
+            "Countries": "Europe",
+            "Grid": "",
+            "file": "SWF_S2021_100m_eu_03035_V01_R03",
+            "format": "Geotiff",
+            "path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Small_Woody_Features\\HRL_Small_Woody_Features(SWF)_2021\\Data\\Data-details\\SWF_2021_100m_prepackages\\SWF_S2021_100m_eu_03035_V01_R03.zip",
+            "resolution": "100 m",
+            "size": "270MB",
+            "source": "EEA",
+            "type": "Raster",
+            "version": "V01_R03"
+          }
+        ]
+      },
+      {
+        "title": "Tree Cover Density 2012 (raster 20 m and 100 m), Europe, 3-yearly",
+        "id": "https://land.copernicus.eu/api/en/products/high-resolution-layer-forests-and-tree-cover/tree-cover-density-2012",
+        "UID": "b903be8a861d48d9af41266ce63cc287",
+        "dataset_full_format": null,
+        "dataset_download_information": {
+          "items": [
+            {
+              "@id": "868d416d-6d78-4650-a997-1fce0c108fe8",
+              "collection": "20 m",
+              "full_format": "Geotiff",
+              "full_path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Tree_Cover_Density\\HRL_Tree_Cover_Density(TCD)_2012\\Data\\data-master\\TDC_2012_020m_tiled",
+              "full_source": "EEA",
+              "name": "RASTER ",
+              "wekeo_choices": ""
+            },
+            {
+              "@id": "1a57b319-3714-4f81-9423-b258ef4323e7",
+              "collection": "100 m",
+              "full_format": "Geotiff",
+              "full_path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Tree_Cover_Density\\HRL_Tree_Cover_Density(TCD)_2012\\Data\\data-master\\TDC_2012_100m_tiled",
+              "full_source": "EEA",
+              "name": "RASTER "
+            }
+          ]
+        },
+        "downloadable_files_count": 56,
+        "downloadable_files_keys": [
+          "@id",
+          "area",
+          "file",
+          "format",
+          "path",
+          "resolution",
+          "size",
+          "source",
+          "title",
+          "type",
+          "version",
+          "year"
+        ],
+        "downloadable_files_athens": [],
+        "downloadable_files_sample": [
+          {
+            "@id": "1479d703-79fd-46d7-a4c1-40e0d5ef1083",
+            "area": "Europe",
+            "file": "TCD_2012_100m_eu_03035_d04_Full",
+            "format": "Geotiff",
+            "path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Tree_Cover_Density\\HRL_Tree_Cover_Density(TCD)_2012\\Data\\data-details\\raster\\TDC_2012_100m\\TCD_2012_100m_eu_03035_d04_Full.zip",
+            "resolution": "100 m",
+            "size": "400 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Raster",
+            "version": "d04",
+            "year": ""
+          },
+          {
+            "@id": "266be23f-29a1-41f8-899d-a57c35d572fc",
+            "area": "Europe",
+            "file": "TCD_2012_020m_eu_03035_d03_Full",
+            "format": "Geotiff",
+            "path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Tree_Cover_Density\\HRL_Tree_Cover_Density(TCD)_2012\\Data\\data-details\\raster\\TDC_2012_020m\\TCD_2012_020m_eu_03035_d03_Full.zip",
+            "resolution": "20 m",
+            "size": "7 GB",
+            "source": "EEA",
+            "title": "",
+            "type": "Raster",
+            "version": "d03",
+            "year": ""
+          },
+          {
+            "@id": "8b77e799-072a-4519-ad27-95d1a7a62273",
+            "area": "E00N20",
+            "file": "TCD_2012_020m_E00N20_03035_d03",
+            "format": "Geotiff",
+            "path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Tree_Cover_Density\\HRL_Tree_Cover_Density(TCD)_2012\\Data\\data-details\\raster\\TDC_2012_020m\\TCD_2012_020m_E00N20_03035_d03.zip",
+            "resolution": "20 m",
+            "size": "322 KB",
+            "source": "EEA",
+            "title": "",
+            "type": "Raster",
+            "version": "d03",
+            "year": ""
+          }
+        ]
+      },
+      {
+        "title": "Tree Cover Density 2015 (raster 20 m and 100 m), Europe, 3-yearly",
+        "id": "https://land.copernicus.eu/api/en/products/high-resolution-layer-forests-and-tree-cover/tree-cover-density-2015",
+        "UID": "860eee4b9af64f6283e8097f533456f9",
+        "dataset_full_format": null,
+        "dataset_download_information": {
+          "items": [
+            {
+              "@id": "eee61480-0b01-4724-a92e-800fa8fbf7e6",
+              "collection": "20 m",
+              "full_format": "Geotiff",
+              "full_path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Tree_Cover_Density\\HRL_Tree_Cover_Density(TCD)_2015\\Data\\data-master\\TCD_2015_020m_tiled",
+              "full_source": "EEA",
+              "name": "RASTER ",
+              "wekeo_choices": ""
+            },
+            {
+              "@id": "ffb868bd-2914-4928-9121-378524919ec8",
+              "collection": "100 m",
+              "full_format": "Geotiff",
+              "full_path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Tree_Cover_Density\\HRL_Tree_Cover_Density(TCD)_2015\\Data\\data-master\\TCD_2015_100m_tiled",
+              "full_source": "EEA",
+              "name": "RASTER "
+            }
+          ]
+        },
+        "downloadable_files_count": 56,
+        "downloadable_files_keys": [
+          "@id",
+          "area",
+          "file",
+          "format",
+          "path",
+          "resolution",
+          "size",
+          "source",
+          "title",
+          "type",
+          "version",
+          "year"
+        ],
+        "downloadable_files_athens": [],
+        "downloadable_files_sample": [
+          {
+            "@id": "e7aa315e-96d3-47b7-88f9-219115ef69bc",
+            "area": "Europe",
+            "file": "TCD_2015_100m_eu_03035_d04_Full",
+            "format": "Geotiff",
+            "path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Tree_Cover_Density\\HRL_Tree_Cover_Density(TCD)_2015\\Data\\data-details\\raster\\TCD_2012_100m\\TCD_2015_100m_eu_03035_d04_Full.zip",
+            "resolution": "100 m",
+            "size": "424 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Raster",
+            "version": "d04",
+            "year": ""
+          },
+          {
+            "@id": "245b8a61-e053-4509-b7c6-b79294d93576",
+            "area": "Europe",
+            "file": "TCD_2015_020m_eu_03035_d05_Full",
+            "format": "Geotiff",
+            "path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Tree_Cover_Density\\HRL_Tree_Cover_Density(TCD)_2015\\Data\\data-details\\raster\\TCD_2012_020m\\TCD_2015_020m_eu_03035_d05_Full.zip",
+            "resolution": "20 m",
+            "size": "6 GB",
+            "source": "EEA",
+            "title": "",
+            "type": "Raster",
+            "version": "d05",
+            "year": ""
+          },
+          {
+            "@id": "7d9d01a0-f8ab-47fe-800f-79e09dd7b96b",
+            "area": "E00N20",
+            "file": "TCD_2015_020m_eu_03035_d05_E00N20",
+            "format": "Geotiff",
+            "path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Tree_Cover_Density\\HRL_Tree_Cover_Density(TCD)_2015\\Data\\data-details\\raster\\TCD_2012_020m\\TCD_2015_020m_eu_03035_d05_E00N20.zip",
+            "resolution": "20 m",
+            "size": "324 KB",
+            "source": "EEA",
+            "title": "",
+            "type": "Raster",
+            "version": "d05",
+            "year": ""
+          }
+        ]
+      },
+      {
+        "title": "Forest Additional Support Layer 2018-present (raster 10 m), Europe, 3-yearly",
+        "id": "https://land.copernicus.eu/api/en/products/high-resolution-layer-forests-and-tree-cover/forest-additional-support-layer-2018-present-raster-10-m-europe-3-yearly",
+        "UID": "e087f7ac40614b29a576bf2b4756479b",
+        "dataset_full_format": null,
+        "dataset_download_information": {
+          "items": [
+            {
+              "@id": "97299b8a-c732-495d-9c28-a218772e4522",
+              "byoc_collection": "912a6eb9-12f2-4cad-a821-2c5b03dfccbb",
+              "full_format": "Geotiff",
+              "full_path": "https://csv.dataspace.copernicus.eu/CLMS/landcover_landuse/forest_type/clms_vlcc_forest-additional-support-layer_europe_10m_3yearly_v1/",
+              "full_source": "CDSE_CSV",
+              "name": "RASTER"
+            }
+          ]
+        },
+        "downloadable_files_count": 1,
+        "downloadable_files_keys": [
+          "@id",
+          "area",
+          "file",
+          "format",
+          "path",
+          "resolution",
+          "size",
+          "source",
+          "title",
+          "type",
+          "version",
+          "year"
+        ],
+        "downloadable_files_athens": [],
+        "downloadable_files_sample": [
+          {
+            "@id": "b0c0f319-7528-4c40-95a2-1f0602bb4880",
+            "area": "",
+            "file": "",
+            "format": "",
+            "path": "",
+            "resolution": "",
+            "size": "",
+            "source": "",
+            "title": "",
+            "type": "",
+            "version": "",
+            "year": ""
+          }
+        ]
+      },
+      {
+        "title": "Forest Type 2012 (raster 20 m and 100 m), Europe, 3-yearly",
+        "id": "https://land.copernicus.eu/api/en/products/high-resolution-layer-forests-and-tree-cover/forest-type-2012",
+        "UID": "6606864bf28345438b7fc091ddb0a445",
+        "dataset_full_format": null,
+        "dataset_download_information": {
+          "items": [
+            {
+              "@id": "9bc16a37-9204-4e11-854b-b50f4e6a6793",
+              "collection": "20 m",
+              "full_format": "Geotiff",
+              "full_path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Forest_Type\\HRL_Forest_Type(FTY)_2012\\Data\\data-master\\FTY_2012_020m_tiled",
+              "full_source": "EEA",
+              "name": "RASTER ",
+              "wekeo_choices": ""
+            },
+            {
+              "@id": "b2151396-06d6-4d37-b040-4270e17f9333",
+              "collection": "100 m",
+              "full_format": "Geotiff",
+              "full_path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Forest_Type\\HRL_Forest_Type(FTY)_2012\\Data\\data-master\\FTY_2012_100m_tiled",
+              "full_source": "EEA",
+              "name": "RASTER "
+            }
+          ]
+        },
+        "downloadable_files_count": 56,
+        "downloadable_files_keys": [
+          "@id",
+          "area",
+          "file",
+          "format",
+          "path",
+          "resolution",
+          "size",
+          "source",
+          "title",
+          "type",
+          "version",
+          "year"
+        ],
+        "downloadable_files_athens": [],
+        "downloadable_files_sample": [
+          {
+            "@id": "b29631a1-ae8c-42f9-8206-f10bb752ee52",
+            "area": "Europe",
+            "file": "FTY_2012_100m_eu_03035_d02_Full",
+            "format": "Geotiff",
+            "path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Forest_Type\\HRL_Forest_Type(FTY)_2012\\Data\\data-details\\raster\\FTY_2012_100m\\FTY_2012_100m_eu_03035_d02_Full.zip",
+            "resolution": "100 m",
+            "size": "103 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Raster",
+            "version": "d02",
+            "year": ""
+          },
+          {
+            "@id": "64afc17c-c33a-4821-b485-be7b7585d01d",
+            "area": "Europe",
+            "file": "FTY_2012_020m_eu_03035_d02_Full",
+            "format": "Geotiff",
+            "path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Forest_Type\\HRL_Forest_Type(FTY)_2012\\Data\\data-details\\raster\\FTY_2012_020m\\FTY_2012_020m_eu_03035_d02_Full.zip",
+            "resolution": "20 m",
+            "size": "1 GB",
+            "source": "EEA",
+            "title": "",
+            "type": "Raster",
+            "version": "d02",
+            "year": ""
+          },
+          {
+            "@id": "b4f12124-8bbd-4588-adb1-7e13357bbb46",
+            "area": "E00N20",
+            "file": "FTY_2012_020m_eu_03035_d02_E00N20",
+            "format": "Geotiff",
+            "path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Forest_Type\\HRL_Forest_Type(FTY)_2012\\Data\\data-details\\raster\\FTY_2012_020m\\FTY_2012_020m_eu_03035_d02_E00N20.zip",
+            "resolution": "20 m",
+            "size": "242 KB",
+            "source": "EEA",
+            "title": "",
+            "type": "Raster",
+            "version": "d02",
+            "year": ""
+          }
+        ]
+      },
+      {
+        "title": "Dominant Leaf Type 2015 (raster 20 m), Europe, 3-yearly",
+        "id": "https://land.copernicus.eu/api/en/products/high-resolution-layer-forests-and-tree-cover/dominant-leaf-type-2015",
+        "UID": "a07881fb9f624b72ae08eb4dbc4bfc7c",
+        "dataset_full_format": null,
+        "dataset_download_information": {
+          "items": [
+            {
+              "@id": "5451143f-507f-4070-9b95-8b6cf6c3d9a1",
+              "full_format": "Geotiff",
+              "full_path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Dominant_Leaf_Type\\HRL_Dominant_Leaf_Type(DLT)_2015\\Data\\data-master\\DLT_2015_020m_tiled",
+              "full_source": "EEA",
+              "name": "RASTER",
+              "wekeo_choices": ""
+            }
+          ]
+        },
+        "downloadable_files_count": 28,
+        "downloadable_files_keys": [
+          "@id",
+          "area",
+          "file",
+          "format",
+          "path",
+          "resolution",
+          "size",
+          "source",
+          "title",
+          "type",
+          "version",
+          "year"
+        ],
+        "downloadable_files_athens": [],
+        "downloadable_files_sample": [
+          {
+            "@id": "92e3bc0c-254f-46ea-bade-e054bc34c0de",
+            "area": "Europe",
+            "file": "DLT_2015_020m_eu_03035_d04_Full",
+            "format": "Geotiff",
+            "path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Dominant_Leaf_Type\\HRL_Dominant_Leaf_Type(DLT)_2015\\Data\\data-details\\raster\\DLT_2015_020m\\DLT_2015_020m_eu_03035_d04_Full.zip",
+            "resolution": "20 m",
+            "size": "1 GB",
+            "source": "EEA",
+            "title": "",
+            "type": "Raster",
+            "version": "d04",
+            "year": ""
+          },
+          {
+            "@id": "3b8eb4e3-d52f-483a-9f99-d59adc21823d",
+            "area": "E00N20",
+            "file": "DLT_2015_020m_eu_03035_d04_E00N20",
+            "format": "Geotiff",
+            "path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Dominant_Leaf_Type\\HRL_Dominant_Leaf_Type(DLT)_2015\\Data\\data-details\\raster\\DLT_2015_020m\\DLT_2015_020m_eu_03035_d04_E00N20.zip",
+            "resolution": "20 m",
+            "size": "244 KB",
+            "source": "EEA",
+            "title": "",
+            "type": "Raster",
+            "version": "d04",
+            "year": ""
+          },
+          {
+            "@id": "27c92227-8428-4a73-baae-0b39a094dc70",
+            "area": "E10N00",
+            "file": "DLT_2015_020m_eu_03035_d04_E10N00",
+            "format": "Geotiff",
+            "path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Dominant_Leaf_Type\\HRL_Dominant_Leaf_Type(DLT)_2015\\Data\\data-details\\raster\\DLT_2015_020m\\DLT_2015_020m_eu_03035_d04_E10N00.zip",
+            "resolution": "20 m",
+            "size": "503 KB",
+            "source": "EEA",
+            "title": "",
+            "type": "Raster",
+            "version": "d04",
+            "year": ""
+          }
+        ]
+      },
+      {
+        "title": "Dominant Leaf Type 2012 (raster 20 m), Europe, 3-yearly",
+        "id": "https://land.copernicus.eu/api/en/products/high-resolution-layer-forests-and-tree-cover/dominant-leaf-type-2012",
+        "UID": "cfa1c94c786d4332a11f58ed59d5e204",
+        "dataset_full_format": null,
+        "dataset_download_information": {
+          "items": [
+            {
+              "@id": "b9378a5e-7c23-47f5-bf66-929f04f4b9a6",
+              "full_format": "Geotiff",
+              "full_path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Dominant_Leaf_Type\\HRL_Dominant_Leaf_Type(DLT)_2012\\Data\\data-master\\DLT_2012_020m_tiled",
+              "full_source": "EEA",
+              "name": "RASTER",
+              "wekeo_choices": ""
+            }
+          ]
+        },
+        "downloadable_files_count": 28,
+        "downloadable_files_keys": [
+          "@id",
+          "area",
+          "file",
+          "format",
+          "path",
+          "resolution",
+          "size",
+          "source",
+          "title",
+          "type",
+          "version",
+          "year"
+        ],
+        "downloadable_files_athens": [],
+        "downloadable_files_sample": [
+          {
+            "@id": "8ac9a4d4-8998-40d9-b0ec-a7ec71f150b5",
+            "area": "Europe",
+            "file": "DLT_2012_020m_eu_03035_d03_Full",
+            "format": "Geotiff",
+            "path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Dominant_Leaf_Type\\HRL_Dominant_Leaf_Type(DLT)_2012\\Data\\data-details\\raster\\DLT_2012_020m\\DLT_2012_020m_eu_03035_d03_Full.zip",
+            "resolution": "20 m",
+            "size": "2 GB",
+            "source": "EEA",
+            "title": "",
+            "type": "Raster",
+            "version": "d03",
+            "year": ""
+          },
+          {
+            "@id": "6351c317-6397-4230-80cb-13d6da6323fb",
+            "area": "E00N20",
+            "file": "DLT_2012_020m_E00N20_03035_d03",
+            "format": "Geotiff",
+            "path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Dominant_Leaf_Type\\HRL_Dominant_Leaf_Type(DLT)_2012\\Data\\data-details\\raster\\DLT_2012_020m\\DLT_2012_020m_E00N20_03035_d03.zip",
+            "resolution": "20 m",
+            "size": "242 KB",
+            "source": "EEA",
+            "title": "",
+            "type": "Raster",
+            "version": "d03",
+            "year": ""
+          },
+          {
+            "@id": "1ccba029-4f1d-4497-a8f2-3c4ff0ca088b",
+            "area": "E10N00",
+            "file": "DLT_2012_020m_E10N00_03035_d03",
+            "format": "Geotiff",
+            "path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Dominant_Leaf_Type\\HRL_Dominant_Leaf_Type(DLT)_2012\\Data\\data-details\\raster\\DLT_2012_020m\\DLT_2012_020m_E10N00_03035_d03.zip",
+            "resolution": "20 m",
+            "size": "437 KB",
+            "source": "EEA",
+            "title": "",
+            "type": "Raster",
+            "version": "d03",
+            "year": ""
+          }
+        ]
+      }
+    ],
+    "Tree Cover Density 2021": [
+      {
+        "title": "Tree Cover Density 2018-present (raster 100 m), Europe, yearly",
+        "id": "https://land.copernicus.eu/api/en/products/high-resolution-layer-forests-and-tree-cover/tree-cover-density-2018-present-raster-100-m-europe-yearly",
+        "UID": "ec1d28e001c04464aafef79dc4ac29e1",
+        "dataset_full_format": null,
+        "dataset_download_information": {
+          "items": [
+            {
+              "@id": "433205b1-5291-429c-aaef-dcc3780a9eff",
+              "byoc_collection": "edd3c5f5-da8e-463f-8c9a-712aa451d37e",
+              "full_format": "Geotiff",
+              "full_path": "https://csv.dataspace.copernicus.eu/CLMS/landcover_landuse/tree_cover_density/clms_vlcc_tree-cover-density_europe_100m_yearly_v1/",
+              "full_source": "CDSE_CSV",
+              "name": "RASTER"
+            }
+          ]
+        },
+        "downloadable_files_count": 1,
+        "downloadable_files_keys": [
+          "@id",
+          "area",
+          "file",
+          "format",
+          "path",
+          "resolution",
+          "size",
+          "source",
+          "title",
+          "type",
+          "version",
+          "year"
+        ],
+        "downloadable_files_athens": [],
+        "downloadable_files_sample": [
+          {
+            "@id": "8a3d2778-ba05-4aa9-90e6-8dad2538391c",
+            "area": "",
+            "file": "",
+            "format": "",
+            "path": "",
+            "resolution": "",
+            "size": "",
+            "source": "",
+            "title": "",
+            "type": "",
+            "version": "",
+            "year": ""
+          }
+        ]
+      },
+      {
+        "title": "Tree Cover Density 2018-present (raster 10 m), Europe, yearly",
+        "id": "https://land.copernicus.eu/api/en/products/high-resolution-layer-forests-and-tree-cover/tree-cover-density-2018-present-raster-10-m-europe-yearly",
+        "UID": "f954d06dfb5442b4910f0ccea9070917",
+        "dataset_full_format": null,
+        "dataset_download_information": {
+          "items": [
+            {
+              "@id": "b119df47-079d-4d28-bda5-0748477a1053",
+              "byoc_collection": "3751d55a-7370-4071-9543-493ec3341d16",
+              "collection": "Tree Cover Density 10 m",
+              "full_format": "Geotiff",
+              "full_path": "https://csv.dataspace.copernicus.eu/CLMS/landcover_landuse/tree_cover_density/clms_vlcc_tree-cover-density_europe_10m_yearly_v1/",
+              "full_source": "CDSE_CSV",
+              "name": "RASTER"
+            },
+            {
+              "@id": "d53ab126-033b-4917-8960-2aad52837ba4",
+              "byoc_collection": "3751d55a-7370-4071-9543-493ec3341d16",
+              "collection": "Confidence layer",
+              "full_format": "Geotiff",
+              "full_path": "https://csv.dataspace.copernicus.eu/CLMS/landcover_landuse/tree_cover_density/clms_vlcc_tree-cover-density-confidence-layer_europe_10m_yearly_v1/",
+              "full_source": "CDSE_CSV",
+              "name": "RASTER"
+            }
+          ]
+        },
+        "downloadable_files_count": 1,
+        "downloadable_files_keys": [
+          "@id",
+          "area",
+          "file",
+          "format",
+          "path",
+          "resolution",
+          "size",
+          "source",
+          "title",
+          "type",
+          "version",
+          "year"
+        ],
+        "downloadable_files_athens": [],
+        "downloadable_files_sample": [
+          {
+            "@id": "8a3d2778-ba05-4aa9-90e6-8dad2538391c",
+            "area": "",
+            "file": "",
+            "format": "",
+            "path": "",
+            "resolution": "",
+            "size": "",
+            "source": "",
+            "title": "",
+            "type": "",
+            "version": "",
+            "year": ""
+          }
+        ]
+      },
+      {
+        "title": "Tree Cover Density 2020 (raster 10 m), pantropical, annual - version 1",
+        "id": "https://land.copernicus.eu/api/en/products/global-dynamic-land-cover/tree-cover-density-2020-raster-10-m-pantropical-annual",
+        "UID": "bba54992cd044ad4ab6ad2d28d788bdc",
+        "dataset_full_format": null,
+        "dataset_download_information": {
+          "items": [
+            {
+              "@id": "ddfa3073-298a-452e-a69e-723162bb0f7d",
+              "byoc_collection": "8bd33a42-dce4-4554-9a1f-1bb248b4183d",
+              "full_format": "Geotiff",
+              "full_path": "https://csv.dataspace.copernicus.eu/CLMS/landcover_landuse/dynamic_land_cover/tcd_pantropical_10m_yearly_v1/",
+              "full_source": "CDSE_CSV",
+              "layers": [],
+              "name": "RASTER"
+            }
+          ]
+        },
+        "downloadable_files_count": 1,
+        "downloadable_files_keys": [
+          "@id",
+          "area",
+          "file",
+          "format",
+          "path",
+          "resolution",
+          "size",
+          "source",
+          "title",
+          "type",
+          "version",
+          "year"
+        ],
+        "downloadable_files_athens": [],
+        "downloadable_files_sample": [
+          {
+            "@id": "3965e653-85ff-47b8-8bfc-2761846701fa",
+            "area": "",
+            "file": "",
+            "format": "",
+            "path": "",
+            "resolution": "",
+            "size": "",
+            "source": "",
+            "title": "",
+            "type": "",
+            "version": "",
+            "year": ""
+          }
+        ]
+      },
+      {
+        "title": "Tree Cover Density 2012 (raster 20 m and 100 m), Europe, 3-yearly",
+        "id": "https://land.copernicus.eu/api/en/products/high-resolution-layer-forests-and-tree-cover/tree-cover-density-2012",
+        "UID": "b903be8a861d48d9af41266ce63cc287",
+        "dataset_full_format": null,
+        "dataset_download_information": {
+          "items": [
+            {
+              "@id": "868d416d-6d78-4650-a997-1fce0c108fe8",
+              "collection": "20 m",
+              "full_format": "Geotiff",
+              "full_path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Tree_Cover_Density\\HRL_Tree_Cover_Density(TCD)_2012\\Data\\data-master\\TDC_2012_020m_tiled",
+              "full_source": "EEA",
+              "name": "RASTER ",
+              "wekeo_choices": ""
+            },
+            {
+              "@id": "1a57b319-3714-4f81-9423-b258ef4323e7",
+              "collection": "100 m",
+              "full_format": "Geotiff",
+              "full_path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Tree_Cover_Density\\HRL_Tree_Cover_Density(TCD)_2012\\Data\\data-master\\TDC_2012_100m_tiled",
+              "full_source": "EEA",
+              "name": "RASTER "
+            }
+          ]
+        },
+        "downloadable_files_count": 56,
+        "downloadable_files_keys": [
+          "@id",
+          "area",
+          "file",
+          "format",
+          "path",
+          "resolution",
+          "size",
+          "source",
+          "title",
+          "type",
+          "version",
+          "year"
+        ],
+        "downloadable_files_athens": [],
+        "downloadable_files_sample": [
+          {
+            "@id": "1479d703-79fd-46d7-a4c1-40e0d5ef1083",
+            "area": "Europe",
+            "file": "TCD_2012_100m_eu_03035_d04_Full",
+            "format": "Geotiff",
+            "path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Tree_Cover_Density\\HRL_Tree_Cover_Density(TCD)_2012\\Data\\data-details\\raster\\TDC_2012_100m\\TCD_2012_100m_eu_03035_d04_Full.zip",
+            "resolution": "100 m",
+            "size": "400 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Raster",
+            "version": "d04",
+            "year": ""
+          },
+          {
+            "@id": "266be23f-29a1-41f8-899d-a57c35d572fc",
+            "area": "Europe",
+            "file": "TCD_2012_020m_eu_03035_d03_Full",
+            "format": "Geotiff",
+            "path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Tree_Cover_Density\\HRL_Tree_Cover_Density(TCD)_2012\\Data\\data-details\\raster\\TDC_2012_020m\\TCD_2012_020m_eu_03035_d03_Full.zip",
+            "resolution": "20 m",
+            "size": "7 GB",
+            "source": "EEA",
+            "title": "",
+            "type": "Raster",
+            "version": "d03",
+            "year": ""
+          },
+          {
+            "@id": "8b77e799-072a-4519-ad27-95d1a7a62273",
+            "area": "E00N20",
+            "file": "TCD_2012_020m_E00N20_03035_d03",
+            "format": "Geotiff",
+            "path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Tree_Cover_Density\\HRL_Tree_Cover_Density(TCD)_2012\\Data\\data-details\\raster\\TDC_2012_020m\\TCD_2012_020m_E00N20_03035_d03.zip",
+            "resolution": "20 m",
+            "size": "322 KB",
+            "source": "EEA",
+            "title": "",
+            "type": "Raster",
+            "version": "d03",
+            "year": ""
+          }
+        ]
+      },
+      {
+        "title": "Tree Cover Density 2015 (raster 20 m and 100 m), Europe, 3-yearly",
+        "id": "https://land.copernicus.eu/api/en/products/high-resolution-layer-forests-and-tree-cover/tree-cover-density-2015",
+        "UID": "860eee4b9af64f6283e8097f533456f9",
+        "dataset_full_format": null,
+        "dataset_download_information": {
+          "items": [
+            {
+              "@id": "eee61480-0b01-4724-a92e-800fa8fbf7e6",
+              "collection": "20 m",
+              "full_format": "Geotiff",
+              "full_path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Tree_Cover_Density\\HRL_Tree_Cover_Density(TCD)_2015\\Data\\data-master\\TCD_2015_020m_tiled",
+              "full_source": "EEA",
+              "name": "RASTER ",
+              "wekeo_choices": ""
+            },
+            {
+              "@id": "ffb868bd-2914-4928-9121-378524919ec8",
+              "collection": "100 m",
+              "full_format": "Geotiff",
+              "full_path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Tree_Cover_Density\\HRL_Tree_Cover_Density(TCD)_2015\\Data\\data-master\\TCD_2015_100m_tiled",
+              "full_source": "EEA",
+              "name": "RASTER "
+            }
+          ]
+        },
+        "downloadable_files_count": 56,
+        "downloadable_files_keys": [
+          "@id",
+          "area",
+          "file",
+          "format",
+          "path",
+          "resolution",
+          "size",
+          "source",
+          "title",
+          "type",
+          "version",
+          "year"
+        ],
+        "downloadable_files_athens": [],
+        "downloadable_files_sample": [
+          {
+            "@id": "e7aa315e-96d3-47b7-88f9-219115ef69bc",
+            "area": "Europe",
+            "file": "TCD_2015_100m_eu_03035_d04_Full",
+            "format": "Geotiff",
+            "path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Tree_Cover_Density\\HRL_Tree_Cover_Density(TCD)_2015\\Data\\data-details\\raster\\TCD_2012_100m\\TCD_2015_100m_eu_03035_d04_Full.zip",
+            "resolution": "100 m",
+            "size": "424 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Raster",
+            "version": "d04",
+            "year": ""
+          },
+          {
+            "@id": "245b8a61-e053-4509-b7c6-b79294d93576",
+            "area": "Europe",
+            "file": "TCD_2015_020m_eu_03035_d05_Full",
+            "format": "Geotiff",
+            "path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Tree_Cover_Density\\HRL_Tree_Cover_Density(TCD)_2015\\Data\\data-details\\raster\\TCD_2012_020m\\TCD_2015_020m_eu_03035_d05_Full.zip",
+            "resolution": "20 m",
+            "size": "6 GB",
+            "source": "EEA",
+            "title": "",
+            "type": "Raster",
+            "version": "d05",
+            "year": ""
+          },
+          {
+            "@id": "7d9d01a0-f8ab-47fe-800f-79e09dd7b96b",
+            "area": "E00N20",
+            "file": "TCD_2015_020m_eu_03035_d05_E00N20",
+            "format": "Geotiff",
+            "path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Tree_Cover_Density\\HRL_Tree_Cover_Density(TCD)_2015\\Data\\data-details\\raster\\TCD_2012_020m\\TCD_2015_020m_eu_03035_d05_E00N20.zip",
+            "resolution": "20 m",
+            "size": "324 KB",
+            "source": "EEA",
+            "title": "",
+            "type": "Raster",
+            "version": "d05",
+            "year": ""
+          }
+        ]
+      },
+      {
+        "title": "Broadleaved Cover Density 2018-present (raster 100 m), Europe, yearly",
+        "id": "https://land.copernicus.eu/api/en/products/high-resolution-layer-forests-and-tree-cover/broadleaved-cover-density-2018-present-raster-100-m-europe-yearly",
+        "UID": "509085da911a444392eb6fa54542ae0c",
+        "dataset_full_format": null,
+        "dataset_download_information": {
+          "items": [
+            {
+              "@id": "aca9d955-1208-4ed5-9017-32a94ee78c4e",
+              "byoc_collection": "a06a42ae-f899-4a07-a5cd-fb7fd920d6c1",
+              "full_format": "Geotiff",
+              "full_path": "https://csv.dataspace.copernicus.eu/CLMS/landcover_landuse/dominant_leaf_type/clms_vlcc_broadleaved-cover-density_europe_100m_yearly_v1/",
+              "full_source": "CDSE_CSV",
+              "layers": [],
+              "name": "RASTER"
+            }
+          ]
+        },
+        "downloadable_files_count": 1,
+        "downloadable_files_keys": [
+          "@id",
+          "area",
+          "file",
+          "format",
+          "path",
+          "resolution",
+          "size",
+          "source",
+          "title",
+          "type",
+          "version",
+          "year"
+        ],
+        "downloadable_files_athens": [],
+        "downloadable_files_sample": [
+          {
+            "@id": "58195092-28c3-40a0-9faa-00f2d7cd2717",
+            "area": "",
+            "file": "",
+            "format": "",
+            "path": "",
+            "resolution": "",
+            "size": "",
+            "source": "",
+            "title": "",
+            "type": "",
+            "version": "",
+            "year": ""
+          }
+        ]
+      },
+      {
+        "title": "Coniferous Cover Density 2018-present (raster 100 m), Europe, yearly",
+        "id": "https://land.copernicus.eu/api/en/products/high-resolution-layer-forests-and-tree-cover/coniferous-cover-density-2018-present-raster-100-m-europe-yearly",
+        "UID": "b63705a752f44d9797fba1b61578fa1f",
+        "dataset_full_format": null,
+        "dataset_download_information": {
+          "items": [
+            {
+              "@id": "a31af961-42d4-42f2-b5f7-2d20e39301f4",
+              "byoc_collection": "a0edd575-c763-4c4a-a910-631df3df4506",
+              "full_format": "Geotiff",
+              "full_path": "https://csv.dataspace.copernicus.eu/CLMS/landcover_landuse/dominant_leaf_type/clms_vlcc_coniferous-cover-density_europe_100m_yearly_v1/",
+              "full_source": "CDSE_CSV",
+              "layers": [],
+              "name": "RASTER"
+            }
+          ]
+        },
+        "downloadable_files_count": 1,
+        "downloadable_files_keys": [
+          "@id",
+          "area",
+          "file",
+          "format",
+          "path",
+          "resolution",
+          "size",
+          "source",
+          "title",
+          "type",
+          "version",
+          "year"
+        ],
+        "downloadable_files_athens": [],
+        "downloadable_files_sample": [
+          {
+            "@id": "58195092-28c3-40a0-9faa-00f2d7cd2717",
+            "area": "",
+            "file": "",
+            "format": "",
+            "path": "",
+            "resolution": "",
+            "size": "",
+            "source": "",
+            "title": "",
+            "type": "",
+            "version": "",
+            "year": ""
+          }
+        ]
+      },
+      {
+        "title": "Tree Cover Change Mask 2012-2015 (raster 20 m), Europe, 3-yearly",
+        "id": "https://land.copernicus.eu/api/en/products/high-resolution-layer-forests-and-tree-cover/tree-cover-change-mask-2012-2015",
+        "UID": "5c62f20d86f848928eeb08e79fb5981e",
+        "dataset_full_format": null,
+        "dataset_download_information": {
+          "items": [
+            {
+              "@id": "3c1f68f2-c9c8-4056-bb10-6b4af6974e2c",
+              "full_format": "Geotiff",
+              "full_path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Tree_Cover_Density\\HRL_Tree_Cover_Density_Change(TCD_CHA)_2012-2015\\Data\\data-master\\TCCM_1215_020m_tiled",
+              "full_source": "EEA",
+              "name": "RASTER",
+              "wekeo_choices": ""
+            }
+          ]
+        },
+        "downloadable_files_count": 40,
+        "downloadable_files_keys": [
+          "@id",
+          "area",
+          "file",
+          "format",
+          "path",
+          "resolution",
+          "size",
+          "source",
+          "title",
+          "type",
+          "version",
+          "year"
+        ],
+        "downloadable_files_athens": [],
+        "downloadable_files_sample": [
+          {
+            "@id": "1eaee99a-fbba-4ef9-863b-a59d6c5b172f",
+            "area": "Europe",
+            "file": "TCCM_1215_020m_eu_03035_v010",
+            "format": "Geotiff",
+            "path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Tree_Cover_Density\\HRL_Tree_Cover_Density_Change(TCD_CHA)_2012-2015\\Data\\data-details\\raster\\TCCM_1215_020m\\TCCM_1215_020m_eu_03035_v010.zip",
+            "resolution": "20 m",
+            "size": "1 GB",
+            "source": "EEA",
+            "title": "",
+            "type": "Raster",
+            "version": "v010",
+            "year": ""
+          },
+          {
+            "@id": "df074327-50ed-4b61-a594-dca28dc49dc8",
+            "area": "Albania",
+            "file": "TCCM_1215_020m_al_03035_v010",
+            "format": "Geotiff",
+            "path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Tree_Cover_Density\\HRL_Tree_Cover_Density_Change(TCD_CHA)_2012-2015\\Data\\data-details\\raster\\TCCM_1215_020m\\TCCM_1215_020m_al_03035_v010.zip",
+            "resolution": "20 m",
+            "size": "13 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Raster",
+            "version": "v010",
+            "year": ""
+          },
+          {
+            "@id": "646cbbeb-1076-4494-b5b6-425b1547c37b",
+            "area": "Austria",
+            "file": "TCCM_1215_020m_at_03035_v010",
+            "format": "Geotiff",
+            "path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Tree_Cover_Density\\HRL_Tree_Cover_Density_Change(TCD_CHA)_2012-2015\\Data\\data-details\\raster\\TCCM_1215_020m\\TCCM_1215_020m_at_03035_v010.zip",
+            "resolution": "20 m",
+            "size": "24 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Raster",
+            "version": "v010",
+            "year": ""
+          }
+        ]
+      },
+      {
+        "title": "Tree Cover Change Mask 2015-2018 (raster 20 m), Europe, 3-yearly",
+        "id": "https://land.copernicus.eu/api/en/products/high-resolution-layer-forests-and-tree-cover/tree-cover-change-mask-2015-2018",
+        "UID": "3c675eb11ef94242a0b962270e7d8758",
+        "dataset_full_format": null,
+        "dataset_download_information": {
+          "items": [
+            {
+              "@id": "0df0e8cd-bb69-45a1-9578-fef894b44f12",
+              "full_format": "Geotiff",
+              "full_path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Tree_Cover_Density\\HRL_Tree_Cover_Density_Change(TCD_CHA)_2015-2018\\Data\\data-master\\TCCM_1518_020m_tiled",
+              "full_source": "EEA",
+              "name": "RASTER",
+              "wekeo_choices": ""
+            }
+          ]
+        },
+        "downloadable_files_count": 40,
+        "downloadable_files_keys": [
+          "@id",
+          "area",
+          "file",
+          "format",
+          "path",
+          "resolution",
+          "size",
+          "source",
+          "title",
+          "type",
+          "version",
+          "year"
+        ],
+        "downloadable_files_athens": [],
+        "downloadable_files_sample": [
+          {
+            "@id": "dc874e63-721a-4323-8d98-09968a326480",
+            "area": "Europe",
+            "file": "TCCM_1518_020m_eu_03035_v010",
+            "format": "Geotiff",
+            "path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Tree_Cover_Density\\HRL_Tree_Cover_Density_Change(TCD_CHA)_2015-2018\\Data\\data-details\\raster\\TCCM_1518_020m\\TCCM_1518_020m_eu_03035_v010.zip",
+            "resolution": "20 m",
+            "size": "1 GB",
+            "source": "EEA",
+            "title": "",
+            "type": "Raster",
+            "version": "v010",
+            "year": ""
+          },
+          {
+            "@id": "22740365-aeb5-49f4-9a8e-c359b1c3a0a2",
+            "area": "Albania",
+            "file": "TCCM_1518_020m_al_03035_v010",
+            "format": "Geotiff",
+            "path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Tree_Cover_Density\\HRL_Tree_Cover_Density_Change(TCD_CHA)_2015-2018\\Data\\data-details\\raster\\TCCM_1518_020m\\TCCM_1518_020m_al_03035_v010.zip",
+            "resolution": "20 m",
+            "size": "12 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Raster",
+            "version": "v010",
+            "year": ""
+          },
+          {
+            "@id": "30804fc2-a749-497b-8675-7e3343298e15",
+            "area": "Austria",
+            "file": "TCCM_1518_020m_at_03035_v010",
+            "format": "Geotiff",
+            "path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Tree_Cover_Density\\HRL_Tree_Cover_Density_Change(TCD_CHA)_2015-2018\\Data\\data-details\\raster\\TCCM_1518_020m\\TCCM_1518_020m_at_03035_v010.zip",
+            "resolution": "20 m",
+            "size": "25 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Raster",
+            "version": "v010",
+            "year": ""
+          }
+        ]
+      },
+      {
+        "title": "Forest Type 2012 (raster 20 m and 100 m), Europe, 3-yearly",
+        "id": "https://land.copernicus.eu/api/en/products/high-resolution-layer-forests-and-tree-cover/forest-type-2012",
+        "UID": "6606864bf28345438b7fc091ddb0a445",
+        "dataset_full_format": null,
+        "dataset_download_information": {
+          "items": [
+            {
+              "@id": "9bc16a37-9204-4e11-854b-b50f4e6a6793",
+              "collection": "20 m",
+              "full_format": "Geotiff",
+              "full_path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Forest_Type\\HRL_Forest_Type(FTY)_2012\\Data\\data-master\\FTY_2012_020m_tiled",
+              "full_source": "EEA",
+              "name": "RASTER ",
+              "wekeo_choices": ""
+            },
+            {
+              "@id": "b2151396-06d6-4d37-b040-4270e17f9333",
+              "collection": "100 m",
+              "full_format": "Geotiff",
+              "full_path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Forest_Type\\HRL_Forest_Type(FTY)_2012\\Data\\data-master\\FTY_2012_100m_tiled",
+              "full_source": "EEA",
+              "name": "RASTER "
+            }
+          ]
+        },
+        "downloadable_files_count": 56,
+        "downloadable_files_keys": [
+          "@id",
+          "area",
+          "file",
+          "format",
+          "path",
+          "resolution",
+          "size",
+          "source",
+          "title",
+          "type",
+          "version",
+          "year"
+        ],
+        "downloadable_files_athens": [],
+        "downloadable_files_sample": [
+          {
+            "@id": "b29631a1-ae8c-42f9-8206-f10bb752ee52",
+            "area": "Europe",
+            "file": "FTY_2012_100m_eu_03035_d02_Full",
+            "format": "Geotiff",
+            "path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Forest_Type\\HRL_Forest_Type(FTY)_2012\\Data\\data-details\\raster\\FTY_2012_100m\\FTY_2012_100m_eu_03035_d02_Full.zip",
+            "resolution": "100 m",
+            "size": "103 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Raster",
+            "version": "d02",
+            "year": ""
+          },
+          {
+            "@id": "64afc17c-c33a-4821-b485-be7b7585d01d",
+            "area": "Europe",
+            "file": "FTY_2012_020m_eu_03035_d02_Full",
+            "format": "Geotiff",
+            "path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Forest_Type\\HRL_Forest_Type(FTY)_2012\\Data\\data-details\\raster\\FTY_2012_020m\\FTY_2012_020m_eu_03035_d02_Full.zip",
+            "resolution": "20 m",
+            "size": "1 GB",
+            "source": "EEA",
+            "title": "",
+            "type": "Raster",
+            "version": "d02",
+            "year": ""
+          },
+          {
+            "@id": "b4f12124-8bbd-4588-adb1-7e13357bbb46",
+            "area": "E00N20",
+            "file": "FTY_2012_020m_eu_03035_d02_E00N20",
+            "format": "Geotiff",
+            "path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Forest_Type\\HRL_Forest_Type(FTY)_2012\\Data\\data-details\\raster\\FTY_2012_020m\\FTY_2012_020m_eu_03035_d02_E00N20.zip",
+            "resolution": "20 m",
+            "size": "242 KB",
+            "source": "EEA",
+            "title": "",
+            "type": "Raster",
+            "version": "d02",
+            "year": ""
+          }
+        ]
+      },
+      {
+        "title": "Forest Type 2015 (raster 20 m and 100 m), Europe, 3-yearly",
+        "id": "https://land.copernicus.eu/api/en/products/high-resolution-layer-forests-and-tree-cover/forest-type-2015",
+        "UID": "c53f82d466354da09de7c7e4ca44b030",
+        "dataset_full_format": null,
+        "dataset_download_information": {
+          "items": [
+            {
+              "@id": "10389bac-e487-442f-be09-2a55f4b194ed",
+              "collection": "20 m",
+              "full_format": "Geotiff",
+              "full_path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Forest_Type\\HRL_Forest_Type(FTY)_2015\\Data\\data-master\\FTY_2015_020m_tiled",
+              "full_source": "EEA",
+              "name": "RASTER",
+              "wekeo_choices": ""
+            },
+            {
+              "@id": "d9bf2d04-92a7-479c-9cec-b8a522fea442",
+              "collection": "100 m",
+              "full_format": "Geotiff",
+              "full_path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Forest_Type\\HRL_Forest_Type(FTY)_2015\\Data\\data-master\\FTY_2015_100m_tiled",
+              "full_source": "EEA",
+              "name": "RASTER"
+            }
+          ]
+        },
+        "downloadable_files_count": 56,
+        "downloadable_files_keys": [
+          "@id",
+          "area",
+          "file",
+          "format",
+          "path",
+          "resolution",
+          "size",
+          "source",
+          "title",
+          "type",
+          "version",
+          "year"
+        ],
+        "downloadable_files_athens": [],
+        "downloadable_files_sample": [
+          {
+            "@id": "d09e3605-92d8-4e6a-a401-220e2e4581e9",
+            "area": "Europe",
+            "file": "FTY_2015_100m_eu_03035_d02_Full",
+            "format": "Geotiff",
+            "path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Forest_Type\\HRL_Forest_Type(FTY)_2015\\Data\\data-details\\raster\\FTY_2015_100m\\FTY_2015_100m_eu_03035_d02_Full.zip",
+            "resolution": "100 m",
+            "size": "110 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Raster",
+            "version": "d02",
+            "year": ""
+          },
+          {
+            "@id": "d808fa74-eb78-4248-a52c-35bcdc3e76d1",
+            "area": "Europe",
+            "file": "FTY_2015_020m_eu_03035_d04_Full",
+            "format": "Geotiff",
+            "path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Forest_Type\\HRL_Forest_Type(FTY)_2015\\Data\\data-details\\raster\\FTY_2015_020m\\FTY_2015_020m_eu_03035_d04_Full.zip",
+            "resolution": "20 m",
+            "size": "1 GB",
+            "source": "EEA",
+            "title": "",
+            "type": "Raster",
+            "version": "d04",
+            "year": ""
+          },
+          {
+            "@id": "36463eaf-656c-4623-ac56-494e08709ea6",
+            "area": "E00N20",
+            "file": "FTY_2015_020m_eu_03035_d04_E00N20",
+            "format": "Geotiff",
+            "path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Forest_Type\\HRL_Forest_Type(FTY)_2015\\Data\\data-details\\raster\\FTY_2015_020m\\FTY_2015_020m_eu_03035_d04_E00N20.zip",
+            "resolution": "20 m",
+            "size": "239 KB",
+            "source": "EEA",
+            "title": "",
+            "type": "Raster",
+            "version": "d04",
+            "year": ""
+          }
+        ]
+      },
+      {
+        "title": "Dominant Leaf Type 2015 (raster 20 m), Europe, 3-yearly",
+        "id": "https://land.copernicus.eu/api/en/products/high-resolution-layer-forests-and-tree-cover/dominant-leaf-type-2015",
+        "UID": "a07881fb9f624b72ae08eb4dbc4bfc7c",
+        "dataset_full_format": null,
+        "dataset_download_information": {
+          "items": [
+            {
+              "@id": "5451143f-507f-4070-9b95-8b6cf6c3d9a1",
+              "full_format": "Geotiff",
+              "full_path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Dominant_Leaf_Type\\HRL_Dominant_Leaf_Type(DLT)_2015\\Data\\data-master\\DLT_2015_020m_tiled",
+              "full_source": "EEA",
+              "name": "RASTER",
+              "wekeo_choices": ""
+            }
+          ]
+        },
+        "downloadable_files_count": 28,
+        "downloadable_files_keys": [
+          "@id",
+          "area",
+          "file",
+          "format",
+          "path",
+          "resolution",
+          "size",
+          "source",
+          "title",
+          "type",
+          "version",
+          "year"
+        ],
+        "downloadable_files_athens": [],
+        "downloadable_files_sample": [
+          {
+            "@id": "92e3bc0c-254f-46ea-bade-e054bc34c0de",
+            "area": "Europe",
+            "file": "DLT_2015_020m_eu_03035_d04_Full",
+            "format": "Geotiff",
+            "path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Dominant_Leaf_Type\\HRL_Dominant_Leaf_Type(DLT)_2015\\Data\\data-details\\raster\\DLT_2015_020m\\DLT_2015_020m_eu_03035_d04_Full.zip",
+            "resolution": "20 m",
+            "size": "1 GB",
+            "source": "EEA",
+            "title": "",
+            "type": "Raster",
+            "version": "d04",
+            "year": ""
+          },
+          {
+            "@id": "3b8eb4e3-d52f-483a-9f99-d59adc21823d",
+            "area": "E00N20",
+            "file": "DLT_2015_020m_eu_03035_d04_E00N20",
+            "format": "Geotiff",
+            "path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Dominant_Leaf_Type\\HRL_Dominant_Leaf_Type(DLT)_2015\\Data\\data-details\\raster\\DLT_2015_020m\\DLT_2015_020m_eu_03035_d04_E00N20.zip",
+            "resolution": "20 m",
+            "size": "244 KB",
+            "source": "EEA",
+            "title": "",
+            "type": "Raster",
+            "version": "d04",
+            "year": ""
+          },
+          {
+            "@id": "27c92227-8428-4a73-baae-0b39a094dc70",
+            "area": "E10N00",
+            "file": "DLT_2015_020m_eu_03035_d04_E10N00",
+            "format": "Geotiff",
+            "path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Dominant_Leaf_Type\\HRL_Dominant_Leaf_Type(DLT)_2015\\Data\\data-details\\raster\\DLT_2015_020m\\DLT_2015_020m_eu_03035_d04_E10N00.zip",
+            "resolution": "20 m",
+            "size": "503 KB",
+            "source": "EEA",
+            "title": "",
+            "type": "Raster",
+            "version": "d04",
+            "year": ""
+          }
+        ]
+      },
+      {
+        "title": "Dominant Leaf Type 2012 (raster 20 m), Europe, 3-yearly",
+        "id": "https://land.copernicus.eu/api/en/products/high-resolution-layer-forests-and-tree-cover/dominant-leaf-type-2012",
+        "UID": "cfa1c94c786d4332a11f58ed59d5e204",
+        "dataset_full_format": null,
+        "dataset_download_information": {
+          "items": [
+            {
+              "@id": "b9378a5e-7c23-47f5-bf66-929f04f4b9a6",
+              "full_format": "Geotiff",
+              "full_path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Dominant_Leaf_Type\\HRL_Dominant_Leaf_Type(DLT)_2012\\Data\\data-master\\DLT_2012_020m_tiled",
+              "full_source": "EEA",
+              "name": "RASTER",
+              "wekeo_choices": ""
+            }
+          ]
+        },
+        "downloadable_files_count": 28,
+        "downloadable_files_keys": [
+          "@id",
+          "area",
+          "file",
+          "format",
+          "path",
+          "resolution",
+          "size",
+          "source",
+          "title",
+          "type",
+          "version",
+          "year"
+        ],
+        "downloadable_files_athens": [],
+        "downloadable_files_sample": [
+          {
+            "@id": "8ac9a4d4-8998-40d9-b0ec-a7ec71f150b5",
+            "area": "Europe",
+            "file": "DLT_2012_020m_eu_03035_d03_Full",
+            "format": "Geotiff",
+            "path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Dominant_Leaf_Type\\HRL_Dominant_Leaf_Type(DLT)_2012\\Data\\data-details\\raster\\DLT_2012_020m\\DLT_2012_020m_eu_03035_d03_Full.zip",
+            "resolution": "20 m",
+            "size": "2 GB",
+            "source": "EEA",
+            "title": "",
+            "type": "Raster",
+            "version": "d03",
+            "year": ""
+          },
+          {
+            "@id": "6351c317-6397-4230-80cb-13d6da6323fb",
+            "area": "E00N20",
+            "file": "DLT_2012_020m_E00N20_03035_d03",
+            "format": "Geotiff",
+            "path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Dominant_Leaf_Type\\HRL_Dominant_Leaf_Type(DLT)_2012\\Data\\data-details\\raster\\DLT_2012_020m\\DLT_2012_020m_E00N20_03035_d03.zip",
+            "resolution": "20 m",
+            "size": "242 KB",
+            "source": "EEA",
+            "title": "",
+            "type": "Raster",
+            "version": "d03",
+            "year": ""
+          },
+          {
+            "@id": "1ccba029-4f1d-4497-a8f2-3c4ff0ca088b",
+            "area": "E10N00",
+            "file": "DLT_2012_020m_E10N00_03035_d03",
+            "format": "Geotiff",
+            "path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Dominant_Leaf_Type\\HRL_Dominant_Leaf_Type(DLT)_2012\\Data\\data-details\\raster\\DLT_2012_020m\\DLT_2012_020m_E10N00_03035_d03.zip",
+            "resolution": "20 m",
+            "size": "437 KB",
+            "source": "EEA",
+            "title": "",
+            "type": "Raster",
+            "version": "d03",
+            "year": ""
+          }
+        ]
+      },
+      {
+        "title": "Dominant Leaf Type Change 2015-2018 (raster 20 m), Europe",
+        "id": "https://land.copernicus.eu/api/en/products/high-resolution-layer-forests-and-tree-cover/dominant-leaf-type-change-2015-2018",
+        "UID": "145aa06280384953a2635db0c945e6e9",
+        "dataset_full_format": null,
+        "dataset_download_information": {
+          "items": [
+            {
+              "@id": "df3b34b0-9bdc-42a7-b1d9-27bd30ccca4a",
+              "full_format": "Geotiff",
+              "full_path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Dominant_Leaf_Type\\HRL_Dominant_Leaf_Type_Change(DLT_CHA)_2015-2018\\Data\\data-master\\DLT_CHA_1518_020m_tiled",
+              "full_source": "EEA",
+              "name": "RASTER",
+              "wekeo_choices": ""
+            }
+          ]
+        },
+        "downloadable_files_count": 40,
+        "downloadable_files_keys": [
+          "@id",
+          "area",
+          "file",
+          "format",
+          "path",
+          "resolution",
+          "size",
+          "source",
+          "title",
+          "type",
+          "version",
+          "year"
+        ],
+        "downloadable_files_athens": [],
+        "downloadable_files_sample": [
+          {
+            "@id": "5d3b4b9c-392e-488f-b1ff-1fd097a29742",
+            "area": "Europe",
+            "file": "DLTC_1518_020m_eu_03035_v010",
+            "format": "Geotiff",
+            "path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Dominant_Leaf_Type\\HRL_Dominant_Leaf_Type_Change(DLT_CHA)_2015-2018\\Data\\data-details\\raster\\DLT_CHA_1518_020m\\DLTC_1518_020m_eu_03035_v010.zip",
+            "resolution": "20 m",
+            "size": "1 GB",
+            "source": "EEA",
+            "title": "",
+            "type": "Raster",
+            "version": "v010",
+            "year": ""
+          },
+          {
+            "@id": "203dba96-cd17-4710-bcf0-cb9498436076",
+            "area": "Albania",
+            "file": "DLTC_1518_020m_al_03035_v010",
+            "format": "Geotiff",
+            "path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Dominant_Leaf_Type\\HRL_Dominant_Leaf_Type_Change(DLT_CHA)_2015-2018\\Data\\data-details\\raster\\DLT_CHA_1518_020m\\DLTC_1518_020m_al_03035_v010.zip",
+            "resolution": "20 m",
+            "size": "12 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Raster",
+            "version": "v010",
+            "year": ""
+          },
+          {
+            "@id": "700e8c67-01d0-4246-bd95-edac3191fbbd",
+            "area": "Austria",
+            "file": "DLTC_1518_020m_at_03035_v010",
+            "format": "Geotiff",
+            "path": "H:\\High_Resolution_Layers\\High_Resolution_Layers\\High_Resolution_Layer(HRL)_Dominant_Leaf_Type\\HRL_Dominant_Leaf_Type_Change(DLT_CHA)_2015-2018\\Data\\data-details\\raster\\DLT_CHA_1518_020m\\DLTC_1518_020m_at_03035_v010.zip",
+            "resolution": "20 m",
+            "size": "25 MB",
+            "source": "EEA",
+            "title": "",
+            "type": "Raster",
+            "version": "v010",
+            "year": ""
+          }
+        ]
+      },
+      {
+        "title": "Tree Cover Presence Change over 3 years 2018-present (raster 20 m), Europe, 3-yearly",
+        "id": "https://land.copernicus.eu/api/en/products/high-resolution-layer-forests-and-tree-cover/tree-cover-presence-change-over-3-years-raster-20-m-europe-3-yearly",
+        "UID": "5c07975698e44a5992e705037e170ce7",
+        "dataset_full_format": null,
+        "dataset_download_information": {
+          "items": [
+            {
+              "@id": "03e06ebf-0ee8-4bff-9a03-91a64d7c2658",
+              "byoc_collection": "c1e547c2-47ec-4ce7-b87c-3057faba5ecc",
+              "collection": "Tree Cover Presence Change",
+              "full_format": "Geotiff",
+              "full_path": "https://csv.dataspace.copernicus.eu/CLMS/landcover_landuse/tree_cover_density/clms_vlcc_tree-cover-presence-change_europe_20m_3yearly_v1/",
+              "full_source": "CDSE_CSV",
+              "name": "RASTER"
+            },
+            {
+              "@id": "0d34a4fc-a2b0-47fb-a8d6-ff601d33fbe8",
+              "byoc_collection": "c1e547c2-47ec-4ce7-b87c-3057faba5ecc",
+              "collection": "Confidence Layer",
+              "full_format": "Geotiff",
+              "full_path": "https://csv.dataspace.copernicus.eu/CLMS/landcover_landuse/tree_cover_density/clms_vlcc_tree-cover-presence-change-confidence-layer_europe_20m_3yearly_v1/",
+              "full_source": "CDSE_CSV",
+              "name": "RASTER"
+            }
+          ]
+        },
+        "downloadable_files_count": 1,
+        "downloadable_files_keys": [
+          "@id",
+          "area",
+          "file",
+          "format",
+          "path",
+          "resolution",
+          "size",
+          "source",
+          "title",
+          "type",
+          "version",
+          "year"
+        ],
+        "downloadable_files_athens": [],
+        "downloadable_files_sample": [
+          {
+            "@id": "9a421be8-45db-4f7e-b936-ae323f30d03a",
+            "area": "",
+            "file": "",
+            "format": "",
+            "path": "",
+            "resolution": "",
+            "size": "",
+            "source": "",
+            "title": "",
+            "type": "",
+            "version": "",
+            "year": ""
+          }
+        ]
+      }
+    ]
+  },
+  "urls": {
+    "gisco_nuts3_2021_geojson": {
+      "url": "https://gisco-services.ec.europa.eu/distribution/v2/nuts/geojson/NUTS_RG_01M_2021_4326_LEVL_3.geojson",
+      "status": 200,
+      "final_url": "https://gisco-services.ec.europa.eu/distribution/v2/nuts/geojson/NUTS_RG_01M_2021_4326_LEVL_3.geojson",
+      "bytes": "28176705",
+      "type": "application/geo+json"
+    },
+    "gisco_nuts_2021_files": {
+      "url": "https://gisco-services.ec.europa.eu/distribution/v2/nuts/nuts-2021-files.json",
+      "status": 200,
+      "final_url": "https://gisco-services.ec.europa.eu/distribution/v2/nuts/nuts-2021-files.json",
+      "bytes": "102924",
+      "type": "application/json"
+    },
+    "worldcover_2021_N36E021": {
+      "url": "https://esa-worldcover.s3.eu-central-1.amazonaws.com/v200/2021/map/ESA_WorldCover_10m_2021_v200_N36E021_Map.tif",
+      "status": 200,
+      "final_url": "https://esa-worldcover.s3.eu-central-1.amazonaws.com/v200/2021/map/ESA_WorldCover_10m_2021_v200_N36E021_Map.tif",
+      "bytes": "65666104",
+      "type": "binary/octet-stream"
+    },
+    "worldcover_2021_N36E024": {
+      "url": "https://esa-worldcover.s3.eu-central-1.amazonaws.com/v200/2021/map/ESA_WorldCover_10m_2021_v200_N36E024_Map.tif",
+      "status": 200,
+      "final_url": "https://esa-worldcover.s3.eu-central-1.amazonaws.com/v200/2021/map/ESA_WorldCover_10m_2021_v200_N36E024_Map.tif",
+      "bytes": "20302054",
+      "type": "binary/octet-stream"
+    }
+  },
+  "pages": {
+    "eurostat_population_grids": {
+      "url": "https://ec.europa.eu/eurostat/web/gisco/geodata/population-distribution/population-grids",
+      "status": 200,
+      "links": [
+        "/eurostat/web/gisco/geodata/grids",
+        "/eurostat/web/gisco/geodata/population-distribution/population-grids",
+        "/eurostat/web/gisco/geodata/statistical-units/census",
+        "https://ec.europa.eu/eurostat/cache/GISCO/geodatafiles/GEOSTAT-grid-POP-1K-2011-V2-0-1.zip",
+        "https://ec.europa.eu/eurostat/cache/GISCO/geodatafiles/GEOSTAT_Grid_POP_2006_1K.zip",
+        "https://ec.europa.eu/eurostat/cache/GISCO/geodatafiles/JRC_GRID_2018.zip",
+        "https://ec.europa.eu/eurostat/web/gisco/geodata/population-distribution/population-grids",
+        "https://gisco-services.ec.europa.eu/census/2021/Eurostat_Census-GRID_2021_V1-0.zip",
+        "https://gisco-services.ec.europa.eu/census/2021/Eurostat_Census-GRID_2021_V2-0.zip",
+        "https://gisco-services.ec.europa.eu/census/2021/Eurostat_Census-GRID_2021_V2.2.zip",
+        "https://gisco-services.ec.europa.eu/census/2021/Eurostat_Census-GRID_2021_V3.zip"
+      ]
+    }
+  },
+  "census_grid_files": [
+    {
+      "url": "https://gisco-services.ec.europa.eu/census/2021/Eurostat_Census-GRID_2021_V1-0.zip",
+      "status": 200,
+      "final_url": "https://gisco-services.ec.europa.eu/census/2021/Eurostat_Census-GRID_2021_V1-0.zip",
+      "bytes": "186301606",
+      "type": "application/zip"
+    },
+    {
+      "url": "https://gisco-services.ec.europa.eu/census/2021/Eurostat_Census-GRID_2021_V2-0.zip",
+      "status": 200,
+      "final_url": "https://gisco-services.ec.europa.eu/census/2021/Eurostat_Census-GRID_2021_V2-0.zip",
+      "bytes": "728705847",
+      "type": "application/zip"
+    },
+    {
+      "url": "https://gisco-services.ec.europa.eu/census/2021/Eurostat_Census-GRID_2021_V2.2.zip",
+      "status": 200,
+      "final_url": "https://gisco-services.ec.europa.eu/census/2021/Eurostat_Census-GRID_2021_V2.2.zip",
+      "bytes": "590083269",
+      "type": "application/zip"
+    },
+    {
+      "url": "https://gisco-services.ec.europa.eu/census/2021/Eurostat_Census-GRID_2021_V3.zip",
+      "status": 200,
+      "final_url": "https://gisco-services.ec.europa.eu/census/2021/Eurostat_Census-GRID_2021_V3.zip",
+      "bytes": "566125577",
+      "type": "application/zip"
+    }
+  ]
+}
