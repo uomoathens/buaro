@@ -1,4 +1,4 @@
-# BUARO results: Attica, step 1.1
+# BUARO results: Attica, step 2
 
 Run date: 2026-11-13. Data up to week 2026-W27. Deaths dataset: `demo_r_mwk3_t`.
 
@@ -40,6 +40,10 @@ Verdict: the data show a clear heat effect on mortality.
 | Central Athens | 3.6% | 2.8% to 4.3% | 22.7% | 31.1 |
 
 ![Vulnerability](vulnerability.png)
+
+## What explains the differences between areas
+
+The area features (census grid, Urban Atlas, Street Tree Layer) are not available yet, so this test has not run.
 
 ## Is Attica adapting?
 
@@ -94,8 +98,9 @@ Every weekly number used by the model is in `data_panel.xlsx`, so anyone can che
 
 ## Honest limits
 
-- Deaths are weekly and by area (NUTS 3), not daily or by neighbourhood. Step 2 brings the 1 km census grid and satellite surface temperature.
+- Deaths are weekly and by area (NUTS 3), not daily or by neighbourhood. The area features are summarised from the 1 km census grid; step 3 adds 100 m satellite surface temperature.
 - Temperature is ERA5-Land reanalysis (about 11 km), averaged over two points per area.
 - Pandemic weeks (2020-W10 to 2022-W26) are left out of training, because COVID-19 deaths would distort the heat signal.
 - The adaptation test assumes a straight-line change over time and has few post-pandemic summers. It is repeated with each summer left out, and a trend is only reported as evidence if no single summer changes the verdict.
+- With seven areas, the comparison of heat risk with tree cover, sealing and age can show associations between areas only. Cause and effect is tested in step 3 at street scale.
 - The pooled estimates are empirical Bayes (random-effects shrinkage), a first step towards the full Bayesian layer of the framework.
