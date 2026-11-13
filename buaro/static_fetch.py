@@ -63,14 +63,32 @@ def download(url, dest, headers=None, chunk=1 << 20):
     return dest
 
 
+BROWSER = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0 Safari/537.36",
+    "Accept": "application/zip,application/octet-stream,*/*;q=0.8",
+    "Referer": "https://land.copernicus.eu/",
+}
+
+
+def probe_response(url, headers):
+    try:
+        r = requests.get(url, headers=headers, stream=True, timeout=60, allow_redirects=True)
+        info = {"status": r.status_code, "final_url": r.url, "server": r.headers.get("Server"), "type": r.headers.get("Content-Type"),
+                "length": r.headers.get("Content-Length"), "body": r.raw.read(400, decode_content=True).decode("utf-8", "replace") if r.status_code >= 400 else ""}
+        r.close()
+        return info
+    except Exception as error:
+        return {"error": str(error)[:300]}
+
+
 def download_clms(client, url, dest, attempts=8, wait=60, sleep=time.sleep):
-    tried = []
+    tried = [{"diagnostic_plain": probe_response(url, {}), "diagnostic_browser": probe_response(url, BROWSER)}]
     for attempt in range(attempts):
         for auth in (False, True):
-            headers = {}
+            headers = dict(BROWSER)
             if auth:
                 try:
-                    headers = {"Authorization": f"Bearer {client.headers(True)['Authorization'].split(' ', 1)[1]}"}
+                    headers["Authorization"] = client.headers(True)["Authorization"]
                 except Exception as error:
                     tried.append({"attempt": attempt, "auth": auth, "error": str(error)[:200]})
                     continue
@@ -210,7 +228,7 @@ def clms_layer(client, name, spec, raw, out, nuts, sleep=time.sleep):
     if result["state"] != "done" or not result["urls"]:
         return entry
     archive, tried = download_clms(client, result["urls"][0], Path(raw) / f"{name}.zip", sleep=sleep)
-    entry["download"] = tried[-6:]
+    entry["download"] = tried[:1] + tried[-4:]
     if archive is None:
         return entry
     layers = extract_layers(archive, Path(raw) / name)

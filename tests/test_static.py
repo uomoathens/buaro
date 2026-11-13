@@ -90,6 +90,7 @@ def test_static_fetch_end_to_end(tmp_path, monkeypatch):
         return Path(dest)
 
     monkeypatch.setattr(static_fetch, "download", fake_download)
+    monkeypatch.setattr(static_fetch, "probe_response", lambda url, headers: {"status": 403})
     monkeypatch.setattr(static_fetch.clms.Client, "__new__", lambda cls, *a, **k: FakeClient())
     monkeypatch.setattr(static_fetch.clms, "service_key", lambda: {"k": 1})
     monkeypatch.setattr(static_fetch.clms, "access_token", lambda key: "tok")
