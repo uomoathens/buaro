@@ -1,5 +1,5 @@
 {
-  "run": "2026-11-13T18:35:25Z",
+  "run": "2026-11-13T19:41:26Z",
   "nuts": {
     "regions": [
       "EL307",
@@ -45,18 +45,18 @@
           "ErrorTaskIds": [],
           "TaskIds": [
             {
-              "TaskID": "1262151649"
+              "TaskID": "99052648791"
             }
           ]
         },
         "tasks": [
-          "1262151649"
+          "99052648791"
         ]
       },
       "wait": {
         "state": "done",
         "urls": [
-          "https://copernicus-fme.eea.europa.eu/fmedatadownload/results/15172.zip"
+          "https://copernicus-fme.eea.europa.eu/fmedatadownload/results/15190.zip"
         ],
         "history": [
           {
@@ -84,12 +84,12 @@
               "FileStructure": "Tiled dataset"
             }
           ],
-          "DownloadURL": "https://copernicus-fme.eea.europa.eu/fmedatadownload/results/15172.zip",
-          "FMETaskId": 15172,
+          "DownloadURL": "https://copernicus-fme.eea.europa.eu/fmedatadownload/results/15190.zip",
+          "FMETaskId": 15190,
           "FileSize": 2736168,
-          "FinalizationDateTime": "2026-11-13T18:35:31.749415+00:00",
+          "FinalizationDateTime": "2026-11-13T19:41:33.627011+00:00",
           "Message": "Download process finished successfully",
-          "RegistrationDateTime": "2026-11-13T18:35:28.050009+00:00",
+          "RegistrationDateTime": "2026-11-13T19:41:30.139500+00:00",
           "Status": "Finished_ok"
         }
       },
@@ -97,7 +97,7 @@
         {
           "diagnostic_plain": {
             "status": 403,
-            "final_url": "https://copernicus-fme.eea.europa.eu/fmedatadownload/results/15172.zip",
+            "final_url": "https://copernicus-fme.eea.europa.eu/fmedatadownload/results/15190.zip",
             "server": "Microsoft-Azure-Application-Gateway/v2",
             "type": "text/html",
             "length": "179",
@@ -105,7 +105,7 @@
           },
           "diagnostic_browser": {
             "status": 200,
-            "final_url": "https://copernicus-fme.eea.europa.eu/fmedatadownload/results/15172.zip",
+            "final_url": "https://copernicus-fme.eea.europa.eu/fmedatadownload/results/15190.zip",
             "server": null,
             "type": "application/zip",
             "length": "2736168",
@@ -115,7 +115,7 @@
         {
           "diagnostic_plain": {
             "status": 403,
-            "final_url": "https://copernicus-fme.eea.europa.eu/fmedatadownload/results/15172.zip",
+            "final_url": "https://copernicus-fme.eea.europa.eu/fmedatadownload/results/15190.zip",
             "server": "Microsoft-Azure-Application-Gateway/v2",
             "type": "text/html",
             "length": "179",
@@ -123,7 +123,7 @@
           },
           "diagnostic_browser": {
             "status": 200,
-            "final_url": "https://copernicus-fme.eea.europa.eu/fmedatadownload/results/15172.zip",
+            "final_url": "https://copernicus-fme.eea.europa.eu/fmedatadownload/results/15190.zip",
             "server": null,
             "type": "application/zip",
             "length": "2736168",
@@ -184,18 +184,18 @@
           "ErrorTaskIds": [],
           "TaskIds": [
             {
-              "TaskID": "68364475363"
+              "TaskID": "14177231677"
             }
           ]
         },
         "tasks": [
-          "68364475363"
+          "14177231677"
         ]
       },
       "wait": {
         "state": "done",
         "urls": [
-          "https://copernicus-fme.eea.europa.eu/fmedatadownload/results/15173.zip"
+          "https://copernicus-fme.eea.europa.eu/fmedatadownload/results/15191.zip"
         ],
         "history": [
           {
@@ -223,12 +223,12 @@
               "FileStructure": "Tiled dataset"
             }
           ],
-          "DownloadURL": "https://copernicus-fme.eea.europa.eu/fmedatadownload/results/15173.zip",
-          "FMETaskId": 15173,
+          "DownloadURL": "https://copernicus-fme.eea.europa.eu/fmedatadownload/results/15191.zip",
+          "FMETaskId": 15191,
           "FileSize": 66270591,
-          "FinalizationDateTime": "2026-11-13T18:36:41.933183+00:00",
+          "FinalizationDateTime": "2026-11-13T19:42:43.043223+00:00",
           "Message": "Download process finished successfully",
-          "RegistrationDateTime": "2026-11-13T18:36:35.099178+00:00",
+          "RegistrationDateTime": "2026-11-13T19:42:36.081420+00:00",
           "Status": "Finished_ok"
         }
       },
@@ -236,7 +236,7 @@
         {
           "diagnostic_plain": {
             "status": 403,
-            "final_url": "https://copernicus-fme.eea.europa.eu/fmedatadownload/results/15173.zip",
+            "final_url": "https://copernicus-fme.eea.europa.eu/fmedatadownload/results/15191.zip",
             "server": "Microsoft-Azure-Application-Gateway/v2",
             "type": "text/html",
             "length": "179",
@@ -244,7 +244,7 @@
           },
           "diagnostic_browser": {
             "status": 200,
-            "final_url": "https://copernicus-fme.eea.europa.eu/fmedatadownload/results/15173.zip",
+            "final_url": "https://copernicus-fme.eea.europa.eu/fmedatadownload/results/15191.zip",
             "server": null,
             "type": "application/zip",
             "length": "66270591",
@@ -254,7 +254,7 @@
         {
           "diagnostic_plain": {
             "status": 403,
-            "final_url": "https://copernicus-fme.eea.europa.eu/fmedatadownload/results/15173.zip",
+            "final_url": "https://copernicus-fme.eea.europa.eu/fmedatadownload/results/15191.zip",
             "server": "Microsoft-Azure-Application-Gateway/v2",
             "type": "text/html",
             "length": "179",
@@ -262,7 +262,7 @@
           },
           "diagnostic_browser": {
             "status": 200,
-            "final_url": "https://copernicus-fme.eea.europa.eu/fmedatadownload/results/15173.zip",
+            "final_url": "https://copernicus-fme.eea.europa.eu/fmedatadownload/results/15191.zip",
             "server": null,
             "type": "application/zip",
             "length": "66270591",
@@ -309,6 +309,7 @@
   "cells": {
     "cells": 3820,
     "cells_with_land": 1971,
-    "regions": 7
+    "regions": 7,
+    "from": "Copernicus layers"
   }
 }
