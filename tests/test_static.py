@@ -23,6 +23,9 @@ class FakeClient:
     def __init__(self):
         self.calls = 0
 
+    def headers(self, auth):
+        return {"Authorization": "Bearer tok"} if auth else {}
+
     def post_request(self, datasets):
         return Reply({"TaskIds": [{"TaskID": "t-" + datasets[0]["FileID"][:4]}]})
 
@@ -78,6 +81,10 @@ def test_static_fetch_end_to_end(tmp_path, monkeypatch):
     }
 
     def fake_download(url, dest, headers=None, chunk=0):
+        if url.startswith("https://example.org/") and not (headers or {}).get("Authorization"):
+            response = static_fetch.requests.Response()
+            response.status_code = 403
+            raise static_fetch.requests.HTTPError(response=response)
         Path(dest).parent.mkdir(parents=True, exist_ok=True)
         shutil.copy(mapping[url], dest)
         return Path(dest)
@@ -93,8 +100,19 @@ def test_static_fetch_end_to_end(tmp_path, monkeypatch):
     assert set(report["census"]["fields"]) >= {"T", "Y_GE65", "NUTS_ID"}
     stl = report["clms"]["street_tree_layer_2021"]
     assert stl["wait"]["state"] == "done" and stl["rows"] == 7
+    assert stl["download"][-1] == {"attempt": 0, "auth": True, "status": "ok"}
     ua = report["clms"]["urban_atlas_2021"]
     assert ua["class_column"] == "code_2021" and ua["population_columns"] == ["Pop2021"]
     assert "UserEmail" not in json.dumps(report)
     for name in ["attica_nuts3.geojson", "census_grid_attica.gpkg", "street_tree_layer_2021_by_nuts3.xlsx", "urban_atlas_2021_by_nuts3.xlsx", "report.json"]:
         assert (out / name).exists()
+
+
+def test_static_fetch_reuses_cached_layers(tmp_path, monkeypatch):
+    test_static_fetch_end_to_end(tmp_path, monkeypatch)
+    calls = []
+    monkeypatch.setattr(static_fetch, "census_attica", lambda *a: calls.append("census"))
+    monkeypatch.setattr(static_fetch, "attica_nuts", lambda *a: calls.append("nuts"))
+    report = static_fetch.main(raw=str(tmp_path / "raw"), out=str(tmp_path / "static"), sleep=lambda s: None)
+    assert calls == []
+    assert report["census"]["cached"] is True and report["census"]["cells"] > 0

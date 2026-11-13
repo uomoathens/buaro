@@ -63,6 +63,28 @@ def download(url, dest, headers=None, chunk=1 << 20):
     return dest
 
 
+def download_clms(client, url, dest, attempts=8, wait=60, sleep=time.sleep):
+    tried = []
+    for attempt in range(attempts):
+        for auth in (False, True):
+            headers = {}
+            if auth:
+                try:
+                    headers = {"Authorization": f"Bearer {client.headers(True)['Authorization'].split(' ', 1)[1]}"}
+                except Exception as error:
+                    tried.append({"attempt": attempt, "auth": auth, "error": str(error)[:200]})
+                    continue
+            try:
+                download(url, dest, headers=headers)
+                tried.append({"attempt": attempt, "auth": auth, "status": "ok"})
+                return dest, tried
+            except requests.HTTPError as error:
+                code = error.response.status_code if error.response is not None else None
+                tried.append({"attempt": attempt, "auth": auth, "status": code})
+        sleep(wait)
+    return None, tried
+
+
 def request_clms(client, dataset, file_id):
     response = client.post_request([{"DatasetID": dataset, "FileID": file_id}])
     try:
@@ -187,7 +209,10 @@ def clms_layer(client, name, spec, raw, out, nuts, sleep=time.sleep):
     entry["wait"]["body"] = sanitize(json.loads(json.dumps(result["body"], default=str)))
     if result["state"] != "done" or not result["urls"]:
         return entry
-    archive = download(result["urls"][0], Path(raw) / f"{name}.zip")
+    archive, tried = download_clms(client, result["urls"][0], Path(raw) / f"{name}.zip", sleep=sleep)
+    entry["download"] = tried[-6:]
+    if archive is None:
+        return entry
     layers = extract_layers(archive, Path(raw) / name)
     entry["layers"] = [describe(p) for p in layers]
     if not layers:
@@ -210,14 +235,20 @@ def main(raw="data/raw/static", out="data/static", sleep=time.sleep):
     Path(out).mkdir(parents=True, exist_ok=True)
     report = {"run": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}
     try:
-        nuts = attica_nuts(raw, out)
-        report["nuts"] = {"regions": nuts["NUTS_ID"].tolist()}
+        cached = Path(out) / "attica_nuts3.geojson"
+        nuts = gpd.read_file(cached) if cached.exists() else attica_nuts(raw, out)
+        report["nuts"] = {"regions": nuts["NUTS_ID"].tolist(), "cached": cached.exists()}
     except Exception as error:
         report["nuts"] = {"error": str(error)[:500]}
         nuts = None
     if nuts is not None:
         try:
-            report["census"] = census_attica(raw, out, nuts)
+            grid = Path(out) / "census_grid_attica.gpkg"
+            if grid.exists():
+                cells = gpd.read_file(grid)
+                report["census"] = {"cached": True, "cells": int(len(cells)), "fields": [c for c in cells.columns if c != "geometry"]}
+            else:
+                report["census"] = census_attica(raw, out, nuts)
         except Exception as error:
             report["census"] = {"error": str(error)[:500]}
         client = clms.Client()
