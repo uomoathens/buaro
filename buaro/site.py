@@ -89,7 +89,7 @@ def build(docs_dir, meta, vuln, summary, weekly, response, robustness, panel, re
         "best2024": clean(float(best2024.iloc[0])) if not best2024.empty else None,
         "improved": int((best["skill_score"] > 0).sum()) if not best.empty else 0,
         "tested": int(len(best)),
-        "mods": records(mods, ["covariate", "label", "min", "max", "change_pp_per_sd", "change_low", "change_high", "p_value", "explained_heterogeneity", "verdict"]),
+        "mods": records(mods, [c for c in ["covariate", "label", "min", "max", "change_pp_per_sd", "change_low", "change_high", "p_value", "explained_heterogeneity", "verdict", "check_without", "check_change_pp_per_sd", "check_low", "check_high", "check_p_value", "check_verdict"] if mods is not None and c in mods.columns]),
         "areaFeatures": records(areas, [c for c in (areas.columns if areas is not None else []) if c not in ("name_el",)]),
         "sources": SOURCES,
     }

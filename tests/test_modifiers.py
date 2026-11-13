@@ -35,3 +35,15 @@ def test_missing_exposure_is_skipped(tmp_path):
     assert modifiers.load(tmp_path) is None
     mods, areas = modifiers.analyse(frame(0.0, 0.0)[0], None)
     assert mods.empty and areas.empty
+
+
+def test_low_coverage_area_is_checked_and_signal_is_reported():
+    from buaro import report
+    vuln, exposure = frame(-0.006, 0.003, seed=4)
+    exposure["population_covered"] = [1, 1, 1, 1, 1, 0.3, 1]
+    mods, _ = modifiers.analyse(vuln, exposure)
+    row = mods.set_index("covariate").loc["tree_share_pop"]
+    assert row["check_without"] == "EL306" and np.isfinite(row["check_p_value"])
+    near = mods.assign(verdict="no clear link", p_value=0.05)
+    text = "\n".join(report.modifiers_markdown(near))
+    assert "comes closest" in text and "signal, not a finding" in text and "tested again without it" in text

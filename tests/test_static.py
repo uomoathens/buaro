@@ -136,7 +136,7 @@ def test_existing_outputs_send_no_new_requests(tmp_path):
 def test_cell_features_measure_known_shares():
     cells = gpd.GeoDataFrame({"GRD_ID": ["a", "b"], "NUTS_ID": ["EL301", "EL302"], "T": [1000, -9999], "Y_GE65": [200, 0]},
                              geometry=[box(0, 0, 1000, 1000), box(1000, 0, 2000, 1000)], crs="EPSG:3035")
-    ua = gpd.GeoDataFrame({"code_2021": ["11100", "14100", "50000", "11230"]},
+    ua = gpd.GeoDataFrame({"code_2021": ["11100", "14110", "50000", "11230"]},
                           geometry=[box(0, 0, 500, 1000), box(500, 0, 800, 1000), box(800, 0, 1000, 1000), box(1000, 0, 2000, 1000)], crs="EPSG:3035")
     trees = gpd.GeoDataFrame({"STL": [1]}, geometry=[box(0, 0, 400, 1000)], crs="EPSG:3035")
     table = static_fetch.cell_features(cells, ua, "code_2021", trees).set_index("GRD_ID")
@@ -154,10 +154,15 @@ def test_cell_features_measure_known_shares():
 def test_cells_built_once(tmp_path, monkeypatch):
     test_static_fetch_end_to_end(tmp_path, monkeypatch)
     out = tmp_path / "static"
-    assert (out / "cells_attica.xlsx").exists() and (out / "exposure_by_nuts3.xlsx").exists()
+    for name in ("cells_attica.xlsx", "exposure_by_nuts3.xlsx", "cells_landuse.xlsx"):
+        assert (out / name).exists()
     report = json.loads((out / "report.json").read_text(encoding="utf-8"))
-    assert report["cells"]["cells"] > 0
-    monkeypatch.setattr(static_fetch.clms.Client, "__new__", lambda cls, *a, **k: type("Silent", (), {"post_request": lambda self, d: (_ for _ in ()).throw(AssertionError("request sent"))})())
+    assert report["cells"]["cells"] > 0 and report["cells"]["from"] == "Copernicus layers"
+    first = static_fetch.pd.read_excel(out / "exposure_by_nuts3.xlsx")
+    assert (first["green_urban_share_pop"] > 0).any()
+    monkeypatch.setattr(static_fetch.clms.Client, "__new__", lambda cls, *a, **k: (_ for _ in ()).throw(AssertionError("client created")))
     again = static_fetch.main(raw=str(tmp_path / "raw"), out=str(out), sleep=lambda s: None)
-    assert again["cells"]["cached"] is True and again["cells"]["cells"] == report["cells"]["cells"]
+    assert again["cells"]["from"] == "stored land use" and again["cells"]["cells"] == report["cells"]["cells"]
     assert all(v.get("cached") for v in again["clms"].values())
+    second = static_fetch.pd.read_excel(out / "exposure_by_nuts3.xlsx")
+    static_fetch.pd.testing.assert_frame_equal(first, second)

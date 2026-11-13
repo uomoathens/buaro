@@ -20,9 +20,10 @@ CLMS_FILES = {
 REGIONS = ["EL301", "EL302", "EL303", "EL304", "EL305", "EL306", "EL307"]
 EQUAL_AREA = "EPSG:3035"
 CELLS = "cells_attica.xlsx"
+LANDUSE = "cells_landuse.xlsx"
 EXPOSURE = "exposure_by_nuts3.xlsx"
 DENSE = {"11100", "11210"}
-GREEN = {"14100"}
+GREEN = {"14100", "14110", "14120", "14130"}
 WATER = {"50000"}
 FEATURES = ["tree_share", "green_urban_share", "dense_fabric_share", "artificial_share"]
 
@@ -243,32 +244,52 @@ def polygons(frame, columns):
     return frame[~frame.geometry.is_empty]
 
 
-def cell_features(cells, ua, group, trees):
+def census_cells(cells):
     if "GRD_ID" not in cells.columns:
         cells = cells.assign(GRD_ID=[f"cell{i}" for i in range(len(cells))])
     grid = cells.to_crs(EQUAL_AREA)[["GRD_ID", "NUTS_ID", "T", "Y_GE65", "geometry"]].copy()
     for column in ("T", "Y_GE65"):
         values = pd.to_numeric(grid[column], errors="coerce")
         grid[column] = values.where(values >= 0)
+    return grid
+
+
+def cell_areas(cells, ua, group, trees):
+    grid = census_cells(cells)
     parts = gpd.overlay(polygons(ua, [group]), grid[["GRD_ID", "geometry"]], how="intersection", keep_geom_type=True)
     parts["code"] = codes(parts[group])
     parts["area"] = parts.geometry.area
     area = parts.pivot_table(index="GRD_ID", columns="code", values="area", aggfunc="sum", fill_value=0.0)
-    pick = lambda test: area[[c for c in area.columns if test(c)]].sum(axis=1)
-    land = area.sum(axis=1) - pick(lambda c: c in WATER)
-    feats = pd.DataFrame({
-        "land_m2": land,
-        "green_urban_share": pick(lambda c: c in GREEN) / land,
-        "dense_fabric_share": pick(lambda c: c in DENSE) / land,
-        "artificial_share": pick(lambda c: str(c).startswith("1")) / land,
-    })
+    area.columns = [str(c) for c in area.columns]
     canopy = gpd.overlay(polygons(trees, []), grid[["GRD_ID", "geometry"]], how="intersection", keep_geom_type=True)
     canopy = canopy.assign(area=canopy.geometry.area).groupby("GRD_ID")["area"].sum()
-    feats["tree_share"] = canopy.reindex(feats.index).fillna(0.0) / land
+    area["tree"] = canopy.reindex(area.index).fillna(0.0)
+    area.index.name = "GRD_ID"
+    return area
+
+
+def features_from_areas(cells, area):
+    grid = census_cells(cells)
+    area = area.copy()
+    area.columns = [str(c) for c in area.columns]
+    classes = [c for c in area.columns if c != "tree"]
+    pick = lambda test: area[[c for c in classes if test(c)]].sum(axis=1)
+    land = area[classes].sum(axis=1) - pick(lambda c: c in WATER)
+    feats = pd.DataFrame({
+        "land_m2": land,
+        "tree_share": area["tree"] / land,
+        "green_urban_share": pick(lambda c: c in GREEN) / land,
+        "dense_fabric_share": pick(lambda c: c in DENSE) / land,
+        "artificial_share": pick(lambda c: c.startswith("1")) / land,
+    })
     feats = feats[feats["land_m2"] > 0]
     feats[FEATURES] = feats[FEATURES].clip(0, 1)
     table = pd.DataFrame(grid.drop(columns="geometry")).merge(feats, left_on="GRD_ID", right_index=True, how="left")
     return table[["GRD_ID", "NUTS_ID", "T", "Y_GE65", "land_m2"] + FEATURES]
+
+
+def cell_features(cells, ua, group, trees):
+    return features_from_areas(cells, cell_areas(cells, ua, group, trees))
 
 
 def exposure_by_region(table):
@@ -327,14 +348,23 @@ def clms_layer(client, name, spec, raw, out, nuts, sleep=time.sleep, previous=No
     return entry
 
 
-def cached_cells(out, old):
+def write_features(out, area):
+    grid = gpd.read_file(Path(out) / "census_grid_attica.gpkg")
+    table = features_from_areas(grid, area)
+    table.to_excel(Path(out) / CELLS, index=False)
+    exposure = exposure_by_region(table)
+    exposure.to_excel(Path(out) / EXPOSURE, index=False)
+    return {"cells": int(len(table)), "cells_with_land": int(table["land_m2"].notna().sum()), "regions": int(len(exposure))}
+
+
+def cells_from_landuse(out):
     try:
-        entry = json.loads(old.read_text(encoding="utf-8")).get("cells", {})
-    except Exception:
-        entry = {}
-    entry = dict(entry)
-    entry["cached"] = True
-    return entry
+        area = pd.read_excel(Path(out) / LANDUSE, dtype={"GRD_ID": str}).set_index("GRD_ID")
+        entry = write_features(out, area)
+        entry["from"] = "stored land use"
+        return entry
+    except Exception as error:
+        return {"error": str(error)[:500]}
 
 
 def build_cells(entries, out):
@@ -345,11 +375,11 @@ def build_cells(entries, out):
         ua = gpd.read_file(pick_layer("urban_atlas_2021", paths["urban_atlas_2021"]))
         trees = gpd.read_file(pick_layer("street_tree_layer_2021", paths["street_tree_layer_2021"]))
         grid = gpd.read_file(Path(out) / "census_grid_attica.gpkg")
-        table = cell_features(grid, ua, class_column(ua.columns), trees)
-        table.to_excel(Path(out) / CELLS, index=False)
-        exposure = exposure_by_region(table)
-        exposure.to_excel(Path(out) / EXPOSURE, index=False)
-        return {"cells": int(len(table)), "cells_with_land": int(table["land_m2"].notna().sum()), "regions": int(len(exposure))}
+        area = cell_areas(grid, ua, class_column(ua.columns), trees)
+        area.reset_index().to_excel(Path(out) / LANDUSE, index=False)
+        entry = write_features(out, area)
+        entry["from"] = "Copernicus layers"
+        return entry
     except Exception as error:
         return {"error": str(error)[:500]}
 
@@ -380,6 +410,11 @@ def main(raw="data/raw/static", out="data/static", sleep=time.sleep):
                 report["census"] = census_attica(raw, out, nuts)
         except Exception as error:
             report["census"] = {"error": str(error)[:500]}
+        if (Path(out) / LANDUSE).exists():
+            report["clms"] = {name: dict(previous.get(name) or {}, cached=True) for name in CLMS_FILES}
+            report["cells"] = cells_from_landuse(out)
+            (Path(out) / "report.json").write_text(json.dumps(report, indent=2, ensure_ascii=False, default=str), encoding="utf-8")
+            return report
         client = clms.Client()
         try:
             client.key = clms.service_key()
@@ -388,13 +423,12 @@ def main(raw="data/raw/static", out="data/static", sleep=time.sleep):
             report["clms_auth"] = f"failed: {str(error)[:200]}"
         if report["clms_auth"] == "ok":
             report["clms"] = {}
-            ready = (Path(out) / CELLS).exists() and (Path(out) / EXPOSURE).exists()
             for name, spec in CLMS_FILES.items():
                 try:
-                    report["clms"][name] = clms_layer(client, name, spec, raw, out, nuts, sleep, previous.get(name), force=not ready)
+                    report["clms"][name] = clms_layer(client, name, spec, raw, out, nuts, sleep, previous.get(name), force=True)
                 except Exception as error:
                     report["clms"][name] = {"error": str(error)[:500]}
-            report["cells"] = cached_cells(out, old) if ready else build_cells(report["clms"], out)
+            report["cells"] = build_cells(report["clms"], out)
     (Path(out) / "report.json").write_text(json.dumps(report, indent=2, ensure_ascii=False, default=str), encoding="utf-8")
     print(json.dumps({k: (v if not isinstance(v, dict) else list(v)) for k, v in report.items()}, indent=2, default=str))
     return report

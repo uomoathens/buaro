@@ -198,8 +198,22 @@ def modifiers_markdown(mods):
         scale = 100 if r.covariate.endswith(("_pop", "_census")) else 1
         lines.append(f"| {r.label} | {fmt(r.min * scale, 1)}% to {fmt(r.max * scale, 1)}% | {r.change_pp_per_sd:+.2f} pp | {r.change_low:+.2f} to {r.change_high:+.2f} | {fmt(r.p_value, 3)} | {fmt(r.explained_heterogeneity * 100, 0)}% | {r.verdict} |")
     lines.append("")
+    if "check_without" in mods.columns and mods["check_without"].notna().any():
+        left = mods["check_without"].dropna().iloc[0]
+        lines.append(f"Check: the Urban Atlas covers less than 80% of the residents of {left}, so each land feature is tested again without it.")
+        lines.append("")
+        lines.append("| Feature | Change per 1 SD, without the low-coverage area | 95% range | p | Verdict |")
+        lines.append("|---|---|---|---|---|")
+        for r in mods[mods["check_without"].notna()].itertuples():
+            lines.append(f"| {r.label} | {r.check_change_pp_per_sd:+.2f} pp | {r.check_low:+.2f} to {r.check_high:+.2f} | {fmt(r.check_p_value, 3)} | {r.check_verdict} |")
+        lines.append("")
     clear = mods[mods["verdict"] != "no clear link"]
-    if clear.empty:
+    near = mods[(mods["verdict"] == "no clear link") & (mods["p_value"] < 0.1)]
+    if clear.empty and not near.empty:
+        r = near.sort_values("p_value").iloc[0]
+        direction = "lower" if r["change_pp_per_sd"] < 0 else "higher"
+        lines.append(f"Verdict: {r['label'].lower()} comes closest. Areas where it is one standard deviation higher show about {abs(r['change_pp_per_sd']):.1f} percentage points {direction} extra deaths per +1°C, and it accounts for {fmt(r['explained_heterogeneity'] * 100, 0)}% of the differences between areas, but with p = {fmt(r['p_value'], 3)} and seven areas this is a signal, not a finding. Step 3 tests it at 100 m with satellite surface temperature.")
+    elif clear.empty:
         lines.append("Verdict: no single feature separates the areas clearly with seven areas. The differences in heat risk remain unexplained at this level, which is why step 3 moves to 100 m surface temperature.")
     else:
         names = ", ".join(clear["label"].str.lower())

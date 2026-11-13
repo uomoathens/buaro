@@ -42,6 +42,35 @@ def meta_regression(y, v, x):
     return {"intercept": float(b[0]), "slope": float(b[1]), "se": float(np.sqrt(cov[1, 1])), "tau2": tau2, "q": q, "k": k}
 
 
+MIN_COVERAGE = 0.8
+
+
+def fit_one(merged, column, total):
+    values = merged[column].astype(float)
+    ok = values.notna() & merged["se_region"].gt(0)
+    if ok.sum() < 4 or values[ok].std(ddof=1) <= 0:
+        return None
+    sd = float(values[ok].std(ddof=1))
+    z = (values[ok] - values[ok].mean()) / sd
+    fit = meta_regression(merged.loc[ok, "beta_region"], merged.loc[ok, "se_region"] ** 2, z)
+    df = fit["k"] - 2
+    t = stats.t.ppf(0.975, df)
+    low, high = fit["slope"] - t * fit["se"], fit["slope"] + t * fit["se"]
+    return {
+        "areas": int(ok.sum()),
+        "mean": float(values[ok].mean()),
+        "sd": sd,
+        "min": float(values[ok].min()),
+        "max": float(values[ok].max()),
+        "change_pp_per_sd": 100 * fit["slope"],
+        "change_low": 100 * low,
+        "change_high": 100 * high,
+        "p_value": float(2 * stats.t.sf(abs(fit["slope"] / fit["se"]), df)),
+        "explained_heterogeneity": float(max(0.0, 1 - fit["tau2"] / total)) if total > 0 else float("nan"),
+        "verdict": "lower heat risk where higher" if high < 0 else ("higher heat risk where higher" if low > 0 else "no clear link"),
+    }
+
+
 def analyse(vuln, exposure):
     if exposure is None or exposure.empty:
         return pd.DataFrame(), pd.DataFrame()
@@ -52,40 +81,26 @@ def analyse(vuln, exposure):
     if len(merged) < 4:
         return pd.DataFrame(), areas
     total = model.pool(merged["beta_region"], merged["se_region"] ** 2)["tau2"]
+    covered = merged["population_covered"].fillna(1.0) if "population_covered" in merged.columns else pd.Series(1.0, index=merged.index)
+    low_cover = merged.loc[covered < MIN_COVERAGE]
+    subset = merged.loc[covered >= MIN_COVERAGE].reset_index(drop=True)
+    total_subset = model.pool(subset["beta_region"], subset["se_region"] ** 2)["tau2"] if len(subset) >= 4 else 0.0
     rows = []
     for column, label in COVARIATES:
         if column not in merged.columns:
             continue
-        values = merged[column].astype(float)
-        ok = values.notna() & merged["se_region"].gt(0)
-        if ok.sum() < 4 or values[ok].std(ddof=1) <= 0:
+        main = fit_one(merged, column, total)
+        if main is None:
             continue
-        sd = float(values[ok].std(ddof=1))
-        z = (values[ok] - values[ok].mean()) / sd
-        fit = meta_regression(merged.loc[ok, "beta_region"], merged.loc[ok, "se_region"] ** 2, z)
-        df = fit["k"] - 2
-        t = stats.t.ppf(0.975, df)
-        p = float(2 * stats.t.sf(abs(fit["slope"] / fit["se"]), df))
-        low, high = fit["slope"] - t * fit["se"], fit["slope"] + t * fit["se"]
-        if high < 0:
-            verdict = "lower heat risk where higher"
-        elif low > 0:
-            verdict = "higher heat risk where higher"
-        else:
-            verdict = "no clear link"
-        rows.append({
-            "covariate": column,
-            "label": label,
-            "areas": int(ok.sum()),
-            "mean": float(values[ok].mean()),
-            "sd": sd,
-            "min": float(values[ok].min()),
-            "max": float(values[ok].max()),
-            "change_pp_per_sd": 100 * fit["slope"],
-            "change_low": 100 * low,
-            "change_high": 100 * high,
-            "p_value": p,
-            "explained_heterogeneity": float(max(0.0, 1 - fit["tau2"] / total)) if total > 0 else float("nan"),
-            "verdict": verdict,
-        })
+        row = {"covariate": column, "label": label, **main}
+        if not low_cover.empty and column.endswith("_pop") and len(subset) >= 5:
+            check = fit_one(subset, column, total_subset)
+            if check is not None:
+                row["check_without"] = ", ".join(low_cover["name_en"])
+                row["check_change_pp_per_sd"] = check["change_pp_per_sd"]
+                row["check_low"] = check["change_low"]
+                row["check_high"] = check["change_high"]
+                row["check_p_value"] = check["p_value"]
+                row["check_verdict"] = check["verdict"]
+        rows.append(row)
     return pd.DataFrame(rows), areas
