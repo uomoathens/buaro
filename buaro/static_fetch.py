@@ -218,7 +218,11 @@ def census_attica(raw, out, nuts):
     return {"layers": described, "used": target["path"], "cells": int(len(cells)), "fields": [c for c in cells.columns if c != "geometry"]}
 
 
-def clms_layer(client, name, spec, raw, out, nuts, sleep=time.sleep):
+def clms_layer(client, name, spec, raw, out, nuts, sleep=time.sleep, previous=None):
+    if (Path(out) / f"{name}_by_nuts3.xlsx").exists():
+        entry = dict(previous or {})
+        entry["cached"] = True
+        return entry
     entry = {"request": request_clms(client, spec["dataset"], spec["file"])}
     if not entry["request"]["tasks"]:
         return entry
@@ -251,6 +255,11 @@ def clms_layer(client, name, spec, raw, out, nuts, sleep=time.sleep):
 def main(raw="data/raw/static", out="data/static", sleep=time.sleep):
     Path(raw).mkdir(parents=True, exist_ok=True)
     Path(out).mkdir(parents=True, exist_ok=True)
+    old = Path(out) / "report.json"
+    try:
+        previous = json.loads(old.read_text(encoding="utf-8")).get("clms", {}) if old.exists() else {}
+    except Exception:
+        previous = {}
     report = {"run": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())}
     try:
         cached = Path(out) / "attica_nuts3.geojson"
@@ -279,7 +288,7 @@ def main(raw="data/raw/static", out="data/static", sleep=time.sleep):
             report["clms"] = {}
             for name, spec in CLMS_FILES.items():
                 try:
-                    report["clms"][name] = clms_layer(client, name, spec, raw, out, nuts, sleep)
+                    report["clms"][name] = clms_layer(client, name, spec, raw, out, nuts, sleep, previous.get(name))
                 except Exception as error:
                     report["clms"][name] = {"error": str(error)[:500]}
     (Path(out) / "report.json").write_text(json.dumps(report, indent=2, ensure_ascii=False, default=str), encoding="utf-8")

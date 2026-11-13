@@ -117,3 +117,17 @@ def test_static_fetch_reuses_cached_layers(tmp_path, monkeypatch):
     report = static_fetch.main(raw=str(tmp_path / "raw"), out=str(tmp_path / "static"), sleep=lambda s: None)
     assert calls == []
     assert report["census"]["cached"] is True and report["census"]["cells"] > 0
+
+
+def test_existing_outputs_send_no_new_requests(tmp_path):
+    from buaro import static_fetch
+    out = tmp_path / "out"
+    out.mkdir()
+    (out / "urban_atlas_2021_by_nuts3.xlsx").write_bytes(b"x")
+
+    class Silent:
+        def post_request(self, *a, **k):
+            raise AssertionError("request sent")
+
+    entry = static_fetch.clms_layer(Silent(), "urban_atlas_2021", static_fetch.CLMS_FILES["urban_atlas_2021"], tmp_path / "raw", out, None, previous={"rows": 147})
+    assert entry == {"rows": 147, "cached": True}
