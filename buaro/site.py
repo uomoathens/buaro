@@ -107,7 +107,8 @@ def build(docs_dir, meta, vuln, summary, weekly, response, robustness, panel, re
         "sources": SOURCES,
     }
     text = json.dumps(payload, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
-    html = TEMPLATE.read_text(encoding="utf-8").replace("__DATA__", text)
+    built = pd.Timestamp.now("UTC").strftime("%Y-%m-%d %H:%M")
+    html = TEMPLATE.read_text(encoding="utf-8").replace("__DATA__", text).replace("__BUILT__", built)
     (docs / "index.html").write_text(html, encoding="utf-8")
     (docs / ".nojekyll").write_text("", encoding="utf-8")
     return docs / "index.html"
