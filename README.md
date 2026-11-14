@@ -1,5 +1,7 @@
 # BUARO
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24221770.svg)](https://doi.org/10.5281/zenodo.24221770)
+
 **Bayesian Urban Adaptation and Resilience Optimization, built on real European data.**
 
 BUARO turns the Bayesian Urban Adaptation and Resilience Optimization Model from Dimitrios Sargiotis, *AI for Planetary Resilience* (Springer, 2027, Section 1.5.2, Table 1.29, [doi:10.1007/978-3-032-35540-9](https://doi.org/10.1007/978-3-032-35540-9)) into open software that runs on real data.
@@ -128,7 +130,9 @@ Copyright © 2026 Dimitrios Sargiotis, National Technical University of Athens.
 
 Licensed under the EUPL v1.2, the open source licence of the European Union. Anyone may use, study and adapt BUARO; whoever distributes it or offers it as an online service, changed or unchanged, must do so under the same licence, keep this copyright notice and make the source code available. The full text is in [LICENSE](LICENSE).
 
-The method develops the Bayesian Urban Adaptation and Resilience Optimization Model of the book *AI for Planetary Resilience* (D. Sargiotis, Springer Nature Switzerland, 2027). If you use BUARO, please cite it as given in [CITATION.cff](CITATION.cff), or with the "Cite this repository" button on GitHub.
+The method develops the Bayesian Urban Adaptation and Resilience Optimization Model of the book *AI for Planetary Resilience* (D. Sargiotis, Springer Nature Switzerland, 2027). If you use BUARO, please cite it as given in [CITATION.cff](CITATION.cff), or with the "Cite this repository" button on GitHub:
+
+> Sargiotis, D. (2026). *BUARO: Bayesian Urban Adaptation and Resilience Optimization* (Version 1.0.0) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.24221770
 
 The data keep their own licences, listed in the table of sources above.
 
