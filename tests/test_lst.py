@@ -146,3 +146,28 @@ def test_scene_in_utm_is_reprojected(tmp_path):
     out = lst.scene_lst(str(tmp_path / "st.tif"), str(tmp_path / "qa.tif"), g)
     assert np.isfinite(out).mean() > 0.95
     assert np.allclose(out[np.isfinite(out)], 30, atol=0.01)
+
+
+def test_years_without_scene_log_are_rebuilt(tmp_path, monkeypatch):
+    static = tmp_path / "static"
+    static.mkdir()
+    land, dem, years = synthetic(years=range(2016, 2026))
+    g = small_grid(100, 100)
+    monkeypatch.setattr(lst.grid100, "spec", lambda d: g)
+    land.to_parquet(static / "landuse_100m.parquet", index=False)
+    out = tmp_path / "lst"
+    out.mkdir()
+    for y in range(2016, 2026):
+        years[years["year"] == y].to_parquet(out / f"lst_{y}.parquet", index=False)
+    calls = []
+
+    def fake_year(session, g_, bbox, year, urban, sleep=None):
+        calls.append(year)
+        return years[years["year"] == year].copy(), [{"id": f"x{year}", "used": True}, {"id": f"y{year}", "used": False}]
+
+    monkeypatch.setattr(lst, "year_summary", fake_year)
+    monkeypatch.setattr(lst, "dem_grid", lambda s, g_, b: dem["elevation"].to_numpy().reshape(100, 100))
+    lst.main(["--static", str(static), "--out", str(out), "--results", str(tmp_path / "r"), "--last-year", "2025"])
+    assert calls == list(range(2014, 2026))
+    summary = json.loads((out / "summary.json").read_text())
+    assert summary["scenes_used"] == 12 and summary["scenes_found"] == 24

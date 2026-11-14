@@ -358,9 +358,14 @@ def main(argv=None):
     session = requests.Session()
     urban = urban_mask(args.static, g)
     report["urban_cells"] = int(urban.sum())
+    logged = set()
+    if (out / "scenes.xlsx").exists():
+        known = pd.read_excel(out / "scenes.xlsx")
+        if "summer" in known.columns:
+            logged = set(int(y) for y in known["summer"].dropna().unique())
     for year in range(FIRST_YEAR, last + 1):
         path = out / f"lst_{year}.parquet"
-        if path.exists():
+        if path.exists() and year in logged:
             report["years"][year] = {"cached": True}
             continue
         try:
@@ -406,7 +411,9 @@ def main(argv=None):
             report["map_error"] = str(error)[:300]
         (out / "summary.json").write_text(json.dumps({
             "effects": eff.to_dict("records"), "curve": curve.to_dict("records"), "unseen": by_year.to_dict("records"),
-            "validation": validation, "summers": summary.to_dict("records"), "scenes_used": int(summary["scenes"].sum()),
+            "validation": validation, "summers": summary.to_dict("records"),
+            "scenes_used": int(scenes["used"].fillna(False).astype(bool).sum()) if "used" in scenes.columns and len(scenes) else int(summary["scenes"].sum()),
+            "scenes_found": int(len(scenes)),
             "map": report.get("map"),
         }, indent=2, default=float), encoding="utf-8")
     else:
