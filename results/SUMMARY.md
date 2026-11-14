@@ -113,6 +113,22 @@ The features explain 9% of the differences between cells of the same square in t
 
 The climate projections (Copernicus Interactive Climate Atlas, CMIP6) are not available yet, so this step has not run.
 
+## What prevents heat deaths: measures
+
+Two independent lines of evidence are set side by side, because they answer different questions.
+
+- **Cooling measured from space** (step 3): more street trees where people live lower the surface temperature. Only part of that reaches the air people breathe: across 392 European urban areas, trees cool the daytime air about 12 times less than the surface (Du et al. 2024, Environmental Research Letters). The low end uses that ratio, the high end assumes the air cools as much as the surface.
+- **Difference between areas** (step 2): areas with more green and more trees lose fewer people per degree of heat. Bringing each area up to the best-covered area of Attica stays inside what Attica already shows; it includes everything that comes with greener neighbourhoods, so it is an upper bound.
+
+| Measure | Evidence | Heat deaths avoided per summer, today's climate | Range | Share of heat deaths | New cover needed |
+|---|---|---|---|---|---|
+| Street trees +10 points | cooling measured from space | 9 | 8 to 111 | 1.0% | 6,080 ha |
+| Street trees +5 points | cooling measured from space | 5 | 4 to 57 | 0.5% | 3,040 ha |
+| Green urban areas up to the best area of Attica | difference between areas | 301 | 167 to 431 | 31.3% | 3,395 ha |
+| Street trees up to the best area of Attica | difference between areas | 234 | -2 to 458 | 24.3% | 1,578 ha |
+
+Verdict: the cooling that trees bring to the air explains only a small part of the protection seen in greener areas (9 deaths a summer for “Street trees +10 points”, against 301 for “Green urban areas up to the best area of Attica”). Greener neighbourhoods most likely protect people in other ways as well, such as shade where people walk and wait, cooler homes, and the housing and health that often come with them; with seven areas these cannot yet be told apart. Trees are worth planting for cooling, but most of the gain seen between areas lies in what makes green neighbourhoods safer.
+
 ## Is Attica adapting?
 
 The model lets the heat effect change linearly from year to year. A negative trend means each degree of heat is becoming less deadly.
