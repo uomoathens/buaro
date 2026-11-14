@@ -18,7 +18,8 @@ class Session:
             body = GWL_CSV
             return type("R", (), {"raise_for_status": lambda self: None, "text": body})()
         form = {"inputs": {"variable": {"schema": {"enum": ["monthly_daily_maximum_temperature", "monthly_extreme_hot_days"]}},
-                           "experiment": {"schema": {"enum": list(hazard.EXPERIMENTS)}}}}
+                           "experiment": {"schema": {"enum": list(hazard.EXPERIMENTS)}},
+                           "domain": {"schema": {"enum": ["europe", "global"]}}}}
         return type("R", (), {"raise_for_status": lambda self: None, "json": lambda self: form})()
 
 
@@ -61,7 +62,7 @@ def test_hazard_builds_warming_level_deltas(tmp_path):
     report = hazard.main(["--raw", str(tmp_path / "raw"), "--out", str(tmp_path / "out")], session=Session(), client=client)
     assert report["variable"] == "monthly_daily_maximum_temperature"
     assert {r["experiment"] for r in client.requests} == set(hazard.EXPERIMENTS)
-    assert all(r["bias_adjustment"] == "no_bias_adjustment" for r in client.requests)
+    assert all(r["bias_adjustment"] == "no_bias_adjustment" and r["domain"] == "global" for r in client.requests)
     ens = pd.read_excel(tmp_path / "out" / hazard.DELTAS, sheet_name="Ensemble")
     july = ens[ens["month"] == 7].set_index("level")
     assert july.loc[1.5, "delta_median"] > 0

@@ -116,6 +116,17 @@ footer{font-size:13px;color:var(--text-muted);margin-top:24px}
 <details><summary>Show as table</summary><div id="table-outlook"></div><div id="table-outlook-areas"></div></details>
 </section>
 
+<section id="sec-measures">
+<h2>What prevents heat deaths: measures</h2>
+<p class="lead">Two independent lines of evidence side by side. <b>Cooling measured from space</b>: more street trees where people live lower the surface temperature (step 3); only part of that reaches the air, since across 392 European urban areas trees cool the daytime air about 12 times less than the surface (Du et al. 2024). <b>Difference between areas</b>: greener areas lose fewer people per degree of heat (step 2); bringing each area up to the best-covered area of Attica stays inside what Attica already shows, and includes everything that comes with greener neighbourhoods, so it is an upper bound.</p>
+<p class="lead" style="font-size:13px;margin:0 0 6px"><span style="color:var(--s1)">&#9679;</span> cooling measured from space &nbsp; <span style="color:var(--s2)">&#9679;</span> difference between areas. Heat deaths avoided per summer in Attica, today's climate.</p>
+<div class="chart" id="chart-measures"></div>
+<div class="verdict" id="verdict-measures"></div>
+<div class="controls" style="margin-top:16px"><label>Measure <select id="measure"></select></label></div>
+<div class="chart" id="chart-measures-areas"></div>
+<details><summary>Show as table</summary><div id="table-measures"></div><div id="table-measures-areas"></div></details>
+</section>
+
 <section>
 <h2>Each summer's response to heat, without any model</h2>
 <p class="lead">Extra deaths in weeks 26 to 36 above the calm-week level of the same year, divided by the heat the summer brought (degree-weeks above the area thresholds). A lower bar means each degree of heat cost fewer lives.</p>
@@ -219,7 +230,7 @@ hit.addEventListener('mousemove',ev=>{const r=svg.getBoundingClientRect();showTi
 }
 
 function dotChart(host,opts){
-const rows=opts.rows;const rowH=40;const W=1000,m={l:opts.left||170,r:rows.some(r=>r.flag)?190:70,t:10,b:36};const H=m.t+m.b+rows.length*rowH;
+const rows=opts.rows;const rowH=40;const W=1000,m={l:opts.left||170,r:opts.right||(rows.some(r=>r.flag)?190:70),t:10,b:36};const H=m.t+m.b+rows.length*rowH;
 const {svg,g,iw,ih}=frame(host,W,H,m);
 const all=[0];rows.forEach(r=>{all.push(r.lo,r.hi)});
 const ticks=nice(Math.min(...all),Math.max(...all),5);const lo=ticks[0],hi=ticks[ticks.length-1];
@@ -347,6 +358,24 @@ table('table-outlook',['Global warming','Summer warming in Athens','Heat deaths 
 const A=D.outlookAreas||[];const lv=[...new Set(A.map(a=>a.level))];const names=[...new Set(A.map(a=>a.name_en))];
 table('table-outlook-areas',['Area'].concat(lv.map(lab)),names.map(n=>[n].concat(lv.map(l=>{const a=A.find(x=>x.name_en===n&&x.level===l);return a?fmt(a.heat_deaths_per_summer_central,0):'n/a'}))))}
 
+const measureSel=document.getElementById('measure');
+[...new Set((D.measures||[]).map(m=>m.measure))].forEach(m=>{const o=document.createElement('option');o.value=m;o.textContent=m;measureSel.appendChild(o)});
+function measures(){const M=(D.measures||[]).filter(m=>m.level===0);const sec=document.getElementById('sec-measures');
+if(!M.length){sec.style.display='none';return}
+const order=M.slice().sort((a,b)=>(a.kind===b.kind?a.deaths_avoided-b.deaths_avoided:(a.kind==='physical'?-1:1)));
+const col=m=>m.kind==='physical'?css('--s1'):css('--s2');
+const tip=m=>'<b>'+m.measure+'</b>'+tipRow(null,'Evidence',m.evidence)+tipRow(null,'Deaths avoided per summer',fmt(m.deaths_avoided,0))+tipRow(null,'Range',fmt(m.deaths_avoided_low,0)+' to '+fmt(m.deaths_avoided_high,0))+tipRow(null,'Share of heat deaths',fmt(m.share_avoided*100,1)+'%')+tipRow(null,'New cover',fmt(m.new_cover_ha,0)+' ha');
+dotChart(document.getElementById('chart-measures'),{rows:order.map(m=>({label:m.measure,v:m.deaths_avoided,lo:m.deaths_avoided_low,hi:m.deaths_avoided_high,valueLabel:fmt(m.deaths_avoided,0),color:col(m),tip:tip(m)})),left:330,tickFmt:v=>fmt(v,0)});
+const phys=M.filter(m=>m.kind==='physical').sort((a,b)=>b.deaths_avoided-a.deaths_avoided)[0],assoc=M.filter(m=>m.kind==='association').sort((a,b)=>b.deaths_avoided-a.deaths_avoided)[0];
+document.getElementById('verdict-measures').textContent=(phys&&assoc)?'The cooling that trees bring to the air explains only a small part of the protection seen in greener areas: about '+fmt(phys.deaths_avoided,0)+' deaths a summer for “'+phys.measure+'”, against about '+fmt(assoc.deaths_avoided,0)+' for “'+assoc.measure+'”. Greener neighbourhoods most likely protect people in other ways as well, such as shade where people walk and wait, cooler homes, and the housing and health that often come with them; with seven areas these cannot yet be told apart.':'';
+const sel=measureSel.value||M[0].measure;const A=(D.measuresAreas||[]).filter(m=>m.level===0&&m.measure===sel).sort((a,b)=>a.deaths_avoided-b.deaths_avoided);
+dotChart(document.getElementById('chart-measures-areas'),{right:170,rows:A.map(m=>({label:m.name_en,v:m.deaths_avoided,lo:m.deaths_avoided_low,hi:m.deaths_avoided_high,valueLabel:fmt(m.deaths_avoided,1)+(m.new_cover_ha>0?'  ('+fmt(m.deaths_avoided_per_100ha,2)+' per 100 ha)':''),color:col(m),
+tip:'<b>'+m.name_en+'</b>'+tipRow(null,'Deaths avoided per summer',fmt(m.deaths_avoided,1))+tipRow(null,'Range',fmt(m.deaths_avoided_low,1)+' to '+fmt(m.deaths_avoided_high,1))+tipRow(null,'Increase',fmt(m.increase_points,1)+' points')+tipRow(null,'New cover',fmt(m.new_cover_ha,0)+' ha')+tipRow(null,'Per 100 ha of new cover',fmt(m.deaths_avoided_per_100ha,2))})),left:170,tickFmt:v=>fmt(v,0)});
+table('table-measures',['Measure','Evidence','Deaths avoided per summer','Range','Share of heat deaths','New cover (ha)'],M.map(m=>[m.measure,m.evidence,fmt(m.deaths_avoided,0),fmt(m.deaths_avoided_low,0)+' to '+fmt(m.deaths_avoided_high,0),fmt(m.share_avoided*100,1)+'%',fmt(m.new_cover_ha,0)]));
+const all=(D.measuresAreas||[]).filter(m=>m.level===0);
+table('table-measures-areas',['Area','Measure','Increase (points)','Deaths avoided','Range','New cover (ha)','Per 100 ha'],all.map(m=>[m.name_en,m.measure,fmt(m.increase_points,1),fmt(m.deaths_avoided,1),fmt(m.deaths_avoided_low,1)+' to '+fmt(m.deaths_avoided_high,1),fmt(m.new_cover_ha,0),m.new_cover_ha>0?fmt(m.deaths_avoided_per_100ha,2):'n/a']))}
+measureSel.addEventListener('change',measures);
+
 function response(){const R=D.response;const c=css('--s1');
 barChart(document.getElementById('chart-response'),{categories:R.map(r=>String(r.year)),series:[{name:'Extra deaths per degree-week',values:R.map(r=>r.excess_per_degree_week),color:c}],labels:true,ydec:0,height:280,tip:(i)=>{const r=R[i];return '<b>Summer '+r.year+'</b>'+tipRow(null,'Extra deaths per degree-week',fmt(r.excess_per_degree_week,1))+tipRow(null,'Extra deaths, weeks 26 to 36',fmt(r.summer_excess_deaths))+tipRow(null,'Degree-weeks of heat',fmt(r.degree_weeks_above_threshold,1))+tipRow(null,'Hottest week, mean max',fmt(r.hottest_week_tmax,1)+' °C')}});
 table('table-response',['Summer','Extra deaths, weeks 26 to 36','Degree-weeks','Extra deaths per degree-week','Hottest week (°C)'],R.map(r=>[r.year,fmt(r.summer_excess_deaths),fmt(r.degree_weeks_above_threshold,1),fmt(r.excess_per_degree_week,1),fmt(r.hottest_week_tmax,1)]))}
@@ -367,7 +396,7 @@ table('table-compare',['Baseline','Summer','Recorded deaths','Forecast with heat
 document.getElementById('sources').innerHTML=D.sources.map(s=>'<li><a href="'+s.url+'">'+s.name+'</a>: '+s.what+'</li>').join('');
 document.getElementById('footer').textContent='Framework: D. Sargiotis, AI for Planetary Resilience, Springer Nature Switzerland, 2027. Contains modified Copernicus Climate Change Service information. Neither the European Commission nor ECMWF is responsible for any use of this information.';
 
-function redraw(){tiles();summer();vuln();mods();surface();outlook();response();loo();compare()}
+function redraw(){tiles();summer();vuln();mods();surface();outlook();measures();response();loo();compare()}
 yearSel.addEventListener('change',summer);areaSel.addEventListener('change',summer);
 let rt;window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(redraw,150)});
 if(window.matchMedia)window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',redraw);

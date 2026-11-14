@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 import yaml
 
-from . import backtest, climate, data, eurostat, future, model, modifiers, report, site
+from . import backtest, climate, data, eurostat, future, model, modifiers, report, scenarios, site
 
 
 def load_config(path):
@@ -211,7 +211,11 @@ def main(argv=None):
     adaptation["depends_on"] = flips
     response = summer_response(panel, vuln)
     mods, areas = modifiers.analyse(vuln, modifiers.load(args.static))
-    outlook, outlook_areas = future.project(panel, vuln, future.load(args.climate))
+    ensemble = future.load(args.climate)
+    outlook, outlook_areas = future.project(panel, vuln, ensemble)
+    lst_path = Path(args.lst) / "summary.json"
+    surface = json.loads(lst_path.read_text(encoding="utf-8")) if lst_path.exists() else None
+    measures, measures_areas = scenarios.evaluate(panel, vuln, mods, areas, surface, ensemble, args.static)
     se = np.sqrt(pooled["pooled_var"])
     ref = config["reference"]
     ref_attica = ref["greece_heat_deaths_2024"] * ref["attica_population_2021"] / ref["greece_population_2021"]
@@ -262,6 +266,7 @@ def main(argv=None):
             {"item": "Street tree cover", "source": "Copernicus Land Monitoring Service, Urban Atlas Street Tree Layer 2021", "link": "https://land.copernicus.eu/en/products/urban-atlas"},
             {"item": "Summer warming at 1.5°C, 2°C and 3°C", "source": "Copernicus Climate Change Service, Gridded dataset underpinning the Copernicus Interactive Climate Atlas (CMIP6)", "link": "https://cds.climate.copernicus.eu/datasets/multi-origin-c3s-atlas"},
             {"item": "Years each model reaches each warming level", "source": "IPCC AR6 WGI Atlas, global warming levels", "link": "https://github.com/IPCC-WG1/Atlas/tree/main/warming-levels"},
+            {"item": "Air cooling relative to surface cooling of urban trees", "source": "Du et al. 2024, Environmental Research Letters 19:044037 (392 European urban clusters)", "link": "https://doi.org/10.1088/1748-9326/ad30a3"},
             {"item": "Cross-check", "source": ref["label"], "link": "https://doi.org/10.1038/s41591-025-03954-7"},
         ]
     )
@@ -282,18 +287,18 @@ def main(argv=None):
             ("Heat modifiers", mods, ["Random-effects meta-regression of each area's heat effect on one area feature at a time. change_pp_per_sd: change in extra deaths per +1°C, in percentage points, for one standard deviation of the feature across areas, with 95% range (t distribution). With seven areas this is an association between areas, not proof of cause."]),
             ("Warming levels", outlook, ["Heat-related deaths per summer (weeks 22 to 39) in Attica if the summers 2015 to 2025 happened at a global warming of 1.5°C, 2°C or 3°C, with today's population and today's vulnerability. Level 0 is today's climate. Summer warming per month is the median of the CMIP6 models in the Copernicus Interactive Climate Atlas, at the 20-year windows of the IPCC AR6 Atlas, relative to 2011-2030. Low and high combine the 10th and 90th model percentiles with the 95% range of vulnerability."]),
             ("Warming levels by area", outlook_areas, None),
+            ("Measures", measures, ["Heat-related deaths avoided per summer (weeks 22 to 39) in Attica. Physical: street tree cover raised where people live; the surface cooling measured with Landsat (step 3) is turned into air cooling with the European ratio of air to surface cooling efficiency of urban trees (0.006 / 0.075 °C per % tree cover, Du et al. 2024, Environmental Research Letters 19:044037); the high end assumes the air cools as much as the surface. Association: each area brought up to the best-covered area of Attica, using the difference in heat risk between areas (step 2); this includes everything that comes with greener neighbourhoods and is an upper bound."]),
+            ("Measures by area", measures_areas, None),
             ("Area exposure", areas, ["Area features weighted by the residents of each 1 km census cell (Eurostat Census 2021 grid) and measured on Copernicus Urban Atlas 2021 and its Street Tree Layer."]),
             ("Sources", sources, None),
         ],
     )
     panel_cols = ["geo", "week", "date", "year", "isoweek", "deaths", "tmax", "tmean", "tmax_lag1", "tmean_lag1", "population", "share_65plus", "pandemic"]
     report.workbook(out / "data_panel.xlsx", [("Panel", panel[panel_cols], ["Weekly deaths (Eurostat), ERA5-Land temperature and population used by the model."])])
-    lst_path = Path(args.lst) / "summary.json"
-    surface = json.loads(lst_path.read_text(encoding="utf-8")) if lst_path.exists() else None
-    text = report.summary_markdown(meta, vuln, summary, comparison, ref, response, mods, surface, outlook)
+    text = report.summary_markdown(meta, vuln, summary, comparison, ref, response, mods, surface, outlook, measures)
     (out / "SUMMARY.md").write_text(text, encoding="utf-8")
     report.write_meta(out / "run_metadata.json", meta)
-    site.build(args.docs, meta, vuln, summary, weekly, response, robustness, panel, regions, mods=mods, areas=areas, surface=surface, outlook=outlook, outlook_areas=outlook_areas,
+    site.build(args.docs, meta, vuln, summary, weekly, response, robustness, panel, regions, mods=mods, areas=areas, surface=surface, outlook=outlook, outlook_areas=outlook_areas, measures=measures, measures_areas=measures_areas,
                files=[out / "buaro_attica_step1.xlsx", out / "data_panel.xlsx", Path(args.static) / "cells_attica.xlsx", out / "buaro_attica_lst.xlsx"],
                images=[Path(args.lst) / "lst_map.png"])
     print(text)

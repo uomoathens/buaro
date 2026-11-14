@@ -103,7 +103,7 @@ def read_point(paths, variable_hint="tx"):
     return data
 
 
-def retrieve(experiment, variable, raw, key, client=None):
+def retrieve(experiment, variable, raw, key, client=None, domain=None):
     target = Path(raw) / f"tx_{experiment}.zip"
     if not target.exists():
         if client is None:
@@ -111,6 +111,8 @@ def retrieve(experiment, variable, raw, key, client=None):
             client = cdsapi.Client(url=CDS, key=key, quiet=True, progress=False)
         request = {"origin": "cmip6", "experiment": experiment, "period": EXPERIMENTS[experiment], "variable": variable,
                    "bias_adjustment": "no_bias_adjustment", "area": AREA}
+        if domain:
+            request["domain"] = domain
         client.retrieve(DATASET, request).download(str(target))
     paths = []
     if zipfile.is_zipfile(target):
@@ -184,6 +186,8 @@ def main(argv=None, session=None, client=None):
         report["form"] = {"error": str(error)[:400]}
     variable = pick_variable(options)
     report["variable"] = variable
+    domain = "global" if "global" in options.get("domain", []) else None
+    report["domain"] = domain
     series_path = out / SERIES
     if series_path.exists():
         series = pd.read_excel(series_path)
@@ -197,7 +201,7 @@ def main(argv=None, session=None, client=None):
             parts, status = [], {}
             for experiment in EXPERIMENTS:
                 try:
-                    data = read_point(retrieve(experiment, variable, raw, key, client))
+                    data = read_point(retrieve(experiment, variable, raw, key, client, domain))
                     data["experiment"] = experiment
                     parts.append(data)
                     status[experiment] = {"members": int(data["model_run"].nunique()), "years": [int(data["year"].min()), int(data["year"].max())]}

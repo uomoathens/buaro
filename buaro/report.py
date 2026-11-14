@@ -307,7 +307,34 @@ def outlook_markdown(outlook):
     return lines
 
 
-def summary_markdown(meta, vuln, summary, comparison, reference, response=None, mods=None, surface=None, outlook=None):
+def measures_markdown(measures):
+    lines = ["## What prevents heat deaths: measures", ""]
+    if measures is None or measures.empty:
+        lines.append("The measures need the results of steps 2 and 3, which are not available yet.")
+        lines.append("")
+        return lines
+    today = measures[measures["level"] == 0]
+    lines.append("Two independent lines of evidence are set side by side, because they answer different questions.")
+    lines.append("")
+    lines.append("- **Cooling measured from space** (step 3): more street trees where people live lower the surface temperature. Only part of that reaches the air people breathe: across 392 European urban areas, trees cool the daytime air about 12 times less than the surface (Du et al. 2024, Environmental Research Letters). The low end uses that ratio, the high end assumes the air cools as much as the surface.")
+    lines.append("- **Difference between areas** (step 2): areas with more green and more trees lose fewer people per degree of heat. Bringing each area up to the best-covered area of Attica stays inside what Attica already shows; it includes everything that comes with greener neighbourhoods, so it is an upper bound.")
+    lines.append("")
+    lines.append("| Measure | Evidence | Heat deaths avoided per summer, today's climate | Range | Share of heat deaths | New cover needed |")
+    lines.append("|---|---|---|---|---|---|")
+    for r in today.sort_values(["kind", "measure"], ascending=[False, True]).itertuples():
+        lines.append(f"| {r.measure} | {r.evidence} | {r.deaths_avoided:,.0f} | {r.deaths_avoided_low:,.0f} to {r.deaths_avoided_high:,.0f} | {r.share_avoided * 100:.1f}% | {r.new_cover_ha:,.0f} ha |")
+    lines.append("")
+    phys = today[today["kind"] == "physical"]
+    assoc = today[today["kind"] == "association"]
+    if not phys.empty and not assoc.empty:
+        p = phys.sort_values("deaths_avoided").iloc[-1]
+        a = assoc.sort_values("deaths_avoided").iloc[-1]
+        lines.append(f"Verdict: the cooling that trees bring to the air explains only a small part of the protection seen in greener areas ({p['deaths_avoided']:,.0f} deaths a summer for “{p['measure']}”, against {a['deaths_avoided']:,.0f} for “{a['measure']}”). Greener neighbourhoods most likely protect people in other ways as well, such as shade where people walk and wait, cooler homes, and the housing and health that often come with them; with seven areas these cannot yet be told apart. Trees are worth planting for cooling, but most of the gain seen between areas lies in what makes green neighbourhoods safer.")
+        lines.append("")
+    return lines
+
+
+def summary_markdown(meta, vuln, summary, comparison, reference, response=None, mods=None, surface=None, outlook=None, measures=None):
     winner = meta["baseline_selected"]
     best = summary[summary["baseline"] == winner] if not summary.empty else summary
     lines = []
@@ -357,6 +384,7 @@ def summary_markdown(meta, vuln, summary, comparison, reference, response=None, 
     lines.extend(modifiers_markdown(mods))
     lines.extend(surface_markdown(surface))
     lines.extend(outlook_markdown(outlook))
+    lines.extend(measures_markdown(measures))
     a = meta["adaptation"]
     lines.append("## Is Attica adapting?")
     lines.append("")

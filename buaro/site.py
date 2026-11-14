@@ -17,6 +17,7 @@ SOURCES = [
     {"name": "Copernicus DEM GLO-30", "url": "https://dataspace.copernicus.eu/explore-data/data-collections/copernicus-contributing-missions/collections-description/COP-DEM", "what": "elevation, 30 m"},
     {"name": "Copernicus Climate Change Service, Gridded dataset underpinning the Copernicus Interactive Climate Atlas", "url": "https://cds.climate.copernicus.eu/datasets/multi-origin-c3s-atlas", "what": "CMIP6 monthly mean of daily maximum temperature, 1850 to 2100"},
     {"name": "IPCC AR6 WGI Atlas, global warming levels", "url": "https://github.com/IPCC-WG1/Atlas/tree/main/warming-levels", "what": "the 20-year window in which each CMIP6 model reaches 1.5°C, 2°C and 3°C"},
+    {"name": "Du et al. 2024, Environmental Research Letters 19:044037", "url": "https://doi.org/10.1088/1748-9326/ad30a3", "what": "air versus surface cooling efficiency of urban trees in 392 European urban clusters"},
     {"name": "EuroMOMO, methods", "url": "https://www.euromomo.eu/how-it-works/methods", "what": "calm spring and autumn weeks as the basis of expected mortality"},
     {"name": "Janoš et al. (2025), Nature Medicine", "url": "https://doi.org/10.1038/s41591-025-03954-7", "what": "heat-related mortality in Europe during 2024, used as a cross-check"},
     {"name": "European Commission, COM(2026) 720", "url": "https://climate.ec.europa.eu/document/download/476ef20a-0c66-4be2-a104-70ba96622477_en?filename=com_2026_720_en.pdf", "what": "Communication on the EU Framework for Climate Resilience"},
@@ -67,7 +68,7 @@ def backtest_payload(weekly, winner):
     return out
 
 
-def build(docs_dir, meta, vuln, summary, weekly, response, robustness, panel, regions, mods=None, areas=None, surface=None, outlook=None, outlook_areas=None, files=(), images=()):
+def build(docs_dir, meta, vuln, summary, weekly, response, robustness, panel, regions, mods=None, areas=None, surface=None, outlook=None, outlook_areas=None, measures=None, measures_areas=None, files=(), images=()):
     docs = Path(docs_dir)
     data_dir = docs / "data"
     data_dir.mkdir(parents=True, exist_ok=True)
@@ -100,6 +101,8 @@ def build(docs_dir, meta, vuln, summary, weekly, response, robustness, panel, re
         "areaFeatures": records(areas, [c for c in (areas.columns if areas is not None else []) if c not in ("name_el",)]),
         "surface": clean(surface) if surface else None,
         "outlook": records(outlook, list(outlook.columns)) if outlook is not None and not outlook.empty else [],
+        "measures": records(measures, list(measures.columns)) if measures is not None and not measures.empty else [],
+        "measuresAreas": records(measures_areas, list(measures_areas.columns)) if measures_areas is not None and not measures_areas.empty else [],
         "outlookAreas": records(outlook_areas, list(outlook_areas.columns)) if outlook_areas is not None and not outlook_areas.empty else [],
         "sources": SOURCES,
     }
