@@ -68,6 +68,10 @@ Check: the Urban Atlas covers less than 80% of the residents of Western Attica, 
 Verdict: green urban areas where people live is clearly linked to the differences in heat risk between areas.
 The link holds after the Holm correction for testing several features. It remains an association between seven areas; step 3 tests the cooling itself at 100 m.
 
+## What cools the city: surface temperature at 100 m
+
+The Landsat surface temperature analysis has not run yet.
+
 ## Is Attica adapting?
 
 The model lets the heat effect change linearly from year to year. A negative trend means each degree of heat is becoming less deadly.
@@ -126,4 +130,5 @@ Every weekly number used by the model is in `data_panel.xlsx`, so anyone can che
 - Pandemic weeks (2020-W10 to 2022-W26) are left out of training, because COVID-19 deaths would distort the heat signal.
 - The adaptation test assumes a straight-line change over time and has few post-pandemic summers. It is repeated with each summer left out, and a trend is only reported as evidence if no single summer changes the verdict.
 - With seven areas, the comparison of heat risk with tree cover, sealing and age can show associations between areas only. Cause and effect is tested in step 3 at street scale.
+- Landsat measures the temperature of the ground and roofs in late morning, not the air temperature people feel, and not the night. Elevation comes from the Copernicus DEM, a surface model that includes buildings and trees, so part of the cooling of trees may be counted under elevation; the tree estimate is, if anything, conservative.
 - The pooled estimates are empirical Bayes (random-effects shrinkage), a first step towards the full Bayesian layer of the framework.
