@@ -1,5 +1,5 @@
 {
-  "run": "2026-11-14T12:48:44Z",
+  "run": "2026-11-14T14:15:53Z",
   "warming_levels": {
     "runs": 35
   },
@@ -99,19 +99,137 @@
   "domain": "global",
   "series": {
     "historical": {
-      "error": "403 Client Error: Forbidden for url: https://cds.climate.copernicus.eu/api/retrieve/v1/processes/multi-origin-c3s-atlas/execution\nrequired licences not accepted\nNot all the required licences have been accepted; please visit https://cds.climate.copernicus.eu/datasets/multi-origin-c3s-atlas?tab=download#manage-licences to accept the required licence(s)."
+      "members": 23,
+      "years": [
+        1850,
+        2014
+      ]
     },
     "ssp1_2_6": {
-      "error": "403 Client Error: Forbidden for url: https://cds.climate.copernicus.eu/api/retrieve/v1/processes/multi-origin-c3s-atlas/execution\nrequired licences not accepted\nNot all the required licences have been accepted; please visit https://cds.climate.copernicus.eu/datasets/multi-origin-c3s-atlas?tab=download#manage-licences to accept the required licence(s)."
+      "members": 18,
+      "years": [
+        2015,
+        2100
+      ]
     },
     "ssp2_4_5": {
-      "error": "403 Client Error: Forbidden for url: https://cds.climate.copernicus.eu/api/retrieve/v1/processes/multi-origin-c3s-atlas/execution\nrequired licences not accepted\nNot all the required licences have been accepted; please visit https://cds.climate.copernicus.eu/datasets/multi-origin-c3s-atlas?tab=download#manage-licences to accept the required licence(s)."
+      "members": 19,
+      "years": [
+        2015,
+        2100
+      ]
     },
     "ssp3_7_0": {
-      "error": "403 Client Error: Forbidden for url: https://cds.climate.copernicus.eu/api/retrieve/v1/processes/multi-origin-c3s-atlas/execution\nrequired licences not accepted\nNot all the required licences have been accepted; please visit https://cds.climate.copernicus.eu/datasets/multi-origin-c3s-atlas?tab=download#manage-licences to accept the required licence(s)."
+      "members": 18,
+      "years": [
+        2015,
+        2100
+      ]
     },
     "ssp5_8_5": {
-      "error": "403 Client Error: Forbidden for url: https://cds.climate.copernicus.eu/api/retrieve/v1/processes/multi-origin-c3s-atlas/execution\nrequired licences not accepted\nNot all the required licences have been accepted; please visit https://cds.climate.copernicus.eu/datasets/multi-origin-c3s-atlas?tab=download#manage-licences to accept the required licence(s)."
+      "members": 20,
+      "years": [
+        2015,
+        2100
+      ]
     }
-  }
+  },
+  "deltas": [
+    {
+      "level": 1.5,
+      "month": 6,
+      "delta_median": 0.398,
+      "delta_p10": -0.182,
+      "delta_p90": 0.898,
+      "models": 19
+    },
+    {
+      "level": 1.5,
+      "month": 7,
+      "delta_median": 0.425,
+      "delta_p10": -0.103,
+      "delta_p90": 0.936,
+      "models": 19
+    },
+    {
+      "level": 1.5,
+      "month": 8,
+      "delta_median": 0.39,
+      "delta_p10": -0.123,
+      "delta_p90": 0.982,
+      "models": 19
+    },
+    {
+      "level": 1.5,
+      "month": 9,
+      "delta_median": 0.262,
+      "delta_p10": -0.213,
+      "delta_p90": 0.838,
+      "models": 19
+    },
+    {
+      "level": 2.0,
+      "month": 6,
+      "delta_median": 0.929,
+      "delta_p10": 0.366,
+      "delta_p90": 1.786,
+      "models": 19
+    },
+    {
+      "level": 2.0,
+      "month": 7,
+      "delta_median": 1.009,
+      "delta_p10": 0.464,
+      "delta_p90": 2.011,
+      "models": 19
+    },
+    {
+      "level": 2.0,
+      "month": 8,
+      "delta_median": 1.0,
+      "delta_p10": 0.622,
+      "delta_p90": 2.007,
+      "models": 19
+    },
+    {
+      "level": 2.0,
+      "month": 9,
+      "delta_median": 0.767,
+      "delta_p10": 0.404,
+      "delta_p90": 1.426,
+      "models": 19
+    },
+    {
+      "level": 3.0,
+      "month": 6,
+      "delta_median": 2.139,
+      "delta_p10": 1.45,
+      "delta_p90": 3.159,
+      "models": 19
+    },
+    {
+      "level": 3.0,
+      "month": 7,
+      "delta_median": 2.423,
+      "delta_p10": 1.727,
+      "delta_p90": 3.162,
+      "models": 19
+    },
+    {
+      "level": 3.0,
+      "month": 8,
+      "delta_median": 2.438,
+      "delta_p10": 1.618,
+      "delta_p90": 3.295,
+      "models": 19
+    },
+    {
+      "level": 3.0,
+      "month": 9,
+      "delta_median": 2.245,
+      "delta_p10": 1.649,
+      "delta_p90": 2.816,
+      "models": 19
+    }
+  ]
 }
