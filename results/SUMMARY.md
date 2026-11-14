@@ -109,6 +109,10 @@ The features explain 9% of the differences between cells of the same square in t
 
 ![Summer surface temperature](../docs/lst_map.png)
 
+## Heat deaths at 1.5°C, 2°C and 3°C of global warming
+
+The climate projections (Copernicus Interactive Climate Atlas, CMIP6) are not available yet, so this step has not run.
+
 ## Is Attica adapting?
 
 The model lets the heat effect change linearly from year to year. A negative trend means each degree of heat is becoming less deadly.
@@ -168,4 +172,5 @@ Every weekly number used by the model is in `data_panel.xlsx`, so anyone can che
 - The adaptation test assumes a straight-line change over time and has few post-pandemic summers. It is repeated with each summer left out, and a trend is only reported as evidence if no single summer changes the verdict.
 - With seven areas, the comparison of heat risk with tree cover, sealing and age can show associations between areas only. Cause and effect is tested in step 3 at street scale.
 - Landsat measures the temperature of the ground and roofs in late morning, not the air temperature people feel, and not the night. Elevation comes from the Copernicus DEM, a surface model that includes buildings and trees, so part of the cooling of trees may be counted under elevation; the tree estimate is, if anything, conservative.
+- The warming-level outlook shifts each week's observed maximum temperature by the projected monthly change (delta method). It does not change how variable summers are, nor population, ageing or adaptation, and the models are not bias-adjusted; only their change is used.
 - The pooled estimates are empirical Bayes (random-effects shrinkage), a first step towards the full Bayesian layer of the framework.
