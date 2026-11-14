@@ -94,6 +94,20 @@ footer{font-size:13px;color:var(--text-muted);margin-top:24px}
 <details><summary>Show as table</summary><div id="table-mods"></div><div id="table-areas"></div></details>
 </section>
 
+<section id="sec-surface">
+<h2>What cools the city: surface temperature at 100 m</h2>
+<p class="lead" id="surface-lead"></p>
+<figure id="surface-map" style="margin:0 0 18px"><img src="lst_map.png" alt="Map of Attica: summer surface temperature of each 100 m cell compared with the median of the built-up city" style="max-width:560px;width:100%;height:auto;display:block;margin:0 auto"><figcaption style="font-size:13px;color:var(--text-secondary);text-align:center;margin-top:6px">Average summer late-morning surface temperature of each 100 m cell, compared with the median of the built-up city on the same day. Blue: cooler, red: hotter. Lines: the seven areas.</figcaption></figure>
+<h3 style="font-size:15px;margin:10px 0 4px">Change in surface temperature, same 1 km square</h3>
+<p class="lead" style="font-size:13px;margin:0 0 6px"><span style="color:var(--s1)">&#9679;</span> summers the model learned from &nbsp; <span style="color:var(--s2)">&#9679;</span> unseen summers. Per +10 percentage points of each land feature, or per +100 m of elevation.</p>
+<div class="chart" id="chart-surface"></div>
+<h3 style="font-size:15px;margin:14px 0 4px">More trees, cooler streets</h3>
+<p class="lead" style="font-size:13px;margin:0 0 6px">Surface temperature by street tree cover, compared with cells of the same 1 km square that have almost no trees (0-2%).</p>
+<div class="chart" id="chart-dose"></div>
+<div class="verdict" id="verdict-surface"></div>
+<details><summary>Show as table</summary><div id="table-surface"></div><div id="table-dose"></div><div id="table-unseen"></div></details>
+</section>
+
 <section>
 <h2>Each summer's response to heat, without any model</h2>
 <p class="lead">Extra deaths in weeks 26 to 36 above the calm-week level of the same year, divided by the heat the summer brought (degree-weeks above the area thresholds). A lower bar means each degree of heat cost fewer lives.</p>
@@ -123,6 +137,7 @@ footer{font-size:13px;color:var(--text-muted);margin-top:24px}
 <ul class="src">
 <li><a href="data/buaro_attica_step1.xlsx">buaro_attica_step1.xlsx</a>: all results, by area, by week and by baseline.</li>
 <li><a href="data/data_panel.xlsx">data_panel.xlsx</a>: every weekly number the model used.</li>
+<li><a href="data/buaro_attica_lst.xlsx">buaro_attica_lst.xlsx</a>: the surface temperature results, the tree cover curve and every unseen summer.</li>
 <li><a href="data/cells_attica.xlsx">cells_attica.xlsx</a>: every 1 km census cell with its residents, residents aged 65+, tree cover and land use.</li>
 </ul>
 <ul class="src" id="sources"></ul>
@@ -139,7 +154,7 @@ const root=document.documentElement;
 const themeSel=document.getElementById('theme');
 themeSel.addEventListener('change',()=>{if(themeSel.value){root.setAttribute('data-theme',themeSel.value)}else{root.removeAttribute('data-theme')}redraw()});
 const css=n=>getComputedStyle(document.querySelector('.viz-root')).getPropertyValue(n).trim();
-const fmt=(v,d=0)=>v==null||!isFinite(v)?'n/a':Number(v).toLocaleString('en-GB',{minimumFractionDigits:d,maximumFractionDigits:d});
+const fmt=(v,d=0)=>{if(v==null||!isFinite(v))return 'n/a';const r=Number(Number(v).toFixed(d));return (r===0?0:r).toLocaleString('en-GB',{minimumFractionDigits:d,maximumFractionDigits:d})};
 const pct=(rr,d=1)=>(rr>=1?'+':'')+fmt((rr-1)*100,d)+'%';
 const NS='http://www.w3.org/2000/svg';
 const el=(t,a,p)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e};
@@ -206,7 +221,7 @@ el('line',{x1:x(0),x2:x(0),y1:0,y2:ih,stroke:css('--text-secondary'),'stroke-wid
 rows.forEach((r,i)=>{const cy=i*rowH+rowH/2;const t=el('text',{x:-12,y:cy+4,'text-anchor':'end','font-size':13,fill:css('--text-primary')},g);t.textContent=r.label;
 el('line',{x1:x(r.lo),x2:x(r.hi),y1:cy,y2:cy,stroke:r.color||css('--s1'),'stroke-width':2.5,'stroke-linecap':'round'},g);
 el('circle',{cx:x(r.v),cy,r:6,fill:r.color||css('--s1'),stroke:css('--surface-1'),'stroke-width':2},g);
-const lab=el('text',{x:x(r.hi)+8,y:cy+4,'font-size':12,fill:css('--text-secondary')},g);lab.textContent=r.valueLabel+(r.flag?'  '+r.flag:'');
+const lab=el('text',{x:x(r.hi)+8,y:cy+4,'font-size':12,fill:css('--text-secondary'),stroke:css('--surface-1'),'stroke-width':4,'paint-order':'stroke','stroke-linejoin':'round'},g);lab.textContent=r.valueLabel+(r.flag?'  '+r.flag:'');
 const hit=el('rect',{x:-m.l,y:i*rowH,width:iw+m.l+m.r,height:rowH,fill:'transparent'},g);
 hit.addEventListener('mousemove',ev=>{const b=svg.getBoundingClientRect();showTip(host,r.tip,(x(r.v)+m.l)*b.width/W,ev.clientY-b.top)});hit.addEventListener('mouseleave',()=>hideTip(host))});
 }
@@ -292,6 +307,27 @@ const cols=R.map(r=>r.covariate);
 table('table-areas',['Area','Per +1°C'].concat(R.map(r=>r.label)).concat(['Residents inside the Urban Atlas']),(D.areaFeatures||[]).map(a=>[a.name_en,pct(a.rr_per_degree)].concat(cols.map(c=>a[c]!=null?fmt(a[c]*100,1)+'%':'n/a')).concat([a.population_covered!=null?fmt(a.population_covered*100,0)+'%':'n/a'])))}
 featSel.addEventListener('change',mods);
 
+function surface(){const S=D.surface;const sec=document.getElementById('sec-surface');
+if(!S||!S.effects||!S.effects.length){sec.style.display='none';return}
+const v=S.validation;
+document.getElementById('surface-lead').textContent='Every clear Landsat 8 and 9 scene of June to August since '+v.train_years[0]+' ('+fmt(S.scenes_used,0)+' scenes) gives the land surface temperature of each 100 m cell in late morning. Only built-up cells are used ('+fmt(v.train_cells,0)+' cells), and each is compared only with the other cells of its own 1 km square, so the sea, the hills and the wind cannot pose as cooling. The model learns from '+v.train_years[0]+' to '+v.train_years[v.train_years.length-1]+' and is tested on '+v.test_years.join(', ')+', which it has never seen.';
+if(!S.map)document.getElementById('surface-map').style.display='none';
+const short={tree_share:'Street tree cover',green_urban_share:'Green urban areas',dense_fabric_share:'Dense, sealed fabric',artificial_share:'Built-up land',elevation:'Elevation (+100 m)'};
+const rows=[];const feats=[...new Set(S.effects.map(e=>e.feature))];
+feats.forEach(f=>{['training summers','unseen summers'].forEach((p,j)=>{const e=S.effects.find(r=>r.feature===f&&r.period===p);if(!e)return;
+rows.push({label:j?'':short[f],v:e.effect_c,lo:e.low_c,hi:e.high_c,valueLabel:(e.effect_c>=0?'+':'')+fmt(e.effect_c,2)+'°C',color:j?css('--s2'):css('--s1'),
+tip:'<b>'+e.label+'</b>'+tipRow(null,p==='training summers'?'Summers learned from':'Unseen summers',(e.effect_c>=0?'+':'')+fmt(e.effect_c,2)+'°C')+tipRow(null,'95% range',fmt(e.low_c,2)+' to '+fmt(e.high_c,2))+tipRow(null,'Per',e.unit)+tipRow(null,'Cells',fmt(e.cells,0))})})});
+dotChart(document.getElementById('chart-surface'),{rows,left:190,tickFmt:v=>fmt(v,1)+'°C'});
+const C=S.curve||[];
+dotChart(document.getElementById('chart-dose'),{rows:C.map(c=>({label:'Tree cover '+c.tree_cover,v:c.effect_c,lo:c.low_c,hi:c.high_c,valueLabel:c.reference?'reference':(fmt(c.effect_c,2)+'°C'),color:css('--s1'),
+tip:'<b>Tree cover '+c.tree_cover+'</b>'+tipRow(null,'Difference',fmt(c.effect_c,2)+'°C')+tipRow(null,'95% range',fmt(c.low_c,2)+' to '+fmt(c.high_c,2))+tipRow(null,'Cells',fmt(c.cells,0))})),left:190,tickFmt:v=>fmt(v,1)+'°C'});
+const tr=S.effects.find(e=>e.feature==='tree_share'&&e.period==='training summers'),te=S.effects.find(e=>e.feature==='tree_share'&&e.period==='unseen summers');
+const U=S.unseen||[];const holds=te&&te.high_c<0&&U.every(u=>u.tree_high_c<0);
+document.getElementById('verdict-surface').textContent=holds?'Street trees cool the city surface. Each +10 percentage points of tree cover lowers late-morning surface temperature by about '+fmt(Math.abs(tr.effect_c),2)+'°C, and every unseen summer confirms it on its own ('+U.map(u=>u.summer+': '+fmt(u.tree_effect_c,2)+'°C').join(', ')+'). Cells with more than 40% tree cover are about '+fmt(Math.abs(C[C.length-1].effect_c),1)+'°C cooler than cells with almost none. Open green areas without trees add no cooling of their own. Landsat sees the ground and roofs in late morning, not the air or the night.':'The cooling from street trees learned on past summers is not confirmed on every unseen summer, so it is not reported as a finding yet.';
+table('table-surface',['Feature','Per','Summers learned from','Unseen summers'],feats.map(f=>{const a=S.effects.find(r=>r.feature===f&&r.period==='training summers'),b=S.effects.find(r=>r.feature===f&&r.period==='unseen summers');return [a.label,a.unit,fmt(a.effect_c,2)+' ('+fmt(a.low_c,2)+' to '+fmt(a.high_c,2)+')',b?fmt(b.effect_c,2)+' ('+fmt(b.low_c,2)+' to '+fmt(b.high_c,2)+')':'n/a']}));
+table('table-dose',['Tree cover','Difference (°C)','95% range','Cells'],C.map(c=>[c.tree_cover,fmt(c.effect_c,2),fmt(c.low_c,2)+' to '+fmt(c.high_c,2),fmt(c.cells,0)]));
+table('table-unseen',['Unseen summer','Cooling per +10 points of trees (°C)','95% range','Cells'],U.map(u=>[u.summer,fmt(u.tree_effect_c,2),fmt(u.tree_low_c,2)+' to '+fmt(u.tree_high_c,2),fmt(u.cells,0)]))}
+
 function response(){const R=D.response;const c=css('--s1');
 barChart(document.getElementById('chart-response'),{categories:R.map(r=>String(r.year)),series:[{name:'Extra deaths per degree-week',values:R.map(r=>r.excess_per_degree_week),color:c}],labels:true,ydec:0,height:280,tip:(i)=>{const r=R[i];return '<b>Summer '+r.year+'</b>'+tipRow(null,'Extra deaths per degree-week',fmt(r.excess_per_degree_week,1))+tipRow(null,'Extra deaths, weeks 26 to 36',fmt(r.summer_excess_deaths))+tipRow(null,'Degree-weeks of heat',fmt(r.degree_weeks_above_threshold,1))+tipRow(null,'Hottest week, mean max',fmt(r.hottest_week_tmax,1)+' °C')}});
 table('table-response',['Summer','Extra deaths, weeks 26 to 36','Degree-weeks','Extra deaths per degree-week','Hottest week (°C)'],R.map(r=>[r.year,fmt(r.summer_excess_deaths),fmt(r.degree_weeks_above_threshold,1),fmt(r.excess_per_degree_week,1),fmt(r.hottest_week_tmax,1)]))}
@@ -312,7 +348,7 @@ table('table-compare',['Baseline','Summer','Recorded deaths','Forecast with heat
 document.getElementById('sources').innerHTML=D.sources.map(s=>'<li><a href="'+s.url+'">'+s.name+'</a>: '+s.what+'</li>').join('');
 document.getElementById('footer').textContent='Framework: D. Sargiotis, AI for Planetary Resilience, Springer Nature Switzerland, 2027. Contains modified Copernicus Climate Change Service information. Neither the European Commission nor ECMWF is responsible for any use of this information.';
 
-function redraw(){tiles();summer();vuln();mods();response();loo();compare()}
+function redraw(){tiles();summer();vuln();mods();surface();response();loo();compare()}
 yearSel.addEventListener('change',summer);areaSel.addEventListener('change',summer);
 let rt;window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(redraw,150)});
 if(window.matchMedia)window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',redraw);

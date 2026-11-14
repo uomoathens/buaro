@@ -1,4 +1,5 @@
 import argparse
+import json
 import datetime as dt
 from pathlib import Path
 
@@ -155,6 +156,7 @@ def main(argv=None):
     parser.add_argument("--end-date", default=None)
     parser.add_argument("--docs", default="docs")
     parser.add_argument("--static", default="data/static")
+    parser.add_argument("--lst", default="data/lst")
     args = parser.parse_args(argv)
 
     config = load_config(args.config)
@@ -280,11 +282,14 @@ def main(argv=None):
     )
     panel_cols = ["geo", "week", "date", "year", "isoweek", "deaths", "tmax", "tmean", "tmax_lag1", "tmean_lag1", "population", "share_65plus", "pandemic"]
     report.workbook(out / "data_panel.xlsx", [("Panel", panel[panel_cols], ["Weekly deaths (Eurostat), ERA5-Land temperature and population used by the model."])])
-    text = report.summary_markdown(meta, vuln, summary, comparison, ref, response, mods)
+    lst_path = Path(args.lst) / "summary.json"
+    surface = json.loads(lst_path.read_text(encoding="utf-8")) if lst_path.exists() else None
+    text = report.summary_markdown(meta, vuln, summary, comparison, ref, response, mods, surface)
     (out / "SUMMARY.md").write_text(text, encoding="utf-8")
     report.write_meta(out / "run_metadata.json", meta)
-    site.build(args.docs, meta, vuln, summary, weekly, response, robustness, panel, regions, mods=mods, areas=areas,
-               files=[out / "buaro_attica_step1.xlsx", out / "data_panel.xlsx", Path(args.static) / "cells_attica.xlsx"])
+    site.build(args.docs, meta, vuln, summary, weekly, response, robustness, panel, regions, mods=mods, areas=areas, surface=surface,
+               files=[out / "buaro_attica_step1.xlsx", out / "data_panel.xlsx", Path(args.static) / "cells_attica.xlsx", out / "buaro_attica_lst.xlsx"],
+               images=[Path(args.lst) / "lst_map.png"])
     print(text)
     return meta
 

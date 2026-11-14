@@ -3,7 +3,7 @@ name: BUARO pipeline
 on:
   workflow_dispatch:
   workflow_run:
-    workflows: ["BUARO static data"]
+    workflows: ["BUARO static data", "BUARO surface temperature"]
     types: [completed]
   schedule:
     - cron: "23 5 4 * *"

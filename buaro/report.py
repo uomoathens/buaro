@@ -231,7 +231,63 @@ def modifiers_markdown(mods):
     return lines
 
 
-def summary_markdown(meta, vuln, summary, comparison, reference, response=None, mods=None):
+def surface_markdown(surface):
+    lines = ["## What cools the city: surface temperature at 100 m", ""]
+    if not surface or not surface.get("effects"):
+        lines.append("The Landsat surface temperature analysis has not run yet.")
+        lines.append("")
+        return lines
+    v = surface["validation"]
+    eff = pd.DataFrame(surface["effects"])
+    train = eff[eff["period"] == "training summers"].set_index("feature")
+    test = eff[eff["period"] == "unseen summers"].set_index("feature")
+    lines.append(f"Every clear Landsat 8 and 9 scene of June to August since {v['train_years'][0]} ({surface.get('scenes_used') or 'all'} scenes) gives the land surface temperature of each 100 m cell in late morning. Each scene is compared with the median of the built-up city that day, so hot and cool days cancel out.")
+    lines.append(f"Only built-up cells are used (at least {int(v['min_built_up'] * 100)}% built-up land, {v['train_cells']:,} cells), where the Street Tree Layer is mapped. Each cell is compared only with the other cells of the same 1 km square, so the sea, the hills and the wind cannot pose as cooling.")
+    lines.append(f"The model learns from the summers {v['train_years'][0]} to {v['train_years'][-1]} and is then tested on {', '.join(str(y) for y in v['test_years'])}, which it has never seen.")
+    lines.append("")
+    lines.append("| Feature | Change | Summers it learned from | Unseen summers |")
+    lines.append("|---|---|---|---|")
+    for f in train.index:
+        a = train.loc[f]
+        b = test.loc[f] if f in test.index else None
+        right = f"{b['effect_c']:+.2f}°C ({b['low_c']:+.2f} to {b['high_c']:+.2f})" if b is not None else "n/a"
+        lines.append(f"| {a['label']} | {a['unit']} | {a['effect_c']:+.2f}°C ({a['low_c']:+.2f} to {a['high_c']:+.2f}) | {right} |")
+    lines.append("")
+    if surface.get("curve"):
+        lines.append("Surface temperature by street tree cover, compared with cells with almost no trees (0-2%), same 1 km square:")
+        lines.append("")
+        lines.append("| Tree cover | Difference | 95% range | Cells |")
+        lines.append("|---|---|---|---|")
+        for r in surface["curve"]:
+            lines.append(f"| {r['tree_cover']} | {r['effect_c']:+.2f}°C | {r['low_c']:+.2f} to {r['high_c']:+.2f} | {r['cells']:,} |")
+        lines.append("")
+    if surface.get("unseen"):
+        lines.append("| Unseen summer | Cooling per +10 points of tree cover | 95% range |")
+        lines.append("|---|---|---|")
+        for r in surface["unseen"]:
+            lines.append(f"| {r['summer']} | {r['tree_effect_c']:+.2f}°C | {r['tree_low_c']:+.2f} to {r['tree_high_c']:+.2f} |")
+        lines.append("")
+    if "tree_share" in train.index and "tree_share" in test.index:
+        a, b = train.loc["tree_share"], test.loc["tree_share"]
+        holds = b["high_c"] < 0 and all(r["tree_high_c"] < 0 for r in surface.get("unseen", []))
+        if holds:
+            lines.append(f"Verdict: street trees cool the city surface. Each +10 percentage points of tree cover lowers late-morning surface temperature by about {abs(a['effect_c']):.2f}°C, and the unseen summers confirm it ({b['effect_c']:+.2f}°C), every one of them on its own. Cells with more than 40% tree cover are about {abs(surface['curve'][-1]['effect_c']):.1f}°C cooler than cells with almost none.")
+        else:
+            lines.append("Verdict: the cooling from street trees learned on past summers is not confirmed on every unseen summer, so it is not yet reported as a finding.")
+    if "green_urban_share" in train.index:
+        lines.append("Green urban areas add no cooling of their own once their trees are counted, most likely because open, dry grass in an Athens summer heats up much like bare ground. The link between green areas and lower heat mortality found between areas is therefore most likely carried by their trees, and by the shade and cooler air they offer to people, which surface temperature does not measure.")
+    if "dense_fabric_share" in train.index:
+        lines.append("Dense, highly sealed fabric is slightly cooler at the surface in late morning than open, low-density or industrial land in the same square, most likely because tall buildings shade the streets while bare land and large flat roofs heat fastest. This is a daytime surface effect; dense fabric releases its heat at night, which Landsat does not see.")
+    lines.append("")
+    lines.append(f"The features explain {fmt(v.get('test_r2_within', float('nan')) * 100, 0)}% of the differences between cells of the same square in the unseen summers. The rest comes from roofs, materials and street shape, which no open European layer maps yet. The finding is the size of the tree effect and its stability from summer to summer, not a full map of the causes.")
+    lines.append("")
+    if surface.get("map"):
+        lines.append("![Summer surface temperature](../docs/lst_map.png)")
+        lines.append("")
+    return lines
+
+
+def summary_markdown(meta, vuln, summary, comparison, reference, response=None, mods=None, surface=None):
     winner = meta["baseline_selected"]
     best = summary[summary["baseline"] == winner] if not summary.empty else summary
     lines = []
@@ -279,6 +335,7 @@ def summary_markdown(meta, vuln, summary, comparison, reference, response=None, 
     lines.append("![Vulnerability](vulnerability.png)")
     lines.append("")
     lines.extend(modifiers_markdown(mods))
+    lines.extend(surface_markdown(surface))
     a = meta["adaptation"]
     lines.append("## Is Attica adapting?")
     lines.append("")
@@ -345,6 +402,7 @@ def summary_markdown(meta, vuln, summary, comparison, reference, response=None, 
     lines.append("- Pandemic weeks (2020-W10 to 2022-W26) are left out of training, because COVID-19 deaths would distort the heat signal.")
     lines.append("- The adaptation test assumes a straight-line change over time and has few post-pandemic summers. It is repeated with each summer left out, and a trend is only reported as evidence if no single summer changes the verdict.")
     lines.append("- With seven areas, the comparison of heat risk with tree cover, sealing and age can show associations between areas only. Cause and effect is tested in step 3 at street scale.")
+    lines.append("- Landsat measures the temperature of the ground and roofs in late morning, not the air temperature people feel, and not the night. Elevation comes from the Copernicus DEM, a surface model that includes buildings and trees, so part of the cooling of trees may be counted under elevation; the tree estimate is, if anything, conservative.")
     lines.append("- The pooled estimates are empirical Bayes (random-effects shrinkage), a first step towards the full Bayesian layer of the framework.")
     lines.append("")
     return "\n".join(lines)

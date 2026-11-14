@@ -73,13 +73,14 @@ def synthetic(seed=0, effect=-8.0, years=range(2016, 2026)):
 
 def test_analysis_recovers_cooling_and_validates_on_unseen_summers():
     land, dem, years = synthetic()
-    eff, by_year, validation = lst.analyse(land, dem, years)
+    eff, by_year, validation, curve = lst.analyse(land, dem, years)
     train = eff[eff["period"] == "training summers"].set_index("feature")
     assert abs(train.loc["tree_share", "effect_c"] + 0.8) < 0.05
     assert abs(train.loc["dense_fabric_share", "effect_c"] - 0.15) < 0.03
     assert abs(train.loc["elevation", "effect_c"] + 0.4) < 0.05
     assert validation["test_r2_within"] > 0.5
     assert set(by_year["summer"]) == {2023, 2024, 2025}
+    assert curve["effect_c"].iloc[-1] < curve["effect_c"].iloc[1] < 0
     assert (eff["period"] == "unseen summers").any()
 
 
@@ -121,6 +122,11 @@ def test_main_caches_years_and_writes_results(tmp_path, monkeypatch):
     assert report["analysis"]["test_r2_within"] > 0.5
     eff = pd.read_excel(res / "buaro_attica_lst.xlsx", sheet_name="Cooling effects")
     assert (eff["feature"] == "tree_share").any()
+    summary = json.loads((out / "summary.json").read_text())
+    assert summary["curve"] and summary["unseen"] and summary["scenes_used"] > 0
+    from buaro import report
+    text = "\n".join(report.surface_markdown(summary))
+    assert "Verdict: street trees cool the city surface" in text
     calls.clear()
     lst.main(["--static", str(static), "--out", str(out), "--results", str(res), "--last-year", "2025"])
     assert calls == []
