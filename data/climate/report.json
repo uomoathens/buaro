@@ -1,5 +1,5 @@
 {
-  "run": "2026-11-14T12:19:13Z",
+  "run": "2026-11-14T12:48:44Z",
   "warming_levels": {
     "runs": 35
   },
@@ -96,6 +96,7 @@
     "area": []
   },
   "variable": "monthly_daily_maximum_temperature",
+  "domain": "global",
   "series": {
     "historical": {
       "error": "403 Client Error: Forbidden for url: https://cds.climate.copernicus.eu/api/retrieve/v1/processes/multi-origin-c3s-atlas/execution\nrequired licences not accepted\nNot all the required licences have been accepted; please visit https://cds.climate.copernicus.eu/datasets/multi-origin-c3s-atlas?tab=download#manage-licences to accept the required licence(s)."
