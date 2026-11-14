@@ -1,5 +1,5 @@
 {
-  "run": "2026-11-14T09:29:35Z",
+  "run": "2026-11-14T10:45:12Z",
   "grid": {
     "width": 510,
     "height": 730,
@@ -39,53 +39,79 @@
       2026
     ],
     "train_cells": 62700,
-    "train_r2_within": 0.10696519092290002,
+    "train_r2_within": 0.10722166321381266,
     "min_built_up": 0.5,
     "test_cells": 62700,
-    "test_r2_within": 0.09156468894415382,
-    "test_rmse_c": 1.110860760710329,
-    "test_sd_c": 1.1655102201540841
+    "test_r2_within": 0.09150275405713604,
+    "test_rmse_c": 1.1109947818372599,
+    "test_sd_c": 1.1656111009575445
   },
   "map": "lst_map.png",
   "years": {
     "2014": {
-      "cached": true
+      "scenes": 14,
+      "used": 10,
+      "cells": 235809
     },
     "2015": {
-      "cached": true
+      "scenes": 17,
+      "used": 13,
+      "cells": 241169
     },
     "2016": {
-      "cached": true
+      "scenes": 22,
+      "used": 14,
+      "cells": 239078
     },
     "2017": {
-      "cached": true
+      "scenes": 22,
+      "used": 15,
+      "cells": 243702
     },
     "2018": {
-      "cached": true
+      "scenes": 19,
+      "used": 11,
+      "cells": 248096
     },
     "2019": {
-      "cached": true
+      "scenes": 20,
+      "used": 12,
+      "cells": 242188
     },
     "2020": {
-      "cached": true
+      "scenes": 14,
+      "used": 10,
+      "cells": 235168
     },
     "2021": {
-      "cached": true
+      "scenes": 21,
+      "used": 17,
+      "cells": 242030
     },
     "2022": {
-      "cached": true
+      "scenes": 35,
+      "used": 23,
+      "cells": 251858
     },
     "2023": {
-      "cached": true
+      "scenes": 40,
+      "used": 30,
+      "cells": 257227
     },
     "2024": {
-      "cached": true
+      "scenes": 43,
+      "used": 32,
+      "cells": 281837
     },
     "2025": {
-      "cached": true
+      "scenes": 45,
+      "used": 33,
+      "cells": 264895
     },
     "2026": {
-      "cached": true
+      "scenes": 37,
+      "used": 26,
+      "cells": 250891
     }
   }
 }
