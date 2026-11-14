@@ -121,3 +121,14 @@ python -m buaro.run --config config/attica.yaml --out results --cache data/raw
 ## Credits
 
 Framework: Dimitrios Sargiotis, *AI for Planetary Resilience*, Springer Nature Switzerland, 2027.
+
+## Licence and citation
+
+Copyright © 2026 Dimitrios Sargiotis, National Technical University of Athens.
+
+Licensed under the EUPL v1.2, the open source licence of the European Union. Anyone may use, study and adapt BUARO; whoever distributes it or offers it as an online service, changed or unchanged, must do so under the same licence, keep this copyright notice and make the source code available. The full text is in [LICENSE](LICENSE).
+
+The method develops the Bayesian Urban Adaptation and Resilience Optimization Model of the book *AI for Planetary Resilience* (D. Sargiotis, Springer Nature Switzerland, 2027). If you use BUARO, please cite it as given in [CITATION.cff](CITATION.cff), or with the "Cite this repository" button on GitHub.
+
+The data keep their own licences, listed in the table of sources above.
+

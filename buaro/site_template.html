@@ -425,7 +425,7 @@ barChart(document.getElementById('chart-compare'),{categories:years.map(String),
 table('table-compare',['Baseline','Summer','Recorded deaths','Forecast with heat','Forecast without heat','Weekly error with heat','Skill score'],S.map(r=>[BASE[r.baseline],r.year,fmt(r.observed_deaths),fmt(r.predicted_with_heat),fmt(r.predicted_without_heat),fmt(r.rmse_with_heat,1),fmt(r.skill_score,2)]))}
 
 document.getElementById('sources').innerHTML=D.sources.map(s=>'<li><a href="'+s.url+'">'+s.name+'</a>: '+s.what+'</li>').join('');
-document.getElementById('footer').textContent='Framework: D. Sargiotis, AI for Planetary Resilience, Springer Nature Switzerland, 2027. Contains modified Copernicus Climate Change Service information. Neither the European Commission nor ECMWF is responsible for any use of this information.';
+document.getElementById('footer').textContent='Framework: D. Sargiotis, AI for Planetary Resilience, Springer Nature Switzerland, 2027. Software: BUARO, © 2026 Dimitrios Sargiotis, licensed under the EUPL v1.2. Contains modified Copernicus Climate Change Service information. Neither the European Commission nor ECMWF is responsible for any use of this information.';
 
 function redraw(){tiles();summer();vuln();mods();surface();outlook();measures();response();loo();compare();impact()}
 yearSel.addEventListener('change',summer);areaSel.addEventListener('change',summer);

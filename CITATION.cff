@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "BUARO: Bayesian Urban Adaptation and Resilience Optimization"
+type: software
+authors:
+  - family-names: Sargiotis
+    given-names: Dimitrios
+    affiliation: "National Technical University of Athens"
+license: EUPL-1.2
+repository-code: "https://github.com/uomoathens/buaro"
+url: "https://uomoathens.github.io/buaro/"
+abstract: "Open software that turns the Bayesian Urban Adaptation and Resilience Optimization Model of the book AI for Planetary Resilience into a self-updating instrument. It estimates heat-related mortality by area from official European data, tests itself on unseen summers, measures urban cooling from Landsat at 100 m, projects heat deaths at 1.5, 2 and 3 degrees of global warming, and ranks protective measures."
+keywords:
+  - heat-related mortality
+  - climate adaptation
+  - urban resilience
+  - Bayesian modelling
+  - Copernicus
+  - Eurostat
+  - Landsat
+  - local digital twin
+references:
+  - type: book
+    title: "AI for Planetary Resilience"
+    authors:
+      - family-names: Sargiotis
+        given-names: Dimitrios
+    publisher:
+      name: "Springer Nature Switzerland"
+    year: 2027
