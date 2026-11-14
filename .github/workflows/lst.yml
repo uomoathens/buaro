@@ -1,0 +1,55 @@
+name: BUARO surface temperature
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "buaro/lst.py"
+      - "buaro/grid100.py"
+  workflow_run:
+    workflows: ["BUARO static data"]
+    types: [completed]
+  schedule:
+    - cron: "41 4 3 10 *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: buaro-lst
+  cancel-in-progress: false
+
+jobs:
+  lst:
+    runs-on: ubuntu-latest
+    timeout-minutes: 330
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - name: Install
+        run: pip install -r requirements.txt
+
+      - name: Landsat surface temperature
+        run: python -m buaro.lst
+
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898237+github-actions[bot]@users.noreply.github.com"
+          git add data/lst
+          if [ -f results/buaro_attica_lst.xlsx ]; then git add results/buaro_attica_lst.xlsx; fi
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
+            git commit --allow-empty-message -m ""
+            git pull --rebase
+            git push
+          fi

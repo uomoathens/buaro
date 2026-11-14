@@ -103,4 +103,19 @@ def analyse(vuln, exposure):
                 row["check_p_value"] = check["p_value"]
                 row["check_verdict"] = check["verdict"]
         rows.append(row)
-    return pd.DataFrame(rows), areas
+    table = pd.DataFrame(rows)
+    if not table.empty:
+        table["p_holm"] = holm(table["p_value"].to_numpy())
+    return table, areas
+
+
+def holm(p):
+    p = np.asarray(p, dtype=float)
+    order = np.argsort(p)
+    m = len(p)
+    adjusted = np.empty(m)
+    running = 0.0
+    for rank, i in enumerate(order):
+        running = max(running, min(1.0, (m - rank) * p[i]))
+        adjusted[i] = running
+    return adjusted

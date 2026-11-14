@@ -14,6 +14,8 @@ on:
       - "!buaro/probe.py"
       - "!buaro/clms.py"
       - "!buaro/static_fetch.py"
+      - "!buaro/lst.py"
+      - "!buaro/grid100.py"
       - "config/**"
       - "tests/**"
       - "requirements.txt"

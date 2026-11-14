@@ -5,11 +5,12 @@ import zipfile
 from pathlib import Path
 
 import geopandas as gpd
+import numpy as np
 import pandas as pd
 import pyogrio
 import requests
 
-from . import clms
+from . import clms, grid100
 
 NUTS_URL = "https://gisco-services.ec.europa.eu/distribution/v2/nuts/geojson/NUTS_RG_01M_2021_4326_LEVL_3.geojson"
 CENSUS_URL = "https://gisco-services.ec.europa.eu/census/2021/Eurostat_Census-GRID_2021_V3.zip"
@@ -21,6 +22,9 @@ REGIONS = ["EL301", "EL302", "EL303", "EL304", "EL305", "EL306", "EL307"]
 EQUAL_AREA = "EPSG:3035"
 CELLS = "cells_attica.xlsx"
 LANDUSE = "cells_landuse.xlsx"
+LANDUSE100 = "landuse_100m.parquet"
+FINE = 10
+CLASSES = {"water": 1, "dense": 2, "green": 3, "built": 4, "open": 5}
 EXPOSURE = "exposure_by_nuts3.xlsx"
 DENSE = {"11100", "11210"}
 GREEN = {"14100", "14110", "14120", "14130"}
@@ -367,6 +371,42 @@ def cells_from_landuse(out):
         return {"error": str(error)[:500]}
 
 
+def class_codes(series):
+    code = codes(series).fillna("")
+    value = pd.Series(CLASSES["open"], index=series.index)
+    value[code.str.startswith("1")] = CLASSES["built"]
+    value[code.str.startswith("141")] = CLASSES["green"]
+    value[code.isin(DENSE)] = CLASSES["dense"]
+    value[code.isin(WATER)] = CLASSES["water"]
+    return value
+
+
+def landuse_100m(ua, group, trees, g):
+    from rasterio import features
+    from rasterio.transform import from_origin
+    xmin, ymin, xmax, ymax = g["bounds"]
+    k = int(round(grid100.RES / FINE))
+    shape = (g["height"] * k, g["width"] * k)
+    transform = from_origin(xmin, ymax, FINE, FINE)
+    ua = polygons(ua, [group])
+    ua = ua.assign(value=class_codes(ua[group]).values)
+    fine = features.rasterize(zip(ua.geometry, ua["value"]), out_shape=shape, transform=transform, fill=0, dtype="uint8")
+    tree = features.rasterize(((geom, 1) for geom in polygons(trees, []).geometry), out_shape=shape, transform=transform, fill=0, dtype="uint8")
+    block = lambda a: a.reshape(g["height"], k, g["width"], k).sum(axis=(1, 3)).astype("float64")
+    count = {name: block(fine == value) for name, value in CLASSES.items()}
+    land = sum(count[n] for n in CLASSES if n != "water")
+    with np.errstate(invalid="ignore", divide="ignore"):
+        layers = {
+            "land_frac": land / (k * k),
+            "tree_share": np.clip(block(tree * (fine > 1)) / land, 0, 1),
+            "green_urban_share": count["green"] / land,
+            "dense_fabric_share": count["dense"] / land,
+            "artificial_share": (count["dense"] + count["green"] + count["built"]) / land,
+        }
+    table = grid100.frame(g, **layers)
+    return table[table["land_frac"] > 0].reset_index(drop=True)
+
+
 def build_cells(entries, out):
     try:
         paths = {n: [l["path"] for l in entries.get(n, {}).get("layers", [])] for n in CLMS_FILES}
@@ -374,11 +414,23 @@ def build_cells(entries, out):
             return {"error": "layers missing"}
         ua = gpd.read_file(pick_layer("urban_atlas_2021", paths["urban_atlas_2021"]))
         trees = gpd.read_file(pick_layer("street_tree_layer_2021", paths["street_tree_layer_2021"]))
-        grid = gpd.read_file(Path(out) / "census_grid_attica.gpkg")
-        area = cell_areas(grid, ua, class_column(ua.columns), trees)
-        area.reset_index().to_excel(Path(out) / LANDUSE, index=False)
-        entry = write_features(out, area)
-        entry["from"] = "Copernicus layers"
+        group = class_column(ua.columns)
+        if (Path(out) / LANDUSE).exists():
+            entry = cells_from_landuse(out)
+        else:
+            grid = gpd.read_file(Path(out) / "census_grid_attica.gpkg")
+            area = cell_areas(grid, ua, group, trees)
+            area.reset_index().to_excel(Path(out) / LANDUSE, index=False)
+            entry = write_features(out, area)
+            entry["from"] = "Copernicus layers"
+        try:
+            g = grid100.spec(out)
+            fine = landuse_100m(ua, group, trees, g)
+            fine.to_parquet(Path(out) / LANDUSE100, index=False)
+            entry["cells_100m"] = int(len(fine))
+            entry["grid_100m"] = {"width": g["width"], "height": g["height"], "bounds": g["bounds"]}
+        except Exception as error:
+            entry["cells_100m_error"] = str(error)[:500]
         return entry
     except Exception as error:
         return {"error": str(error)[:500]}
@@ -410,7 +462,7 @@ def main(raw="data/raw/static", out="data/static", sleep=time.sleep):
                 report["census"] = census_attica(raw, out, nuts)
         except Exception as error:
             report["census"] = {"error": str(error)[:500]}
-        if (Path(out) / LANDUSE).exists():
+        if (Path(out) / LANDUSE).exists() and (Path(out) / LANDUSE100).exists():
             report["clms"] = {name: dict(previous.get(name) or {}, cached=True) for name in CLMS_FILES}
             report["cells"] = cells_from_landuse(out)
             (Path(out) / "report.json").write_text(json.dumps(report, indent=2, ensure_ascii=False, default=str), encoding="utf-8")

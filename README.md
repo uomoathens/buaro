@@ -105,8 +105,9 @@ Contains modified Copernicus Climate Change Service information. Neither the Eur
 | Step | Book term | What it adds | Data |
 |---|---|---|---|
 | 1 and 1.1 | V(h, z) | Heat vulnerability by NUTS 3 area, adaptation test, tested on unseen summers | Eurostat, ERA5-Land |
-| 2 (this release) | E(z), A(z) | 1 km exposure (residents and residents aged 65+) and adaptive capacity (street tree cover, green urban areas, sealed urban fabric), weighted by where people live, and a random-effects meta-regression of each area's heat effect on these features | Eurostat Census Grid 2021, Copernicus Urban Atlas 2021 and Street Tree Layer 2021 |
-| 3 | P(h \| θ) | Heat hazard under the 1.5°C, 2°C and 3°C reference levels of the Climate Resilience Law | C3S Atlas dataset (CMIP6, CORDEX-EUR-11) |
+| 2 | E(z), A(z) | 1 km exposure (residents and residents aged 65+) and adaptive capacity (street tree cover, green urban areas, sealed urban fabric), weighted by where people live, and a random-effects meta-regression of each area's heat effect on these features | Eurostat Census Grid 2021, Copernicus Urban Atlas 2021 and Street Tree Layer 2021 |
+| 3.0 (this release) | LST(c, t) | Summer land surface temperature on a 100 m grid from every clear Landsat 8 and 9 scene since 2014 (USGS Collection 2 Level-2, band ST_B10, cloud and water masked with QA_PIXEL), set against 100 m tree cover, green urban areas, sealed fabric and elevation, compared only within each 1 km cell so that coast, hills and wind cannot pose as cooling, trained on 2014 to 2022 and tested on the unseen summers 2023 to 2025 | USGS Landsat Collection 2 via Microsoft Planetary Computer, Copernicus DEM GLO-30, Urban Atlas 2021, Street Tree Layer 2021 |
+| 3.1 | P(h \| θ) | Heat hazard under the 1.5°C, 2°C and 3°C reference levels of the Climate Resilience Law | C3S Atlas dataset (CMIP6, CORDEX-EUR-11) |
 | 4 | s*, C(s) | Ranking of measures (tree canopy, cool roofs) that holds across all three scenarios | Landsat surface temperature, published unit costs |
 
 ## Run it locally

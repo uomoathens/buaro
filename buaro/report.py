@@ -192,11 +192,14 @@ def modifiers_markdown(mods):
     lines.append("Each area's heat effect is compared with one feature of the places where its residents live, measured on the Eurostat 1 km census grid and the Copernicus Urban Atlas 2021 and Street Tree Layer 2021.")
     lines.append("The test is a random-effects meta-regression across the seven areas, one feature at a time. It shows associations between areas, not proof of cause.")
     lines.append("")
-    lines.append("| Feature | Range across areas | Change in extra deaths per +1°C, per 1 SD | 95% range | p | Share of area differences explained | Verdict |")
-    lines.append("|---|---|---|---|---|---|---|")
+    lines.append(f"Because {len(mods)} features are tested, the p value is also shown after the Holm correction for multiple tests.")
+    lines.append("")
+    lines.append("| Feature | Range across areas | Change in extra deaths per +1°C, per 1 SD | 95% range | p | p after Holm correction | Share of area differences explained | Verdict |")
+    lines.append("|---|---|---|---|---|---|---|---|")
     for r in mods.itertuples():
         scale = 100 if r.covariate.endswith(("_pop", "_census")) else 1
-        lines.append(f"| {r.label} | {fmt(r.min * scale, 1)}% to {fmt(r.max * scale, 1)}% | {r.change_pp_per_sd:+.2f} pp | {r.change_low:+.2f} to {r.change_high:+.2f} | {fmt(r.p_value, 3)} | {fmt(r.explained_heterogeneity * 100, 0)}% | {r.verdict} |")
+        holm = getattr(r, "p_holm", float("nan"))
+        lines.append(f"| {r.label} | {fmt(r.min * scale, 1)}% to {fmt(r.max * scale, 1)}% | {r.change_pp_per_sd:+.2f} pp | {r.change_low:+.2f} to {r.change_high:+.2f} | {fmt(r.p_value, 3)} | {fmt(holm, 3)} | {fmt(r.explained_heterogeneity * 100, 0)}% | {r.verdict} |")
     lines.append("")
     if "check_without" in mods.columns and mods["check_without"].notna().any():
         left = mods["check_without"].dropna().iloc[0]
@@ -218,6 +221,12 @@ def modifiers_markdown(mods):
     else:
         names = ", ".join(clear["label"].str.lower())
         lines.append(f"Verdict: {names} {'is' if len(clear) == 1 else 'are'} clearly linked to the differences in heat risk between areas.")
+        if "p_holm" in clear.columns:
+            kept = clear[clear["p_holm"] < 0.05]
+            if len(kept) == len(clear):
+                lines.append("The link holds after the Holm correction for testing several features. It remains an association between seven areas; step 3 tests the cooling itself at 100 m.")
+            else:
+                lines.append("After the Holm correction for testing several features, not every link stays below 0.05, so it is reported as a signal.")
     lines.append("")
     return lines
 
