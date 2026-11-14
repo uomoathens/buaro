@@ -70,7 +70,44 @@ The link holds after the Holm correction for testing several features. It remain
 
 ## What cools the city: surface temperature at 100 m
 
-The Landsat surface temperature analysis has not run yet.
+Every clear Landsat 8 and 9 scene of June to August since 2014 (245 scenes) gives the land surface temperature of each 100 m cell in late morning. Each scene is compared with the median of the built-up city that day, so hot and cool days cancel out.
+Only built-up cells are used (at least 50% built-up land, 62,700 cells), where the Street Tree Layer is mapped. Each cell is compared only with the other cells of the same 1 km square, so the sea, the hills and the wind cannot pose as cooling.
+The model learns from the summers 2014 to 2022 and is then tested on 2023, 2024, 2025, 2026, which it has never seen.
+
+| Feature | Change | Summers it learned from | Unseen summers |
+|---|---|---|---|
+| Street tree cover | +10 percentage points | -0.27°C (-0.30 to -0.23) | -0.23°C (-0.27 to -0.20) |
+| Green urban areas | +10 percentage points | +0.02°C (-0.02 to +0.07) | +0.05°C (+0.00 to +0.10) |
+| Dense, highly sealed urban fabric | +10 percentage points | -0.10°C (-0.13 to -0.07) | -0.11°C (-0.14 to -0.08) |
+| Built-up land | +10 percentage points | -0.06°C (-0.08 to -0.03) | -0.08°C (-0.11 to -0.06) |
+| Elevation | +100 m | -0.54°C (-0.79 to -0.29) | -0.45°C (-0.71 to -0.19) |
+
+Surface temperature by street tree cover, compared with cells with almost no trees (0-2%), same 1 km square:
+
+| Tree cover | Difference | 95% range | Cells |
+|---|---|---|---|
+| 0-2% | +0.00°C | +0.00 to +0.00 | 36,610 |
+| 2-5% | -0.23°C | -0.28 to -0.19 | 4,109 |
+| 5-10% | -0.30°C | -0.36 to -0.25 | 6,620 |
+| 10-20% | -0.52°C | -0.60 to -0.45 | 6,592 |
+| 20-30% | -0.80°C | -0.92 to -0.69 | 3,478 |
+| 30-40% | -0.99°C | -1.16 to -0.83 | 2,039 |
+| 40-100% | -1.41°C | -1.61 to -1.22 | 3,252 |
+
+| Unseen summer | Cooling per +10 points of tree cover | 95% range |
+|---|---|---|
+| 2023 | -0.24°C | -0.28 to -0.21 |
+| 2024 | -0.23°C | -0.27 to -0.20 |
+| 2025 | -0.22°C | -0.25 to -0.19 |
+| 2026 | -0.24°C | -0.27 to -0.21 |
+
+Verdict: street trees cool the city surface. Each +10 percentage points of tree cover lowers late-morning surface temperature by about 0.27°C, and the unseen summers confirm it (-0.23°C), every one of them on its own. Cells with more than 40% tree cover are about 1.4°C cooler than cells with almost none.
+Green urban areas add no cooling of their own once their trees are counted, most likely because open, dry grass in an Athens summer heats up much like bare ground. The link between green areas and lower heat mortality found between areas is therefore most likely carried by their trees, and by the shade and cooler air they offer to people, which surface temperature does not measure.
+Dense, highly sealed fabric is slightly cooler at the surface in late morning than open, low-density or industrial land in the same square, most likely because tall buildings shade the streets while bare land and large flat roofs heat fastest. This is a daytime surface effect; dense fabric releases its heat at night, which Landsat does not see.
+
+The features explain 9% of the differences between cells of the same square in the unseen summers. The rest comes from roofs, materials and street shape, which no open European layer maps yet. The finding is the size of the tree effect and its stability from summer to summer, not a full map of the causes.
+
+![Summer surface temperature](../docs/lst_map.png)
 
 ## Is Attica adapting?
 
