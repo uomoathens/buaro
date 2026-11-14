@@ -1,0 +1,318 @@
+{
+  "effects": [
+    {
+      "period": "training summers",
+      "feature": "tree_share",
+      "label": "Street tree cover",
+      "unit": "+10 percentage points",
+      "effect_c": -0.265204903780586,
+      "low_c": -0.3019911967938891,
+      "high_c": -0.22841861076728287,
+      "p_value": 2.4797772225925963e-45,
+      "cells": 62700
+    },
+    {
+      "period": "training summers",
+      "feature": "green_urban_share",
+      "label": "Green urban areas",
+      "unit": "+10 percentage points",
+      "effect_c": 0.02285250978163378,
+      "low_c": -0.02241174940043117,
+      "high_c": 0.06811676896369871,
+      "p_value": 0.32240655985186006,
+      "cells": 62700
+    },
+    {
+      "period": "training summers",
+      "feature": "dense_fabric_share",
+      "label": "Dense, highly sealed urban fabric",
+      "unit": "+10 percentage points",
+      "effect_c": -0.10005909741692004,
+      "low_c": -0.12736319761075984,
+      "high_c": -0.07275499722308022,
+      "p_value": 6.843838442005897e-13,
+      "cells": 62700
+    },
+    {
+      "period": "training summers",
+      "feature": "artificial_share",
+      "label": "Built-up land",
+      "unit": "+10 percentage points",
+      "effect_c": -0.058108093503631414,
+      "low_c": -0.08353909434991043,
+      "high_c": -0.032677092657352386,
+      "p_value": 7.521045391733566e-06,
+      "cells": 62700
+    },
+    {
+      "period": "training summers",
+      "feature": "elevation",
+      "label": "Elevation",
+      "unit": "+100 m",
+      "effect_c": -0.5378836769410853,
+      "low_c": -0.7896426150526672,
+      "high_c": -0.28612473882950323,
+      "p_value": 2.820830983417809e-05,
+      "cells": 62700
+    },
+    {
+      "period": "unseen summers",
+      "feature": "tree_share",
+      "label": "Street tree cover",
+      "unit": "+10 percentage points",
+      "effect_c": -0.2332301613361675,
+      "low_c": -0.26524535062307725,
+      "high_c": -0.20121497204925776,
+      "p_value": 2.9876976179653837e-46,
+      "cells": 62700
+    },
+    {
+      "period": "unseen summers",
+      "feature": "green_urban_share",
+      "label": "Green urban areas",
+      "unit": "+10 percentage points",
+      "effect_c": 0.05140552483040161,
+      "low_c": 0.004583774519918027,
+      "high_c": 0.0982272751408852,
+      "p_value": 0.03140985374546476,
+      "cells": 62700
+    },
+    {
+      "period": "unseen summers",
+      "feature": "dense_fabric_share",
+      "label": "Dense, highly sealed urban fabric",
+      "unit": "+10 percentage points",
+      "effect_c": -0.11033521213047422,
+      "low_c": -0.13802621180645172,
+      "high_c": -0.08264421245449671,
+      "p_value": 5.741233695362933e-15,
+      "cells": 62700
+    },
+    {
+      "period": "unseen summers",
+      "feature": "artificial_share",
+      "label": "Built-up land",
+      "unit": "+10 percentage points",
+      "effect_c": -0.08410870885830057,
+      "low_c": -0.1088904152703671,
+      "high_c": -0.05932700244623404,
+      "p_value": 2.8896792750180603e-11,
+      "cells": 62700
+    },
+    {
+      "period": "unseen summers",
+      "feature": "elevation",
+      "label": "Elevation",
+      "unit": "+100 m",
+      "effect_c": -0.4493064820115351,
+      "low_c": -0.7061229594332517,
+      "high_c": -0.19249000458981858,
+      "p_value": 0.0006058023860079166,
+      "cells": 62700
+    }
+  ],
+  "curve": [
+    {
+      "tree_cover": "0-2%",
+      "effect_c": 0.0,
+      "low_c": 0.0,
+      "high_c": 0.0,
+      "cells": 36610,
+      "reference": true
+    },
+    {
+      "tree_cover": "2-5%",
+      "effect_c": -0.23455662158181864,
+      "low_c": -0.27854278478883987,
+      "high_c": -0.19057045837479744,
+      "cells": 4109,
+      "reference": false
+    },
+    {
+      "tree_cover": "5-10%",
+      "effect_c": -0.30468404251175935,
+      "low_c": -0.3579102561837433,
+      "high_c": -0.2514578288397754,
+      "cells": 6620,
+      "reference": false
+    },
+    {
+      "tree_cover": "10-20%",
+      "effect_c": -0.5225480798113863,
+      "low_c": -0.5954427391262274,
+      "high_c": -0.4496534204965452,
+      "cells": 6592,
+      "reference": false
+    },
+    {
+      "tree_cover": "20-30%",
+      "effect_c": -0.8046651216673797,
+      "low_c": -0.9169039243811348,
+      "high_c": -0.6924263189536246,
+      "cells": 3478,
+      "reference": false
+    },
+    {
+      "tree_cover": "30-40%",
+      "effect_c": -0.9938154873319136,
+      "low_c": -1.1574132126013463,
+      "high_c": -0.830217762062481,
+      "cells": 2039,
+      "reference": false
+    },
+    {
+      "tree_cover": "40-100%",
+      "effect_c": -1.4112096775010852,
+      "low_c": -1.6068576967238068,
+      "high_c": -1.2155616582783635,
+      "cells": 3252,
+      "reference": false
+    }
+  ],
+  "unseen": [
+    {
+      "summer": 2023,
+      "cells": 62700,
+      "r2_within": 0.09229260957800312,
+      "rmse_c": 1.1507798351184784,
+      "tree_effect_c": -0.24395270846853812,
+      "tree_low_c": -0.27789054265422813,
+      "tree_high_c": -0.21001487428284804
+    },
+    {
+      "summer": 2024,
+      "cells": 62700,
+      "r2_within": 0.08803701907950823,
+      "rmse_c": 1.1570658771851305,
+      "tree_effect_c": -0.23206969658936472,
+      "tree_low_c": -0.26670753030317085,
+      "tree_high_c": -0.1974318628755586
+    },
+    {
+      "summer": 2025,
+      "cells": 62700,
+      "r2_within": 0.08384499876521323,
+      "rmse_c": 1.1327734293740301,
+      "tree_effect_c": -0.22271432259133778,
+      "tree_low_c": -0.25394521947538345,
+      "tree_high_c": -0.19148342570729213
+    },
+    {
+      "summer": 2026,
+      "cells": 62699,
+      "r2_within": 0.08887317233491565,
+      "rmse_c": 1.0876251538678523,
+      "tree_effect_c": -0.23555691364102485,
+      "tree_low_c": -0.2650046300640681,
+      "tree_high_c": -0.2061091972179816
+    }
+  ],
+  "validation": {
+    "train_years": [
+      2014,
+      2015,
+      2016,
+      2017,
+      2018,
+      2019,
+      2020,
+      2021,
+      2022
+    ],
+    "test_years": [
+      2023,
+      2024,
+      2025,
+      2026
+    ],
+    "train_cells": 62700,
+    "train_r2_within": 0.10696519092290002,
+    "min_built_up": 0.5,
+    "test_cells": 62700,
+    "test_r2_within": 0.09156468894415382,
+    "test_rmse_c": 1.110860760710329,
+    "test_sd_c": 1.1655102201540841
+  },
+  "summers": [
+    {
+      "year": 2014,
+      "cells": 235809,
+      "scenes": 10.0,
+      "mean_lst_c": 41.64835414081933
+    },
+    {
+      "year": 2015,
+      "cells": 241169,
+      "scenes": 13.0,
+      "mean_lst_c": 38.84901085160396
+    },
+    {
+      "year": 2016,
+      "cells": 239078,
+      "scenes": 14.0,
+      "mean_lst_c": 40.095615038487935
+    },
+    {
+      "year": 2017,
+      "cells": 243702,
+      "scenes": 15.0,
+      "mean_lst_c": 39.536743686552384
+    },
+    {
+      "year": 2018,
+      "cells": 247508,
+      "scenes": 10.0,
+      "mean_lst_c": 39.243111836214176
+    },
+    {
+      "year": 2019,
+      "cells": 242188,
+      "scenes": 12.0,
+      "mean_lst_c": 38.76448884247704
+    },
+    {
+      "year": 2020,
+      "cells": 235168,
+      "scenes": 10.0,
+      "mean_lst_c": 38.48197656426588
+    },
+    {
+      "year": 2021,
+      "cells": 242030,
+      "scenes": 17.0,
+      "mean_lst_c": 41.306559553067075
+    },
+    {
+      "year": 2022,
+      "cells": 251858,
+      "scenes": 23.0,
+      "mean_lst_c": 38.71852577387694
+    },
+    {
+      "year": 2023,
+      "cells": 257227,
+      "scenes": 30.0,
+      "mean_lst_c": 40.92222592192082
+    },
+    {
+      "year": 2024,
+      "cells": 281837,
+      "scenes": 32.0,
+      "mean_lst_c": 40.33720487305522
+    },
+    {
+      "year": 2025,
+      "cells": 264895,
+      "scenes": 33.0,
+      "mean_lst_c": 40.114251268211305
+    },
+    {
+      "year": 2026,
+      "cells": 250891,
+      "scenes": 26.0,
+      "mean_lst_c": 39.892303401516564
+    }
+  ],
+  "scenes_used": 245,
+  "map": "lst_map.png"
+}

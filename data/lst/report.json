@@ -1,5 +1,5 @@
 {
-  "run": "2026-11-14T09:00:59Z",
+  "run": "2026-11-14T09:29:35Z",
   "grid": {
     "width": 510,
     "height": 730,
@@ -35,15 +35,18 @@
     "test_years": [
       2023,
       2024,
-      2025
+      2025,
+      2026
     ],
-    "train_cells": 190295,
-    "train_r2_within": 0.050214995582378186,
-    "test_cells": 190295,
-    "test_r2_within": 0.05471690561624576,
-    "test_rmse_c": 1.4948014865895731,
-    "test_sd_c": 1.5374596146042683
+    "train_cells": 62700,
+    "train_r2_within": 0.10696519092290002,
+    "min_built_up": 0.5,
+    "test_cells": 62700,
+    "test_r2_within": 0.09156468894415382,
+    "test_rmse_c": 1.110860760710329,
+    "test_sd_c": 1.1655102201540841
   },
+  "map": "lst_map.png",
   "years": {
     "2014": {
       "cached": true
