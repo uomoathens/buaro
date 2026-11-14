@@ -43,6 +43,10 @@ jobs:
             echo "No changes"
           else
             git commit --allow-empty-message -m ""
-            git pull --rebase
-            git push
+            pushed=0
+            for attempt in 1 2 3 4 5 6; do
+              if git pull --rebase && git push; then pushed=1; break; fi
+              sleep $((attempt * 15))
+            done
+            test "$pushed" = 1
           fi
