@@ -111,7 +111,16 @@ The features explain 9% of the differences between cells of the same square in t
 
 ## Heat deaths at 1.5°C, 2°C and 3°C of global warming
 
-The climate projections (Copernicus Interactive Climate Atlas, CMIP6) are not available yet, so this step has not run.
+The summers 2015 to 2025, outside the pandemic years, are replayed at the three reference levels of the EU Climate Resilience Law. Each week's maximum temperature is raised by the summer warming that the CMIP6 models of the Copernicus Interactive Climate Atlas project for Athens at that level, month by month, relative to 2011-2030. Population and vulnerability stay as they are today, so the numbers show what warming alone would do if nothing else changed.
+
+| Global warming | Summer warming in Athens | Heat-related deaths per summer | Range | Compared with today | Weeks above the threshold, per area |
+|---|---|---|---|---|---|
+| Today | +0.0°C | 963 | 775 to 1,158 | 1.00× | 11.0 |
+| 1.5°C | +0.4°C | 1,143 | 729 to 1,698 | 1.19× | 11.6 |
+| 2°C | +0.9°C | 1,426 | 953 to 2,345 | 1.48× | 12.8 |
+| 3°C | +2.3°C | 2,204 | 1,427 to 3,315 | 2.29× | 14.2 |
+
+Verdict: at 3°C of global warming, the same summers would bring about 2.3 times today's heat deaths in Attica, unless vulnerability falls. Step 4 measures how much of that street trees and green areas can prevent.
 
 ## What prevents heat deaths: measures
 
