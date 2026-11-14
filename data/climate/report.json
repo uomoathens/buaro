@@ -1,0 +1,102 @@
+{
+  "run": "2026-11-14T11:33:16Z",
+  "warming_levels": {
+    "runs": 35
+  },
+  "form": {
+    "origin": [
+      "cerra",
+      "cmip5",
+      "cmip6",
+      "cordex_core",
+      "cordex_eur_11",
+      "e_obs",
+      "era5",
+      "era5_land",
+      "in_situ_precipitation",
+      "in_situ_temperature",
+      "oras5",
+      "satellite_sea_surface_temperature"
+    ],
+    "experiment": [
+      "historical",
+      "rcp_2_6",
+      "rcp_4_5",
+      "rcp_8_5",
+      "ssp1_1_9",
+      "ssp1_2_6",
+      "ssp2_4_5",
+      "ssp3_7_0",
+      "ssp5_8_5"
+    ],
+    "domain": [
+      "euro_cordex",
+      "europe",
+      "global",
+      "global_mosaic"
+    ],
+    "period": [
+      "1850-2005",
+      "1850-2014",
+      "1881-2017",
+      "1940-2025",
+      "1950-2021",
+      "1950-2024",
+      "1950-2025",
+      "1958-2014",
+      "1970-2005",
+      "1979-2020",
+      "1982-2022",
+      "1985-2025",
+      "2006-2100",
+      "2015-2100"
+    ],
+    "variable": [
+      "annual_cooling_degree_days",
+      "annual_heating_degree_days",
+      "annual_maximum_consecutive_dry_days",
+      "monthly_cloud_cover_percentage",
+      "monthly_daily_accumulated_potential_evapotranspiration",
+      "monthly_daily_maximum_temperature",
+      "monthly_daily_minimum_temperature",
+      "monthly_daily_temperature_range",
+      "monthly_evaporation",
+      "monthly_extreme_hot_days",
+      "monthly_frost_days",
+      "monthly_heavy_precipitation_days",
+      "monthly_maximum_1_day_precipitation",
+      "monthly_maximum_5_day_precipitation",
+      "monthly_maximum_of_daily_maximum_temperature",
+      "monthly_minimum_of_daily_minimum_temperature",
+      "monthly_near_surface_specific_humidity",
+      "monthly_precipitation",
+      "monthly_precipitation_intensity",
+      "monthly_runoff",
+      "monthly_sea_ice_area_percentage",
+      "monthly_sea_level_pressure",
+      "monthly_sea_surface_temperature",
+      "monthly_snowfall_precipitation",
+      "monthly_soil_moisture_in_upper_soil_portion",
+      "monthly_standardised_precipitation_evapotranspiration_index_for_6_months_cumulation_period",
+      "monthly_standardised_precipitation_index_for_6_months_cumulation_period",
+      "monthly_surface_solar_radiation_downwards",
+      "monthly_surface_thermal_radiation_downwards",
+      "monthly_temperature",
+      "monthly_tropical_nights",
+      "monthly_very_extreme_hot_days",
+      "monthly_very_heavy_precipitation_days",
+      "monthly_wet_days",
+      "monthly_wind_speed"
+    ],
+    "bias_adjustment": [
+      "isimip_method",
+      "linear_scaling",
+      "no_bias_adjustment"
+    ],
+    "area": []
+  },
+  "variable": "monthly_daily_maximum_temperature",
+  "series": {
+    "waiting_for": "CDSAPI_KEY secret"
+  }
+}
