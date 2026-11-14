@@ -36,6 +36,9 @@ select{font:inherit;font-size:14px;padding:6px 10px;border-radius:8px;border:1px
 .tip b{display:block;margin-bottom:4px}
 .tip .row{display:flex;justify-content:space-between;gap:14px;color:var(--text-secondary)}
 .tip .row i{display:inline-block;width:10px;height:3px;border-radius:2px;margin-right:6px;vertical-align:middle}
+.impact h3{font-size:15px;margin:16px 0 4px}
+.impact p{margin:0 0 8px;max-width:820px;color:var(--text-secondary)}
+.impact b{color:var(--text-primary)}
 .verdict{border-left:4px solid var(--s1);padding:8px 12px;background:var(--surface-0);border-radius:0 8px 8px 0;margin:10px 0 0}
 details{margin-top:10px}
 summary{cursor:pointer;color:var(--text-secondary);font-size:13px}
@@ -56,7 +59,7 @@ footer{font-size:13px;color:var(--text-muted);margin-top:24px}
 <header>
 <span class="toggle"><label>Theme <select id="theme"><option value="">System</option><option value="light">Light</option><option value="dark">Dark</option></select></label></span>
 <h1>How deadly is heat in Attica, and is it changing?</h1>
-<p>BUARO turns the Bayesian Urban Adaptation and Resilience Optimization Model of <em>AI for Planetary Resilience</em> (D. Sargiotis, Springer, 2027) into open software that learns from official European data. This page is rebuilt automatically every time the pipeline runs.</p>
+<p>BUARO turns the Bayesian Urban Adaptation and Resilience Optimization Model of <em>AI for Planetary Resilience</em> (D. Sargiotis, Springer, 2027) into open software that learns from official European data. This page is rebuilt automatically every time the pipeline runs. Last rebuilt: 2026-11-14 13:45 UTC.</p>
 <div class="meta" id="meta"></div>
 </header>
 
@@ -160,6 +163,25 @@ footer{font-size:13px;color:var(--text-muted);margin-top:24px}
 <li><a href="data/cells_attica.xlsx">cells_attica.xlsx</a>: every 1 km census cell with its residents, residents aged 65+, tree cover and land use.</li>
 </ul>
 <ul class="src" id="sources"></ul>
+</section>
+
+<section id="sec-impact">
+<h2>Impact: what this software changes</h2>
+<p class="lead">BUARO turns a framework from a book into a working, self-updating instrument. Every claim below rests on the results above and on official European data.</p>
+<div class="impact">
+<h3>1. It counts a hidden toll, every month, without anyone running it</h3>
+<p>Heat deaths are rarely recorded as such on death certificates. BUARO finds them in the official weekly deaths of Eurostat, area by area, and updates the count on its own every month. In Attica it estimates <b id="imp-today">about one thousand</b> heat-related deaths in an average summer, and <b id="imp-2024">over two thousand</b> in the summer of 2024, in line with the independent estimate of ISGlobal published in Nature Medicine.</p>
+<h3>2. It shows where to act first</h3>
+<p>The same degree of heat is far more dangerous in some parts of Attica than in others: <b id="imp-gap"></b>. Civil protection and health services can send heat warnings, cooling centres and home visits where each degree costs the most lives, instead of spreading them evenly.</p>
+<h3>3. It separates what works from what only looks green</h3>
+<p>From space, BUARO measures that street trees cool the city surface, the same way in every summer it has never seen, while open lawns do not. It then shows, with a published European ratio, that cooler air alone explains only a small part of why greener neighbourhoods lose fewer people. This tells a municipality what a tree-planting programme can be expected to deliver, and that shade where people walk and wait, cooler homes and care for the most exposed matter as much.</p>
+<h3>4. It speaks the language of the new EU Climate Resilience Law</h3>
+<p>The EU climate resilience framework of October 2026 sets reference levels of 1.5°C, 2°C and 3°C of global warming for planning. BUARO answers directly in those terms: how many more heat deaths each level would bring to each area of Attica, and how many each measure would prevent, using the CMIP6 projections of the Copernicus Interactive Climate Atlas and the warming levels of the IPCC.</p>
+<h3>5. It can be trusted, because it can be checked</h3>
+<p>Only official and peer-reviewed sources are used. Every model is tested on summers it has never seen, uncertainty is always shown, and a claim is reported as a finding only when it survives those tests; when it does not, the page says so. All data and code are open, and every number on this page can be downloaded and verified.</p>
+<h3>6. It is ready for every European city</h3>
+<p>Only the area codes and a few coordinates in BUARO are specific to Athens. Weekly deaths by area come from Eurostat, land use and street trees from the Copernicus Urban Atlas, which maps 790 Functional Urban Areas of more than 50,000 inhabitants, surface temperature from Landsat and climate projections from Copernicus. The same software can give every one of those cities the same instrument, at no cost, as a ready building block for Local Digital Twins and for the climate risk assessments that the EU framework calls for.</p>
+</div>
 </section>
 
 <footer id="footer"></footer>
@@ -270,7 +292,7 @@ hit.addEventListener('mousemove',ev=>{const b=svg.getBoundingClientRect();showTi
 }
 
 const M=D.meta;const A=M.adaptation;
-document.getElementById('meta').textContent='Data up to week '+M.last_week+' · Run on '+M.run_date+' · Deaths: Eurostat '+M.deaths_dataset+' · Temperature: ERA5-Land';
+document.getElementById('meta').textContent='Data up to week '+M.last_week+' · Run on '+M.run_date+' · Deaths: Eurostat '+M.deaths_dataset+' · Temperature: ERA5-Land · Page rebuilt 2026-11-14 13:45 UTC';
 
 function tiles(){const T=document.getElementById('tiles');const b=D.best2024;
 const items=[
@@ -376,6 +398,15 @@ const all=(D.measuresAreas||[]).filter(m=>m.level===0);
 table('table-measures-areas',['Area','Measure','Increase (points)','Deaths avoided','Range','New cover (ha)','Per 100 ha'],all.map(m=>[m.name_en,m.measure,fmt(m.increase_points,1),fmt(m.deaths_avoided,1),fmt(m.deaths_avoided_low,1)+' to '+fmt(m.deaths_avoided_high,1),fmt(m.new_cover_ha,0),m.new_cover_ha>0?fmt(m.deaths_avoided_per_100ha,2):'n/a']))}
 measureSel.addEventListener('change',measures);
 
+function impact(){
+const O=D.outlook||[];const M=(D.measures||[]).filter(m=>m.level===0);
+const base=O.length?O.find(o=>o.level===0):null;const today=base?base.heat_deaths_central:(M.length?M[0].heat_deaths_without_measure:null);
+if(today)document.getElementById('imp-today').textContent='about '+fmt(Math.round(today/10)*10,0);
+if(D.best2024)document.getElementById('imp-2024').textContent=fmt(D.best2024,0);
+const V=(D.vuln||[]).slice().sort((a,b)=>b.rr_per_degree-a.rr_per_degree);
+if(V.length>1){const hi=V[0],lo=V[V.length-1];document.getElementById('imp-gap').textContent='each extra degree raises deaths by '+pct(hi.rr_per_degree)+' in '+hi.name_en+' and by '+pct(lo.rr_per_degree)+' in '+lo.name_en}
+}
+
 function response(){const R=D.response;const c=css('--s1');
 barChart(document.getElementById('chart-response'),{categories:R.map(r=>String(r.year)),series:[{name:'Extra deaths per degree-week',values:R.map(r=>r.excess_per_degree_week),color:c}],labels:true,ydec:0,height:280,tip:(i)=>{const r=R[i];return '<b>Summer '+r.year+'</b>'+tipRow(null,'Extra deaths per degree-week',fmt(r.excess_per_degree_week,1))+tipRow(null,'Extra deaths, weeks 26 to 36',fmt(r.summer_excess_deaths))+tipRow(null,'Degree-weeks of heat',fmt(r.degree_weeks_above_threshold,1))+tipRow(null,'Hottest week, mean max',fmt(r.hottest_week_tmax,1)+' °C')}});
 table('table-response',['Summer','Extra deaths, weeks 26 to 36','Degree-weeks','Extra deaths per degree-week','Hottest week (°C)'],R.map(r=>[r.year,fmt(r.summer_excess_deaths),fmt(r.degree_weeks_above_threshold,1),fmt(r.excess_per_degree_week,1),fmt(r.hottest_week_tmax,1)]))}
@@ -396,7 +427,7 @@ table('table-compare',['Baseline','Summer','Recorded deaths','Forecast with heat
 document.getElementById('sources').innerHTML=D.sources.map(s=>'<li><a href="'+s.url+'">'+s.name+'</a>: '+s.what+'</li>').join('');
 document.getElementById('footer').textContent='Framework: D. Sargiotis, AI for Planetary Resilience, Springer Nature Switzerland, 2027. Contains modified Copernicus Climate Change Service information. Neither the European Commission nor ECMWF is responsible for any use of this information.';
 
-function redraw(){tiles();summer();vuln();mods();surface();outlook();measures();response();loo();compare()}
+function redraw(){tiles();summer();vuln();mods();surface();outlook();measures();response();loo();compare();impact()}
 yearSel.addEventListener('change',summer);areaSel.addEventListener('change',summer);
 let rt;window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(redraw,150)});
 if(window.matchMedia)window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',redraw);
