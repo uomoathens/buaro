@@ -287,7 +287,27 @@ def surface_markdown(surface):
     return lines
 
 
-def summary_markdown(meta, vuln, summary, comparison, reference, response=None, mods=None, surface=None):
+def outlook_markdown(outlook):
+    lines = ["## Heat deaths at 1.5°C, 2°C and 3°C of global warming", ""]
+    if outlook is None or outlook.empty or len(outlook) < 2:
+        lines.append("The climate projections (Copernicus Interactive Climate Atlas, CMIP6) are not available yet, so this step has not run.")
+        lines.append("")
+        return lines
+    lines.append("The summers 2015 to 2025, outside the pandemic years, are replayed at the three reference levels of the EU Climate Resilience Law. Each week's maximum temperature is raised by the summer warming that the CMIP6 models of the Copernicus Interactive Climate Atlas project for Athens at that level, month by month, relative to 2011-2030. Population and vulnerability stay as they are today, so the numbers show what warming alone would do if nothing else changed.")
+    lines.append("")
+    lines.append("| Global warming | Summer warming in Athens | Heat-related deaths per summer | Range | Compared with today | Weeks above the threshold, per area |")
+    lines.append("|---|---|---|---|---|---|")
+    for r in outlook.itertuples():
+        label = "Today" if r.level == 0 else f"{r.level:g}°C"
+        lines.append(f"| {label} | {r.summer_warming_c:+.1f}°C | {r.heat_deaths_central:,.0f} | {r.heat_deaths_low:,.0f} to {r.heat_deaths_high:,.0f} | {r.times_today:.2f}× | {r.hot_weeks_per_area:.1f} |")
+    lines.append("")
+    last = outlook.iloc[-1]
+    lines.append(f"Verdict: at {last['level']:g}°C of global warming, the same summers would bring about {last['times_today']:.1f} times today's heat deaths in Attica, unless vulnerability falls. Step 4 measures how much of that street trees and green areas can prevent.")
+    lines.append("")
+    return lines
+
+
+def summary_markdown(meta, vuln, summary, comparison, reference, response=None, mods=None, surface=None, outlook=None):
     winner = meta["baseline_selected"]
     best = summary[summary["baseline"] == winner] if not summary.empty else summary
     lines = []
@@ -336,6 +356,7 @@ def summary_markdown(meta, vuln, summary, comparison, reference, response=None, 
     lines.append("")
     lines.extend(modifiers_markdown(mods))
     lines.extend(surface_markdown(surface))
+    lines.extend(outlook_markdown(outlook))
     a = meta["adaptation"]
     lines.append("## Is Attica adapting?")
     lines.append("")
@@ -403,6 +424,7 @@ def summary_markdown(meta, vuln, summary, comparison, reference, response=None, 
     lines.append("- The adaptation test assumes a straight-line change over time and has few post-pandemic summers. It is repeated with each summer left out, and a trend is only reported as evidence if no single summer changes the verdict.")
     lines.append("- With seven areas, the comparison of heat risk with tree cover, sealing and age can show associations between areas only. Cause and effect is tested in step 3 at street scale.")
     lines.append("- Landsat measures the temperature of the ground and roofs in late morning, not the air temperature people feel, and not the night. Elevation comes from the Copernicus DEM, a surface model that includes buildings and trees, so part of the cooling of trees may be counted under elevation; the tree estimate is, if anything, conservative.")
+    lines.append("- The warming-level outlook shifts each week's observed maximum temperature by the projected monthly change (delta method). It does not change how variable summers are, nor population, ageing or adaptation, and the models are not bias-adjusted; only their change is used.")
     lines.append("- The pooled estimates are empirical Bayes (random-effects shrinkage), a first step towards the full Bayesian layer of the framework.")
     lines.append("")
     return "\n".join(lines)

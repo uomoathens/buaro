@@ -3,7 +3,7 @@ name: BUARO pipeline
 on:
   workflow_dispatch:
   workflow_run:
-    workflows: ["BUARO static data", "BUARO surface temperature"]
+    workflows: ["BUARO static data", "BUARO surface temperature", "BUARO climate projections"]
     types: [completed]
   schedule:
     - cron: "23 5 4 * *"
@@ -16,6 +16,7 @@ on:
       - "!buaro/static_fetch.py"
       - "!buaro/lst.py"
       - "!buaro/grid100.py"
+      - "!buaro/hazard.py"
       - "config/**"
       - "tests/**"
       - "requirements.txt"
@@ -70,8 +71,14 @@ jobs:
             test "$pushed" = 1
           fi
 
+      - name: Request a branch Pages build
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X POST "repos/${{ github.repository }}/pages/builds" || echo "Pages is published by the deploy job"
+
       - name: Configure Pages
         uses: actions/configure-pages@v5
+        continue-on-error: true
 
       - name: Upload page
         uses: actions/upload-pages-artifact@v5
@@ -81,6 +88,7 @@ jobs:
   deploy:
     needs: run
     runs-on: ubuntu-latest
+    continue-on-error: true
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

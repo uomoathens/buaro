@@ -108,6 +108,14 @@ footer{font-size:13px;color:var(--text-muted);margin-top:24px}
 <details><summary>Show as table</summary><div id="table-surface"></div><div id="table-dose"></div><div id="table-unseen"></div></details>
 </section>
 
+<section id="sec-outlook">
+<h2>Heat deaths at 1.5°C, 2°C and 3°C of global warming</h2>
+<p class="lead">The summers 2015 to 2025, outside the pandemic years, replayed at the three reference levels of the EU Climate Resilience Law: each week's maximum temperature is raised by the summer warming the CMIP6 models of the Copernicus Interactive Climate Atlas project for Athens at that level. Population and vulnerability stay as they are today, so this is what warming alone would do if nothing else changed.</p>
+<div class="chart" id="chart-outlook"></div>
+<div class="verdict" id="verdict-outlook"></div>
+<details><summary>Show as table</summary><div id="table-outlook"></div><div id="table-outlook-areas"></div></details>
+</section>
+
 <section>
 <h2>Each summer's response to heat, without any model</h2>
 <p class="lead">Extra deaths in weeks 26 to 36 above the calm-week level of the same year, divided by the heat the summer brought (degree-weeks above the area thresholds). A lower bar means each degree of heat cost fewer lives.</p>
@@ -328,6 +336,17 @@ table('table-surface',['Feature','Per','Summers learned from','Unseen summers'],
 table('table-dose',['Tree cover','Difference (°C)','95% range','Cells'],C.map(c=>[c.tree_cover,fmt(c.effect_c,2),fmt(c.low_c,2)+' to '+fmt(c.high_c,2),fmt(c.cells,0)]));
 table('table-unseen',['Unseen summer','Cooling per +10 points of trees (°C)','95% range','Cells'],U.map(u=>[u.summer,fmt(u.tree_effect_c,2),fmt(u.tree_low_c,2)+' to '+fmt(u.tree_high_c,2),fmt(u.cells,0)]))}
 
+function outlook(){const O=D.outlook||[];const sec=document.getElementById('sec-outlook');
+if(O.length<2){sec.style.display='none';return}
+const lab=l=>l===0?'Today':fmt(l,1).replace('.0','')+'°C world';
+dotChart(document.getElementById('chart-outlook'),{rows:O.map(r=>({label:lab(r.level),v:r.heat_deaths_central,lo:r.heat_deaths_low,hi:r.heat_deaths_high,valueLabel:fmt(r.heat_deaths_central,0)+' deaths',color:r.level===0?css('--s1'):css('--s2'),
+tip:'<b>'+lab(r.level)+'</b>'+tipRow(null,'Summer warming in Athens',(r.summer_warming_c>=0?'+':'')+fmt(r.summer_warming_c,1)+'°C')+tipRow(null,'Heat deaths per summer',fmt(r.heat_deaths_central,0))+tipRow(null,'Range',fmt(r.heat_deaths_low,0)+' to '+fmt(r.heat_deaths_high,0))+tipRow(null,'Compared with today',fmt(r.times_today,2)+'×')+tipRow(null,'Hot weeks per area',fmt(r.hot_weeks_per_area,1))+(r.models?tipRow(null,'Climate models',fmt(r.models,0)):'')})),left:150,tickFmt:v=>fmt(v,0)});
+const last=O[O.length-1];
+document.getElementById('verdict-outlook').textContent='At '+lab(last.level).replace(' world','')+' of global warming, the same summers would bring about '+fmt(last.times_today,1)+' times today\'s heat deaths in Attica ('+fmt(last.heat_deaths_central,0)+' per summer, range '+fmt(last.heat_deaths_low,0)+' to '+fmt(last.heat_deaths_high,0)+'), unless vulnerability falls. The range combines the spread of the climate models with the uncertainty of vulnerability.';
+table('table-outlook',['Global warming','Summer warming in Athens','Heat deaths per summer','Range','Compared with today','Hot weeks per area'],O.map(r=>[lab(r.level),(r.summer_warming_c>=0?'+':'')+fmt(r.summer_warming_c,1)+'°C',fmt(r.heat_deaths_central,0),fmt(r.heat_deaths_low,0)+' to '+fmt(r.heat_deaths_high,0),fmt(r.times_today,2)+'×',fmt(r.hot_weeks_per_area,1)]));
+const A=D.outlookAreas||[];const lv=[...new Set(A.map(a=>a.level))];const names=[...new Set(A.map(a=>a.name_en))];
+table('table-outlook-areas',['Area'].concat(lv.map(lab)),names.map(n=>[n].concat(lv.map(l=>{const a=A.find(x=>x.name_en===n&&x.level===l);return a?fmt(a.heat_deaths_per_summer_central,0):'n/a'}))))}
+
 function response(){const R=D.response;const c=css('--s1');
 barChart(document.getElementById('chart-response'),{categories:R.map(r=>String(r.year)),series:[{name:'Extra deaths per degree-week',values:R.map(r=>r.excess_per_degree_week),color:c}],labels:true,ydec:0,height:280,tip:(i)=>{const r=R[i];return '<b>Summer '+r.year+'</b>'+tipRow(null,'Extra deaths per degree-week',fmt(r.excess_per_degree_week,1))+tipRow(null,'Extra deaths, weeks 26 to 36',fmt(r.summer_excess_deaths))+tipRow(null,'Degree-weeks of heat',fmt(r.degree_weeks_above_threshold,1))+tipRow(null,'Hottest week, mean max',fmt(r.hottest_week_tmax,1)+' °C')}});
 table('table-response',['Summer','Extra deaths, weeks 26 to 36','Degree-weeks','Extra deaths per degree-week','Hottest week (°C)'],R.map(r=>[r.year,fmt(r.summer_excess_deaths),fmt(r.degree_weeks_above_threshold,1),fmt(r.excess_per_degree_week,1),fmt(r.hottest_week_tmax,1)]))}
@@ -348,7 +367,7 @@ table('table-compare',['Baseline','Summer','Recorded deaths','Forecast with heat
 document.getElementById('sources').innerHTML=D.sources.map(s=>'<li><a href="'+s.url+'">'+s.name+'</a>: '+s.what+'</li>').join('');
 document.getElementById('footer').textContent='Framework: D. Sargiotis, AI for Planetary Resilience, Springer Nature Switzerland, 2027. Contains modified Copernicus Climate Change Service information. Neither the European Commission nor ECMWF is responsible for any use of this information.';
 
-function redraw(){tiles();summer();vuln();mods();surface();response();loo();compare()}
+function redraw(){tiles();summer();vuln();mods();surface();outlook();response();loo();compare()}
 yearSel.addEventListener('change',summer);areaSel.addEventListener('change',summer);
 let rt;window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(redraw,150)});
 if(window.matchMedia)window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change',redraw);

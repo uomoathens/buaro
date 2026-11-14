@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 import yaml
 
-from . import backtest, climate, data, eurostat, model, modifiers, report, site
+from . import backtest, climate, data, eurostat, future, model, modifiers, report, site
 
 
 def load_config(path):
@@ -157,6 +157,7 @@ def main(argv=None):
     parser.add_argument("--docs", default="docs")
     parser.add_argument("--static", default="data/static")
     parser.add_argument("--lst", default="data/lst")
+    parser.add_argument("--climate", default="data/climate")
     args = parser.parse_args(argv)
 
     config = load_config(args.config)
@@ -210,6 +211,7 @@ def main(argv=None):
     adaptation["depends_on"] = flips
     response = summer_response(panel, vuln)
     mods, areas = modifiers.analyse(vuln, modifiers.load(args.static))
+    outlook, outlook_areas = future.project(panel, vuln, future.load(args.climate))
     se = np.sqrt(pooled["pooled_var"])
     ref = config["reference"]
     ref_attica = ref["greece_heat_deaths_2024"] * ref["attica_population_2021"] / ref["greece_population_2021"]
@@ -258,6 +260,8 @@ def main(argv=None):
             {"item": "Residents and residents aged 65+ per 1 km cell", "source": "Eurostat, Census 2021 population grid", "link": "https://ec.europa.eu/eurostat/en/web/gisco/geodata/population-distribution/population-grids"},
             {"item": "Land use and sealing classes", "source": "Copernicus Land Monitoring Service, Urban Atlas 2021", "link": "https://land.copernicus.eu/en/products/urban-atlas"},
             {"item": "Street tree cover", "source": "Copernicus Land Monitoring Service, Urban Atlas Street Tree Layer 2021", "link": "https://land.copernicus.eu/en/products/urban-atlas"},
+            {"item": "Summer warming at 1.5°C, 2°C and 3°C", "source": "Copernicus Climate Change Service, Gridded dataset underpinning the Copernicus Interactive Climate Atlas (CMIP6)", "link": "https://cds.climate.copernicus.eu/datasets/multi-origin-c3s-atlas"},
+            {"item": "Years each model reaches each warming level", "source": "IPCC AR6 WGI Atlas, global warming levels", "link": "https://github.com/IPCC-WG1/Atlas/tree/main/warming-levels"},
             {"item": "Cross-check", "source": ref["label"], "link": "https://doi.org/10.1038/s41591-025-03954-7"},
         ]
     )
@@ -276,6 +280,8 @@ def main(argv=None):
             ("Adaptation robustness", robustness, ["The adaptation test repeated with one summer left out each time. The verdict counts as robust only if no single summer changes it."]),
             ("Summer response", response, ["Model-free check: summer excess deaths (weeks 26 to 36) above the calm-week level of the same year, per degree-week above the area thresholds."]),
             ("Heat modifiers", mods, ["Random-effects meta-regression of each area's heat effect on one area feature at a time. change_pp_per_sd: change in extra deaths per +1°C, in percentage points, for one standard deviation of the feature across areas, with 95% range (t distribution). With seven areas this is an association between areas, not proof of cause."]),
+            ("Warming levels", outlook, ["Heat-related deaths per summer (weeks 22 to 39) in Attica if the summers 2015 to 2025 happened at a global warming of 1.5°C, 2°C or 3°C, with today's population and today's vulnerability. Level 0 is today's climate. Summer warming per month is the median of the CMIP6 models in the Copernicus Interactive Climate Atlas, at the 20-year windows of the IPCC AR6 Atlas, relative to 2011-2030. Low and high combine the 10th and 90th model percentiles with the 95% range of vulnerability."]),
+            ("Warming levels by area", outlook_areas, None),
             ("Area exposure", areas, ["Area features weighted by the residents of each 1 km census cell (Eurostat Census 2021 grid) and measured on Copernicus Urban Atlas 2021 and its Street Tree Layer."]),
             ("Sources", sources, None),
         ],
@@ -284,10 +290,10 @@ def main(argv=None):
     report.workbook(out / "data_panel.xlsx", [("Panel", panel[panel_cols], ["Weekly deaths (Eurostat), ERA5-Land temperature and population used by the model."])])
     lst_path = Path(args.lst) / "summary.json"
     surface = json.loads(lst_path.read_text(encoding="utf-8")) if lst_path.exists() else None
-    text = report.summary_markdown(meta, vuln, summary, comparison, ref, response, mods, surface)
+    text = report.summary_markdown(meta, vuln, summary, comparison, ref, response, mods, surface, outlook)
     (out / "SUMMARY.md").write_text(text, encoding="utf-8")
     report.write_meta(out / "run_metadata.json", meta)
-    site.build(args.docs, meta, vuln, summary, weekly, response, robustness, panel, regions, mods=mods, areas=areas, surface=surface,
+    site.build(args.docs, meta, vuln, summary, weekly, response, robustness, panel, regions, mods=mods, areas=areas, surface=surface, outlook=outlook, outlook_areas=outlook_areas,
                files=[out / "buaro_attica_step1.xlsx", out / "data_panel.xlsx", Path(args.static) / "cells_attica.xlsx", out / "buaro_attica_lst.xlsx"],
                images=[Path(args.lst) / "lst_map.png"])
     print(text)
