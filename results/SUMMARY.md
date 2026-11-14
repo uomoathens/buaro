@@ -70,7 +70,7 @@ The link holds after the Holm correction for testing several features. It remain
 
 ## What cools the city: surface temperature at 100 m
 
-Every clear Landsat 8 and 9 scene of June to August since 2014 (245 scenes) gives the land surface temperature of each 100 m cell in late morning. Each scene is compared with the median of the built-up city that day, so hot and cool days cancel out.
+Every clear Landsat 8 and 9 scene of June to August since 2014 (246 scenes) gives the land surface temperature of each 100 m cell in late morning. Each scene is compared with the median of the built-up city that day, so hot and cool days cancel out.
 Only built-up cells are used (at least 50% built-up land, 62,700 cells), where the Street Tree Layer is mapped. Each cell is compared only with the other cells of the same 1 km square, so the sea, the hills and the wind cannot pose as cooling.
 The model learns from the summers 2014 to 2022 and is then tested on 2023, 2024, 2025, 2026, which it has never seen.
 
@@ -88,10 +88,10 @@ Surface temperature by street tree cover, compared with cells with almost no tre
 |---|---|---|---|
 | 0-2% | +0.00°C | +0.00 to +0.00 | 36,610 |
 | 2-5% | -0.23°C | -0.28 to -0.19 | 4,109 |
-| 5-10% | -0.30°C | -0.36 to -0.25 | 6,620 |
+| 5-10% | -0.31°C | -0.36 to -0.25 | 6,620 |
 | 10-20% | -0.52°C | -0.60 to -0.45 | 6,592 |
-| 20-30% | -0.80°C | -0.92 to -0.69 | 3,478 |
-| 30-40% | -0.99°C | -1.16 to -0.83 | 2,039 |
+| 20-30% | -0.81°C | -0.92 to -0.69 | 3,478 |
+| 30-40% | -1.00°C | -1.16 to -0.83 | 2,039 |
 | 40-100% | -1.41°C | -1.61 to -1.22 | 3,252 |
 
 | Unseen summer | Cooling per +10 points of tree cover | 95% range |
