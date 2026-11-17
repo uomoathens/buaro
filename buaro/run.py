@@ -10,6 +10,9 @@ import yaml
 from . import backtest, climate, data, eurostat, future, model, modifiers, report, scenarios, site
 
 
+RESPONSE_WEEKS = (26, 36)
+
+
 def load_config(path):
     return yaml.safe_load(Path(path).read_text(encoding="utf-8"))
 
@@ -110,9 +113,7 @@ def adaptation_summary(pooled_delta):
 
 
 def adaptation_robustness(panel, regions, percentile, study, kind, adaptation):
-    summer = panel[~panel["pandemic"] & panel["isoweek"].between(26, 36)]
-    counts = summer.groupby("year")["isoweek"].nunique()
-    years = sorted(int(y) for y, n in counts.items() if n >= 8)
+    years = future.full_summers(panel, RESPONSE_WEEKS)
     rows = []
     for year in years:
         _, _, pooled_delta = vulnerability(panel[panel["year"] != year], regions, percentile, study, kind)
@@ -127,11 +128,12 @@ def summer_response(panel, vuln):
     thr = vuln.set_index("geo")["threshold_c"]
     frame = panel[~panel["pandemic"]].copy()
     frame["degrees"] = np.clip(frame["tmax"] - frame["geo"].map(thr), 0, None)
+    full = set(future.full_summers(panel, RESPONSE_WEEKS))
     rows = []
     for year, group in frame.groupby("year"):
         calm = group[group["isoweek"].between(16, 25) | group["isoweek"].between(37, 44)]
-        summer = group[group["isoweek"].between(26, 36)]
-        if calm.empty or summer["isoweek"].nunique() < 11:
+        summer = group[group["isoweek"].between(*RESPONSE_WEEKS)]
+        if calm.empty or int(year) not in full:
             continue
         normal = calm["deaths"].sum() / calm["isoweek"].nunique()
         weekly = summer.groupby("isoweek").agg(deaths=("deaths", "sum"), degrees=("degrees", "mean"), tmax=("tmax", "mean"))
@@ -210,7 +212,8 @@ def main(argv=None):
     adaptation["robust"] = not flips
     adaptation["depends_on"] = flips
     response = summer_response(panel, vuln)
-    model_summers = future.per_summer(panel, vuln, tuple(int(w) for w in study["summer_weeks"]))
+    model_summers = future.per_summer(panel, vuln, future.SUMMER_WEEKS)
+    summer_years = future.full_summers(panel)
     pop65 = pop.dropna(subset=["population_65plus"]) if "population_65plus" in pop.columns else pop.iloc[0:0]
     share_year = int(pop65["year"].max()) if not pop65.empty else None
     mods, areas = modifiers.analyse(vuln, modifiers.load(args.static))
@@ -244,7 +247,10 @@ def main(argv=None):
         "i2": pooled["i2"],
         "adaptation": adaptation,
         "reference_attica_2024": ref_attica,
-        "model_summer_weeks": [int(w) for w in study["summer_weeks"]],
+        "model_vs_reference_2024": (float(model_summers.loc[2024]) / ref_attica - 1) if 2024 in model_summers.index and ref_attica > 0 else None,
+        "model_summer_weeks": [int(w) for w in future.SUMMER_WEEKS],
+        "summer_years": summer_years,
+        "summer_years_text": future.year_ranges(summer_years),
         "model_summers": {str(int(y)): float(v) for y, v in model_summers.items()},
         "model_attica_2024": float(model_summers.loc[2024]) if 2024 in model_summers.index else None,
         "share_65plus_year": share_year,
@@ -292,9 +298,9 @@ def main(argv=None):
             ("Adaptation robustness", robustness, ["The adaptation test repeated with one summer left out each time. The verdict counts as robust only if no single summer changes it."]),
             ("Summer response", response, ["Model-free check: summer excess deaths (weeks 26 to 36) above the calm-week level of the same year, per degree-week above the area thresholds."]),
             ("Heat modifiers", mods, ["Random-effects meta-regression of each area's heat effect on one area feature at a time. change_pp_per_sd: change in extra deaths per +1°C, in percentage points, for one standard deviation of the feature across areas, with 95% range (t distribution). With seven areas this is an association between areas, not proof of cause."]),
-            ("Warming levels", outlook, ["Heat-related deaths per summer (weeks 22 to 39) in Attica if the summers 2015 to 2025 happened at a global warming of 1.5°C, 2°C or 3°C, with today's population and today's vulnerability. Level 0 is today's climate. Summer warming per month is the median of the CMIP6 models in the Copernicus Interactive Climate Atlas, at the 20-year windows of the IPCC AR6 Atlas, relative to 2011-2030. Low and high combine the 10th and 90th model percentiles with the 95% range of vulnerability."]),
+            ("Warming levels", outlook, [f"Heat-related deaths per summer (weeks {future.SUMMER_WEEKS[0]} to {future.SUMMER_WEEKS[1]}) in Attica if the summers {future.year_ranges(summer_years)} happened at a global warming of 1.5°C, 2°C or 3°C, with today's population and today's vulnerability. Level 0 is today's climate. Summer warming per month is the median of the CMIP6 models in the Copernicus Interactive Climate Atlas, at the 20-year windows of the IPCC AR6 Atlas, relative to 2011-2030. Low and high combine the 10th and 90th model percentiles with the 95% range of vulnerability."]),
             ("Warming levels by area", outlook_areas, None),
-            ("Measures", measures, ["Heat-related deaths avoided per summer (weeks 22 to 39) in Attica. Physical: street tree cover raised where people live; the surface cooling measured with Landsat (step 3) is turned into air cooling with the European ratio of air to surface cooling efficiency of urban trees (0.006 / 0.075 °C per % tree cover, Du et al. 2024, Environmental Research Letters 19:044037); the high end assumes the air cools as much as the surface. Association: each area brought up to the best-covered area of Attica, using the difference in heat risk between areas (step 2); this includes everything that comes with greener neighbourhoods and is an upper bound."]),
+            ("Measures", measures, [f"Heat-related deaths avoided per summer (weeks {future.SUMMER_WEEKS[0]} to {future.SUMMER_WEEKS[1]}) in Attica. Physical: street tree cover raised where people live, by 5 or 10 points or up to the best area of Attica; the surface cooling measured with Landsat (step 3) is turned into air cooling with the European ratio of air to surface cooling efficiency of urban trees (0.006 / 0.075 °C per % tree cover, Du et al. 2024, Environmental Research Letters 19:044037); the high end assumes the air cools as much as the surface. Association: each area brought up to the best-covered area of Attica, using the difference in heat risk between areas (step 2); this includes everything that comes with greener neighbourhoods and is an upper bound."]),
             ("Measures by area", measures_areas, None),
             ("Area exposure", areas, ["Area features weighted by the residents of each 1 km census cell (Eurostat Census 2021 grid) and measured on Copernicus Urban Atlas 2021 and its Street Tree Layer."]),
             ("Sources", sources, None),

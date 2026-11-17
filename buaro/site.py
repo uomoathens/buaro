@@ -5,6 +5,8 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 
+from .scenarios import TREES_TO_BEST_AIR
+
 TEMPLATE = Path(__file__).with_name("site_template.html")
 
 SOURCES = [
@@ -20,7 +22,9 @@ SOURCES = [
     {"name": "Du et al. 2024, Environmental Research Letters 19:044037", "url": "https://doi.org/10.1088/1748-9326/ad30a3", "what": "air versus surface cooling efficiency of urban trees in 392 European urban clusters"},
     {"name": "EuroMOMO, methods", "url": "https://www.euromomo.eu/how-it-works/methods", "what": "calm spring and autumn weeks as the basis of expected mortality"},
     {"name": "Janoš et al. (2025), Nature Medicine", "url": "https://doi.org/10.1038/s41591-025-03954-7", "what": "heat-related mortality in Europe during 2024, used as a cross-check"},
-    {"name": "European Commission, COM(2026) 720", "url": "https://climate.ec.europa.eu/document/download/476ef20a-0c66-4be2-a104-70ba96622477_en?filename=com_2026_720_en.pdf", "what": "Communication on the EU Framework for Climate Resilience"},
+    {"name": "Ballester et al. (2023), The Lancet Regional Health Europe", "url": "https://doi.org/10.1016/j.lanepe.2023.100779", "what": "weekly versus daily data in estimating heat-related mortality, 147 European regions"},
+    {"name": "European Commission, COM(2026) 720", "url": "https://data.consilium.europa.eu/doc/document/ST-15096-2026-INIT/en/pdf", "what": "Communication on the EU Framework for Climate Resilience, 27 October 2026"},
+    {"name": "European Commission, COM(2026) 730", "url": "https://data.consilium.europa.eu/doc/document/ST-15079-2026-INIT/en/pdf", "what": "proposal for a Regulation establishing a framework to enhance climate resilience (European Climate Resilience Law), 27 October 2026"},
 ]
 
 
@@ -106,6 +110,7 @@ def build(docs_dir, meta, vuln, summary, weekly, response, robustness, panel, re
         "measuresAreas": records(measures_areas, list(measures_areas.columns)) if measures_areas is not None and not measures_areas.empty else [],
         "outlookAreas": records(outlook_areas, list(outlook_areas.columns)) if outlook_areas is not None and not outlook_areas.empty else [],
         "sources": SOURCES,
+        "treesToBestAir": TREES_TO_BEST_AIR,
     }
     text = json.dumps(payload, ensure_ascii=False, separators=(",", ":")).replace("</", "<\\/")
     built = pd.Timestamp.now("UTC").strftime("%Y-%m-%d %H:%M")

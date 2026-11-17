@@ -11,6 +11,8 @@ from openpyxl import Workbook
 from openpyxl.styles import Alignment, Font, PatternFill
 from openpyxl.utils import get_column_letter
 
+from .scenarios import TREES_TO_BEST_AIR
+
 SURFACE = "#fcfcfb"
 INK = "#0b0b0b"
 INK_2 = "#52514e"
@@ -287,13 +289,14 @@ def surface_markdown(surface):
     return lines
 
 
-def outlook_markdown(outlook):
+def outlook_markdown(outlook, meta=None):
     lines = ["## Heat deaths at 1.5°C, 2°C and 3°C of global warming", ""]
     if outlook is None or outlook.empty or len(outlook) < 2:
         lines.append("The climate projections (Copernicus Interactive Climate Atlas, CMIP6) are not available yet, so this step has not run.")
         lines.append("")
         return lines
-    lines.append("The summers 2015 to 2025, outside the pandemic years, are replayed at the three reference levels of the EU Climate Resilience Law. Each week's maximum temperature is raised by the summer warming that the CMIP6 models of the Copernicus Interactive Climate Atlas project for Athens at that level, month by month, relative to 2011-2030. Population and vulnerability stay as they are today, so the numbers show what warming alone would do if nothing else changed.")
+    years = (meta or {}).get("summer_years_text") or "observed"
+    lines.append(f"The summers {years}, all those fully outside the pandemic period, are replayed at the three reference levels of the proposed European Climate Resilience Law (COM(2026) 730). Each week's maximum temperature is raised by the summer warming that the CMIP6 models of the Copernicus Interactive Climate Atlas project for Athens at that level, month by month, relative to 2011-2030. Population and vulnerability stay as they are today, so the numbers show what warming alone would do if nothing else changed.")
     lines.append("")
     lines.append("| Global warming | Summer warming in Athens | Heat-related deaths per summer | Range | Compared with today | Weeks above the threshold, per area |")
     lines.append("|---|---|---|---|---|---|")
@@ -317,7 +320,7 @@ def measures_markdown(measures):
     lines.append("Two independent lines of evidence are set side by side, because they answer different questions.")
     lines.append("")
     lines.append("- **Cooling measured from space** (step 3): more street trees where people live lower the surface temperature. Only part of that reaches the air people breathe: across 392 European urban areas, trees cool the daytime air about 12 times less than the surface (Du et al. 2024, Environmental Research Letters). The low end uses that ratio, the high end assumes the air cools as much as the surface.")
-    lines.append("- **Difference between areas** (step 2): areas with more green and more trees lose fewer people per degree of heat. Bringing each area up to the best-covered area of Attica stays inside what Attica already shows; it includes everything that comes with greener neighbourhoods, so it is an upper bound.")
+    lines.append("- **Difference between areas** (step 2): the difference in heat risk between greener and less green areas. Bringing each area up to the best-covered area of Attica stays inside what Attica already shows; it includes everything that comes with greener neighbourhoods, so it is an upper bound. The table marks the links that the seven areas do not support.")
     lines.append("")
     lines.append("| Measure | Evidence | Heat deaths avoided per summer, today's climate | Range | Share of heat deaths | New cover needed |")
     lines.append("|---|---|---|---|---|---|")
@@ -332,10 +335,14 @@ def measures_markdown(measures):
         names = ", ".join(f"“{m}”" for m in today[(today["kind"] == "association") & ~supported]["measure"])
         lines.append(f"{names} rests on a difference between areas that the seven areas do not support, so its numbers show only what the data allow, not an expected gain.")
         lines.append("")
-    if not phys.empty and not assoc.empty:
-        p = phys.sort_values("deaths_avoided").iloc[-1]
+    to_best = phys[phys["measure"] == TREES_TO_BEST_AIR]
+    if not to_best.empty and not assoc.empty:
+        p = to_best.iloc[0]
         a = assoc.sort_values("deaths_avoided").iloc[-1]
-        lines.append(f"Verdict: the cooling that trees bring to the air explains only a small part of the protection seen in greener areas ({p['deaths_avoided']:,.0f} deaths a summer for “{p['measure']}”, against {a['deaths_avoided']:,.0f} for “{a['measure']}”). Greener neighbourhoods most likely protect people in other ways as well, such as shade where people walk and wait, cooler homes, and the housing and health that often come with them; with seven areas these cannot yet be told apart. Trees are worth planting for cooling, but most of the gain seen between areas lies in what makes green neighbourhoods safer.")
+        if p["deaths_avoided"] < 0.5 * a["deaths_avoided"]:
+            lines.append(f"Verdict: cooler air explains only a small part of the protection seen in greener areas. Bringing every area up to the best street tree cover of Attica would prevent about {p['deaths_avoided']:,.0f} deaths a summer through cooler air ({p['deaths_avoided_low']:,.0f} to {p['deaths_avoided_high']:,.0f}), while the difference between areas corresponds to about {a['deaths_avoided']:,.0f} for “{a['measure']}”. Greener neighbourhoods most likely protect people in other ways as well, such as shade where people walk and wait, cooler homes, and the housing and health that often come with them; with seven areas these cannot yet be told apart.")
+        else:
+            lines.append(f"Verdict: cooler air from more street trees (about {p['deaths_avoided']:,.0f} deaths a summer) is of the same order as the difference between areas (about {a['deaths_avoided']:,.0f} for “{a['measure']}”).")
         lines.append("")
     return lines
 
@@ -391,7 +398,7 @@ def summary_markdown(meta, vuln, summary, comparison, reference, response=None, 
     lines.append("")
     lines.extend(modifiers_markdown(mods))
     lines.extend(surface_markdown(surface))
-    lines.extend(outlook_markdown(outlook))
+    lines.extend(outlook_markdown(outlook, meta))
     lines.extend(measures_markdown(measures))
     a = meta["adaptation"]
     lines.append("## Is Attica adapting?")

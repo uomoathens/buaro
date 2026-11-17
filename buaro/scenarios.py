@@ -8,6 +8,7 @@ from . import future
 AIR_TO_SURFACE = 0.006 / 0.075
 PHYSICAL_STEPS = (0.05, 0.10)
 BEST_OF_ATTICA = (("tree_share_pop", "Street trees"), ("green_urban_share_pop", "Green urban areas"))
+TREES_TO_BEST_AIR = "Street trees up to the best area of Attica, cooler air only"
 
 
 def summer_weeks(panel):
@@ -73,13 +74,18 @@ def evaluate(panel, vuln, mods, areas, surface=None, ensemble=None, static_dir="
             now = deaths_per_summer(g, base, v.beta_shrunk, v.threshold_c, shift, lag_shift)
             common = {"geo": v.geo, "name_en": v.name_en, "level": level, "heat_deaths_without_measure": now, "built_land_ha": built}
             if surface_per_point:
-                for step in PHYSICAL_STEPS:
+                steps = [(step, f"Street trees +{step * 100:.0f} points") for step in PHYSICAL_STEPS]
+                if not a.empty and "tree_share_pop" in a.columns and not areas["tree_share_pop"].isna().all():
+                    gap = float(areas["tree_share_pop"].max()) - float(a["tree_share_pop"].iloc[0])
+                    if np.isfinite(gap):
+                        steps.append((max(gap, 0.0), TREES_TO_BEST_AIR))
+                for step, label in steps:
                     points = step * 100
                     cool = {k: surface_per_point[k] * points for k in surface_per_point}
                     central = now - deaths_per_summer(g, base, v.beta_shrunk, v.threshold_c, shift, lag_shift, cool["central"] * AIR_TO_SURFACE)
                     low = now - deaths_per_summer(g, base, v.beta_shrunk, v.threshold_c, shift, lag_shift, cool["low"] * AIR_TO_SURFACE)
                     high = now - deaths_per_summer(g, base, v.beta_shrunk, v.threshold_c, shift, lag_shift, cool["central"])
-                    rows.append(dict(common, measure=f"Street trees +{points:.0f} points", evidence="cooling measured from space", kind="physical",
+                    rows.append(dict(common, measure=label, evidence="cooling measured from space", kind="physical",
                                      increase_points=points, surface_cooling_c=cool["central"], air_cooling_c=cool["central"] * AIR_TO_SURFACE,
                                      deaths_avoided=central, deaths_avoided_low=low, deaths_avoided_high=high,
                                      new_cover_ha=built * step))

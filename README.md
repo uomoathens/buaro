@@ -105,7 +105,7 @@ Elevation produced using Copernicus WorldDEM-30 © DLR e.V. 2010-2014 and © Air
 
 ## Honest limits
 
-- Deaths are weekly and by NUTS 3 area, not daily or by neighbourhood. Weekly data are known to underestimate heat mortality by 5% to 20%.
+- Deaths are weekly and by NUTS 3 area, not daily or by neighbourhood. In a comparison across 147 European regions, weekly data underestimated heat-related mortality by about 10% to 22% compared with daily data (Ballester et al. 2023, The Lancet Regional Health Europe, [doi.org/10.1016/j.lanepe.2023.100779](https://doi.org/10.1016/j.lanepe.2023.100779)).
 - Temperature is reanalysis at about 11 km (0.1°), not street level.
 - Shrinkage is empirical Bayes, a first step towards the fully Bayesian layer of the framework.
 - The adaptation test assumes a straight-line change over time and has few post-pandemic summers, so it is a first signal, not proof.
@@ -119,7 +119,7 @@ Elevation produced using Copernicus WorldDEM-30 © DLR e.V. 2010-2014 and © Air
 | 1 and 1.1 | V(h, z) | Heat vulnerability by NUTS 3 area, adaptation test, tested on unseen summers | Eurostat, ERA5-Land |
 | 2 | E(z), A(z) | 1 km exposure (residents and residents aged 65+) and adaptive capacity (street tree cover, green urban areas, sealed urban fabric), weighted by where people live, and a random-effects meta-regression of each area's heat effect on these features | Eurostat Census Grid 2021, Copernicus Urban Atlas 2021 and Street Tree Layer 2021 |
 | 3.0 | LST(c, t) | Summer land surface temperature on a 100 m grid from every clear Landsat 8 and 9 scene since 2014 (USGS Collection 2 Level-2, band ST_B10, cloud and water masked with QA_PIXEL), set against 100 m tree cover, green urban areas, sealed fabric and elevation, compared only within each 1 km cell so that coast, hills and wind cannot pose as cooling, trained on 2014 to 2022 and tested on every unseen summer from 2023 onwards | USGS Landsat Collection 2 via Microsoft Planetary Computer, Copernicus DEM GLO-30, Urban Atlas 2021, Street Tree Layer 2021 |
-| 3.2 | P(h \| θ) | Heat deaths per summer at the 1.5°C, 2°C and 3°C reference levels of the Climate Resilience Law: observed summers shifted by the CMIP6 monthly change in daily maximum temperature at each level (delta method), today's population and vulnerability | C3S Atlas dataset (CMIP6), IPCC AR6 Atlas warming levels |
+| 3.2 | P(h \| θ) | Heat deaths per summer at the 1.5°C, 2°C and 3°C reference levels of the proposed European Climate Resilience Law (COM(2026) 730): observed summers shifted by the CMIP6 monthly change in daily maximum temperature at each level (delta method), today's population and vulnerability | C3S Atlas dataset (CMIP6), IPCC AR6 Atlas warming levels |
 | 4 (this release) | s*, C(s) | Heat deaths avoided by street trees and green urban areas, per area and at each warming level, from two independent lines of evidence: cooling measured from space turned into air cooling with the published European air-to-surface ratio, and the difference in heat risk between areas, kept inside the range Attica already shows | Steps 1 to 3.2, Du et al. 2024 (Environmental Research Letters 19:044037) |
 
 ## Run it locally

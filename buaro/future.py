@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 
 DELTAS = "warming_level_deltas.xlsx"
-SUMMER_WEEKS = (22, 39)
+SUMMER_WEEKS = (23, 39)
 MONTHS = (6, 7, 8, 9)
 LEVELS = (1.5, 2.0, 3.0)
 
@@ -18,6 +18,32 @@ def load(climate_dir):
 
 def month_of(dates):
     return pd.to_datetime(dates).dt.month.clip(lower=MONTHS[0], upper=MONTHS[-1])
+
+
+def year_ranges(years):
+    years = sorted(int(y) for y in years)
+    if not years:
+        return ""
+    spans = []
+    start = prev = years[0]
+    for y in years[1:]:
+        if y == prev + 1:
+            prev = y
+            continue
+        spans.append((start, prev))
+        start = prev = y
+    spans.append((start, prev))
+    parts = [str(a) if a == b else f"{a} to {b}" for a, b in spans]
+    return parts[0] if len(parts) == 1 else ", ".join(parts[:-1]) + " and " + parts[-1]
+
+
+def full_summers(panel, weeks=None):
+    weeks = weeks or SUMMER_WEEKS
+    frame = panel[(~panel["pandemic"]) & panel["isoweek"].between(*weeks) & panel["deaths"].notna()]
+    counts = frame.groupby(["geo", "year"])["isoweek"].nunique()
+    full = counts[counts == weeks[1] - weeks[0] + 1].reset_index()
+    per_year = full.groupby("year")["geo"].nunique()
+    return sorted(int(y) for y, n in per_year.items() if n == panel["geo"].nunique())
 
 
 def heat(tmax, lag, thr):

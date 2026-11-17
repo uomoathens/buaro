@@ -73,4 +73,4 @@ reference:
   greece_heat_deaths_2024: 5980
   greece_population_2021: 10482487
   attica_population_2021: 3814064
-  note: Order-of-magnitude cross-check only. ISGlobal uses daily data and a different model; weekly data are known to underestimate heat mortality by 5% to 20%.
+  note: Order-of-magnitude cross-check only. ISGlobal uses daily data and a different model; in a comparison across 147 European regions, weekly data underestimated heat-related mortality by about 10% to 22% compared with daily data (Ballester et al. 2023, The Lancet Regional Health Europe).
