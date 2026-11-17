@@ -7,13 +7,13 @@ authors:
     given-names: Dimitrios
     affiliation: "National Technical University of Athens"
 license: EUPL-1.2
-version: 1.0.0
-date-released: "2026-11-14"
-doi: 10.5281/zenodo.24221770
+version: 1.0.1
+date-released: "2026-11-17"
+doi: 10.5281/zenodo.24221769
 identifiers:
   - type: doi
-    value: 10.5281/zenodo.24221770
-    description: "Zenodo archive of BUARO v1.0.0"
+    value: 10.5281/zenodo.24221769
+    description: "Zenodo archive of BUARO, all versions"
 repository-code: "https://github.com/uomoathens/buaro"
 url: "https://uomoathens.github.io/buaro/"
 abstract: "Open software that turns the Bayesian Urban Adaptation and Resilience Optimization Model of the book AI for Planetary Resilience into a self-updating instrument. It estimates heat-related mortality by area from official European data, tests itself on unseen summers, measures urban cooling from Landsat at 100 m, projects heat deaths at 1.5, 2 and 3 degrees of global warming, and ranks protective measures."
