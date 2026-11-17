@@ -147,7 +147,7 @@ footer{font-size:13px;color:var(--text-muted);margin-top:24px}
 
 <section>
 <h2>Forecasting summers the model has never seen</h2>
-<p class="lead">Typical weekly error (RMSE) of the summer forecast, for the two ways of setting the normal level of deaths. Lower is better. The baseline is chosen by a rule fixed in advance: lowest mean error over all tested summers.</p>
+<p class="lead">Typical weekly error (RMSE) of the summer forecast, for the two ways of setting the normal level of deaths. Lower is better. The baseline is chosen by a rule fixed in advance: lowest mean error over all tested summers. The same summers are used to choose the baseline and to report its skill, so the skill of the selected baseline may be slightly optimistic.</p>
 <div class="legend" id="legend-compare"></div>
 <div class="chart" id="chart-compare"></div>
 <details><summary>Show as table</summary><div id="table-compare"></div></details>
@@ -170,7 +170,7 @@ footer{font-size:13px;color:var(--text-muted);margin-top:24px}
 <p class="lead">BUARO turns a framework from a book into a working, self-updating instrument. Every claim below rests on the results above and on official European data.</p>
 <div class="impact">
 <h3>1. It counts a hidden toll, every month, without anyone running it</h3>
-<p>Heat deaths are rarely recorded as such on death certificates. BUARO finds them in the official weekly deaths of Eurostat, area by area, and updates the count on its own every month. In Attica it estimates <b id="imp-today">about one thousand</b> heat-related deaths in an average summer, and <b id="imp-2024">over two thousand</b> in the summer of 2024, in line with the independent estimate of ISGlobal published in Nature Medicine.</p>
+<p>Heat deaths are rarely recorded as such on death certificates. BUARO finds them in the official weekly deaths of Eurostat, area by area, and updates the count on its own every month. In Attica it estimates <b id="imp-today">about one thousand</b> heat-related deaths in an average summer, and <b id="imp-2024">close to two thousand</b> in the summer of 2024, in line with the independent estimate of ISGlobal published in Nature Medicine.</p>
 <h3>2. It shows where to act first</h3>
 <p>The same degree of heat is far more dangerous in some parts of Attica than in others: <b id="imp-gap"></b>. Civil protection and health services can send heat warnings, cooling centres and home visits where each degree costs the most lives, instead of spreading them evenly.</p>
 <h3>3. It separates what works from what only looks green</h3>
@@ -297,7 +297,7 @@ document.getElementById('meta').textContent='Data up to week '+M.last_week+' · 
 function tiles(){const T=document.getElementById('tiles');const b=D.best2024;
 const items=[
 {label:'Extra deaths per +1°C above the heat threshold',value:pct(M.pooled_rr),sub:'95% range '+pct(M.pooled_rr_low)+' to '+pct(M.pooled_rr_high)+', all of Attica'},
-{label:'Heat-attributable deaths, summer 2024',value:b?fmt(b):'n/a',sub:'ISGlobal, scaled to Attica: about '+fmt(M.reference_attica_2024)},
+{label:'Heat-related deaths, summer 2024',value:b?fmt(b):'n/a',sub:'Model fitted on all summers. ISGlobal, scaled to Attica: about '+fmt(M.reference_attica_2024)},
 {label:'Summers where heat improved the forecast',value:D.improved+' of '+D.tested,sub:'Each forecast made with data up to 31 May'},
 {label:'Adaptation over time',value:A.verdict==='no clear change'?'No clear change':(A.robust?(A.verdict==='decreasing'?'Decreasing':'Increasing'):'Not robust'),sub:A.robust||A.verdict==='no clear change'?'Checked with each summer left out':'Depends on summer '+(A.depends_on||[]).join(', ')}];
 T.innerHTML=items.map(it=>'<div class="tile"><div class="label">'+it.label+'</div><div class="value">'+it.value+'</div><div class="sub">'+it.sub+'</div></div>').join('')}
@@ -327,9 +327,9 @@ legend('legend-temp',[{label:'Weekly mean maximum temperature (°C)',color:c7},{
 lineChart(document.getElementById('chart-temp'),{x:labels,series:[{name:'Mean max temperature',values:S.tmax,color:c7,dec:1,unit:' °C'}],height:200,ydec:0,hlines:S.thr!=null?[{value:S.thr,label:'Threshold '+fmt(S.thr,1)+' °C'}]:[],extra:S.thr!=null?[S.thr]:[],tipTitle:wk});
 table('table-summer',['Week','Recorded deaths','Forecast with heat','Forecast without heat','Mean max temperature (°C)'],S.weeks.map((w,i)=>[w,fmt(S.deaths[i]),fmt(S.fw[i]),fmt(S.fo[i]),fmt(S.tmax[i],1)]))}
 
-function vuln(){const rows=D.vuln.slice().sort((a,b)=>b.rr_per_degree-a.rr_per_degree).map(r=>({label:r.name_en,v:(r.rr_per_degree-1)*100,lo:(r.rr_low-1)*100,hi:(r.rr_high-1)*100,valueLabel:pct(r.rr_per_degree),tip:'<b>'+r.name_en+'</b>'+tipRow(null,'Per +1°C',pct(r.rr_per_degree))+tipRow(null,'95% range',pct(r.rr_low)+' to '+pct(r.rr_high))+tipRow(null,'Heat threshold',fmt(r.threshold_c,1)+' °C')+tipRow(null,'Aged 65+',r.share_65plus!=null?fmt(r.share_65plus*100,1)+'%':'n/a')}));
+function vuln(){const rows=D.vuln.slice().sort((a,b)=>b.rr_per_degree-a.rr_per_degree).map(r=>({label:r.name_en,v:(r.rr_per_degree-1)*100,lo:(r.rr_low-1)*100,hi:(r.rr_high-1)*100,valueLabel:pct(r.rr_per_degree),tip:'<b>'+r.name_en+'</b>'+tipRow(null,'Per +1°C',pct(r.rr_per_degree))+tipRow(null,'95% range',pct(r.rr_low)+' to '+pct(r.rr_high))+tipRow(null,'Heat threshold',fmt(r.threshold_c,1)+' °C')+tipRow(null,'Aged 65+'+(M.share_65plus_year?' (1 January '+M.share_65plus_year+')':''),r.share_65plus!=null?fmt(r.share_65plus*100,1)+'%':'n/a')}));
 dotChart(document.getElementById('chart-vuln'),{rows,tickFmt:v=>fmt(v,0)+'%'});
-table('table-vuln',['Area','Per +1°C','95% range','Threshold (°C)','Aged 65+'],D.vuln.slice().sort((a,b)=>b.rr_per_degree-a.rr_per_degree).map(r=>[r.name_en,pct(r.rr_per_degree),pct(r.rr_low)+' to '+pct(r.rr_high),fmt(r.threshold_c,1),r.share_65plus!=null?fmt(r.share_65plus*100,1)+'%':'n/a']))}
+table('table-vuln',['Area','Per +1°C','95% range','Threshold (°C)','Aged 65+ (Eurostat'+(M.share_65plus_year?', 1 January '+M.share_65plus_year:'')+')'],D.vuln.slice().sort((a,b)=>b.rr_per_degree-a.rr_per_degree).map(r=>[r.name_en,pct(r.rr_per_degree),pct(r.rr_low)+' to '+pct(r.rr_high),fmt(r.threshold_c,1),r.share_65plus!=null?fmt(r.share_65plus*100,1)+'%':'n/a']))}
 
 const featSel=document.getElementById('feature');
 (D.mods||[]).forEach(r=>{const o=document.createElement('option');o.value=r.covariate;o.textContent=r.label;featSel.appendChild(o)});
@@ -385,15 +385,15 @@ const measureSel=document.getElementById('measure');
 function measures(){const M=(D.measures||[]).filter(m=>m.level===0);const sec=document.getElementById('sec-measures');
 if(!M.length){sec.style.display='none';return}
 const order=M.slice().sort((a,b)=>(a.kind===b.kind?a.deaths_avoided-b.deaths_avoided:(a.kind==='physical'?-1:1)));
-const col=m=>m.kind==='physical'?css('--s1'):css('--s2');
-const tip=m=>'<b>'+m.measure+'</b>'+tipRow(null,'Evidence',m.evidence)+tipRow(null,'Deaths avoided per summer',fmt(m.deaths_avoided,0))+tipRow(null,'Range',fmt(m.deaths_avoided_low,0)+' to '+fmt(m.deaths_avoided_high,0))+tipRow(null,'Share of heat deaths',fmt(m.share_avoided*100,1)+'%')+tipRow(null,'New cover',fmt(m.new_cover_ha,0)+' ha');
+const ok=m=>m.kind==='physical'||m.evidence_verdict==='lower heat risk where higher';const col=m=>m.kind==='physical'?css('--s1'):(ok(m)?css('--s2'):css('--text-muted'));const ev=m=>ok(m)?m.evidence:m.evidence+', not supported by the data';
+const tip=m=>'<b>'+m.measure+'</b>'+tipRow(null,'Evidence',ev(m))+tipRow(null,'Deaths avoided per summer',fmt(m.deaths_avoided,0))+tipRow(null,'Range',fmt(m.deaths_avoided_low,0)+' to '+fmt(m.deaths_avoided_high,0))+tipRow(null,'Share of heat deaths',fmt(m.share_avoided*100,1)+'%')+tipRow(null,'New cover',fmt(m.new_cover_ha,0)+' ha');
 dotChart(document.getElementById('chart-measures'),{rows:order.map(m=>({label:m.measure,v:m.deaths_avoided,lo:m.deaths_avoided_low,hi:m.deaths_avoided_high,valueLabel:fmt(m.deaths_avoided,0),color:col(m),tip:tip(m)})),left:330,tickFmt:v=>fmt(v,0)});
-const phys=M.filter(m=>m.kind==='physical').sort((a,b)=>b.deaths_avoided-a.deaths_avoided)[0],assoc=M.filter(m=>m.kind==='association').sort((a,b)=>b.deaths_avoided-a.deaths_avoided)[0];
+const phys=M.filter(m=>m.kind==='physical').sort((a,b)=>b.deaths_avoided-a.deaths_avoided)[0],assoc=M.filter(m=>m.kind==='association'&&ok(m)).sort((a,b)=>b.deaths_avoided-a.deaths_avoided)[0];
 document.getElementById('verdict-measures').textContent=(phys&&assoc)?'The cooling that trees bring to the air explains only a small part of the protection seen in greener areas: about '+fmt(phys.deaths_avoided,0)+' deaths a summer for “'+phys.measure+'”, against about '+fmt(assoc.deaths_avoided,0)+' for “'+assoc.measure+'”. Greener neighbourhoods most likely protect people in other ways as well, such as shade where people walk and wait, cooler homes, and the housing and health that often come with them; with seven areas these cannot yet be told apart.':'';
 const sel=measureSel.value||M[0].measure;const A=(D.measuresAreas||[]).filter(m=>m.level===0&&m.measure===sel).sort((a,b)=>a.deaths_avoided-b.deaths_avoided);
 dotChart(document.getElementById('chart-measures-areas'),{right:170,rows:A.map(m=>({label:m.name_en,v:m.deaths_avoided,lo:m.deaths_avoided_low,hi:m.deaths_avoided_high,valueLabel:fmt(m.deaths_avoided,1)+(m.new_cover_ha>0?'  ('+fmt(m.deaths_avoided_per_100ha,2)+' per 100 ha)':''),color:col(m),
 tip:'<b>'+m.name_en+'</b>'+tipRow(null,'Deaths avoided per summer',fmt(m.deaths_avoided,1))+tipRow(null,'Range',fmt(m.deaths_avoided_low,1)+' to '+fmt(m.deaths_avoided_high,1))+tipRow(null,'Increase',fmt(m.increase_points,1)+' points')+tipRow(null,'New cover',fmt(m.new_cover_ha,0)+' ha')+tipRow(null,'Per 100 ha of new cover',fmt(m.deaths_avoided_per_100ha,2))})),left:170,tickFmt:v=>fmt(v,0)});
-table('table-measures',['Measure','Evidence','Deaths avoided per summer','Range','Share of heat deaths','New cover (ha)'],M.map(m=>[m.measure,m.evidence,fmt(m.deaths_avoided,0),fmt(m.deaths_avoided_low,0)+' to '+fmt(m.deaths_avoided_high,0),fmt(m.share_avoided*100,1)+'%',fmt(m.new_cover_ha,0)]));
+table('table-measures',['Measure','Evidence','Deaths avoided per summer','Range','Share of heat deaths','New cover (ha)'],M.map(m=>[m.measure,ev(m),fmt(m.deaths_avoided,0),fmt(m.deaths_avoided_low,0)+' to '+fmt(m.deaths_avoided_high,0),fmt(m.share_avoided*100,1)+'%',fmt(m.new_cover_ha,0)]));
 const all=(D.measuresAreas||[]).filter(m=>m.level===0);
 table('table-measures-areas',['Area','Measure','Increase (points)','Deaths avoided','Range','New cover (ha)','Per 100 ha'],all.map(m=>[m.name_en,m.measure,fmt(m.increase_points,1),fmt(m.deaths_avoided,1),fmt(m.deaths_avoided_low,1)+' to '+fmt(m.deaths_avoided_high,1),fmt(m.new_cover_ha,0),m.new_cover_ha>0?fmt(m.deaths_avoided_per_100ha,2):'n/a']))}
 measureSel.addEventListener('change',measures);
@@ -421,11 +421,11 @@ table('table-loo',['Summer left out','Trend','95% range','Verdict'],[['None',fmt
 function compare(){const S=D.summary;const years=[...new Set(S.map(r=>r.year))].sort();const kinds=['serfling','euromomo'].filter(k=>S.some(r=>r.baseline===k));const col={serfling:css('--s3'),euromomo:css('--s1')};
 const ser=kinds.map(k=>({name:BASE[k]+(k===M.baseline_selected?' (selected)':''),color:col[k],values:years.map(y=>{const r=S.find(r=>r.baseline===k&&r.year===y);return r?r.rmse_with_heat:null})}));
 legend('legend-compare',ser.map(s=>({label:s.name,color:s.color})));
-barChart(document.getElementById('chart-compare'),{categories:years.map(String),series:ser,labels:true,height:280,tip:(i,k)=>{const r=S.find(r=>r.baseline===kinds[k]&&r.year===years[i]);return '<b>Summer '+years[i]+'</b>'+tipRow(ser[k].color,BASE[kinds[k]],'')+tipRow(null,'Weekly error with heat',fmt(r.rmse_with_heat,1))+tipRow(null,'Weekly error without heat',fmt(r.rmse_without_heat,1))+tipRow(null,'Skill score',fmt(r.skill_score,2))+tipRow(null,'Recorded deaths',fmt(r.observed_deaths))+tipRow(null,'Heat-attributable',fmt(r.heat_attributable_deaths))}});
+barChart(document.getElementById('chart-compare'),{categories:years.map(String),series:ser,labels:true,height:280,tip:(i,k)=>{const r=S.find(r=>r.baseline===kinds[k]&&r.year===years[i]);return '<b>Summer '+years[i]+'</b>'+tipRow(ser[k].color,BASE[kinds[k]],'')+tipRow(null,'Weekly error with heat',fmt(r.rmse_with_heat,1))+tipRow(null,'Weekly error without heat',fmt(r.rmse_without_heat,1))+tipRow(null,'Skill score',fmt(r.skill_score,2))+tipRow(null,'Recorded deaths',fmt(r.observed_deaths))+tipRow(null,'Heat-attributable in the forecast',fmt(r.heat_attributable_deaths))}});
 table('table-compare',['Baseline','Summer','Recorded deaths','Forecast with heat','Forecast without heat','Weekly error with heat','Skill score'],S.map(r=>[BASE[r.baseline],r.year,fmt(r.observed_deaths),fmt(r.predicted_with_heat),fmt(r.predicted_without_heat),fmt(r.rmse_with_heat,1),fmt(r.skill_score,2)]))}
 
 document.getElementById('sources').innerHTML=D.sources.map(s=>'<li><a href="'+s.url+'">'+s.name+'</a>: '+s.what+'</li>').join('');
-document.getElementById('footer').textContent='Framework: D. Sargiotis, AI for Planetary Resilience, Springer Nature Switzerland, 2027. Software: BUARO, © 2026 Dimitrios Sargiotis, licensed under the EUPL v1.2, archived at doi.org/10.5281/zenodo.24221770. Contains modified Copernicus Climate Change Service information. Neither the European Commission nor ECMWF is responsible for any use of this information.';
+document.getElementById('footer').textContent='Framework: D. Sargiotis, AI for Planetary Resilience, Springer Nature Switzerland, 2027. Software: BUARO, © 2026 Dimitrios Sargiotis, licensed under the EUPL v1.2, archived at doi.org/10.5281/zenodo.24221770. Contains modified Copernicus Climate Change Service information. Neither the European Commission nor ECMWF is responsible for any use of this information. Contains Copernicus Land Monitoring Service information (Urban Atlas 2021 and Street Tree Layer 2021), adapted and modified; this work is not endorsed by the European Union. Elevation produced using Copernicus WorldDEM-30 © DLR e.V. 2010-2014 and © Airbus Defence and Space GmbH 2014-2018 provided under COPERNICUS by the European Union and ESA; all rights reserved. The organisations in charge of the Copernicus programme by law or by delegation do not incur any liability for any use of the Copernicus WorldDEM-30.';
 
 function redraw(){tiles();summer();vuln();mods();surface();outlook();measures();response();loo();compare();impact()}
 yearSel.addEventListener('change',summer);areaSel.addEventListener('change',summer);

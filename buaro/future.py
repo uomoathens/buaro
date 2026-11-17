@@ -24,6 +24,26 @@ def heat(tmax, lag, thr):
     return (np.clip(tmax - thr, 0, None) + np.clip(lag - thr, 0, None)) / 2
 
 
+def per_summer(panel, vuln, weeks):
+    frame = panel[(~panel["pandemic"]) & panel["isoweek"].between(*weeks) & panel["deaths"].notna()].copy()
+    full = frame.groupby(["geo", "year"])["isoweek"].transform("nunique") == weeks[1] - weeks[0] + 1
+    frame = frame[full]
+    parts = []
+    for v in vuln.itertuples():
+        g = frame[frame["geo"] == v.geo]
+        if g.empty:
+            continue
+        h = heat(g["tmax"].to_numpy(), g["tmax_lag1"].to_numpy(), v.threshold_c)
+        deaths = g["deaths"].to_numpy() * (1 - np.exp(-v.beta_shrunk * h))
+        parts.append(pd.DataFrame({"geo": v.geo, "year": g["year"].to_numpy(), "deaths": deaths}))
+    if not parts:
+        return pd.Series(dtype=float)
+    out = pd.concat(parts, ignore_index=True)
+    areas = out.groupby("year")["geo"].nunique()
+    totals = out.groupby("year")["deaths"].sum()
+    return totals[areas == len(vuln)]
+
+
 def project(panel, vuln, ensemble):
     if ensemble is None or ensemble.empty:
         return pd.DataFrame(), pd.DataFrame()

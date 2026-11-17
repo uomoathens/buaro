@@ -105,6 +105,12 @@ def evaluate(panel, vuln, mods, areas, surface=None, ensemble=None, static_dir="
         heat_deaths_without_measure=("heat_deaths_without_measure", "sum"), deaths_avoided=("deaths_avoided", "sum"),
         deaths_avoided_low=("deaths_avoided_low", "sum"), deaths_avoided_high=("deaths_avoided_high", "sum"),
         new_cover_ha=("new_cover_ha", "sum"))
+    if "evidence_verdict" in detail.columns:
+        verdicts = detail.groupby(["measure", "level"])["evidence_verdict"].first().rename("evidence_verdict").reset_index()
+        attica = attica.merge(verdicts, on=["measure", "level"], how="left")
+        attica["supported"] = (attica["kind"] == "physical") | (attica["evidence_verdict"] == "lower heat risk where higher")
+    else:
+        attica["supported"] = attica["kind"] == "physical"
     attica["share_avoided"] = attica["deaths_avoided"] / attica["heat_deaths_without_measure"]
     attica["deaths_avoided_per_100ha"] = attica["deaths_avoided"] / attica["new_cover_ha"] * 100
     return attica, detail

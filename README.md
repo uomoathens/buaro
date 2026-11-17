@@ -22,7 +22,7 @@ BUARO extends it so that every term is learned from public data, and so that the
 
 Heat is the deadliest climate hazard in Europe. In summer 2024, Greece had the highest heat-related death rate in Europe, 574 deaths per million people (ISGlobal, Nature Medicine, 2025). Attica is home to 36.4% of the country's population (2021 census). If the method works here, it works where it matters most.
 
-## Step 1.1 (this release): how vulnerable is each part of Attica to heat, and is it adapting?
+## Step 1.1: how vulnerable is each part of Attica to heat, and is it adapting?
 
 Step 1 learns the vulnerability term V(h, z) for the heat hazard, for the seven NUTS 3 areas of Attica, and then tests it honestly. Step 1.1 adds a second, more robust way to set the normal level of deaths, and a test of whether Attica is adapting.
 
@@ -71,7 +71,7 @@ Every run also rebuilds an interactive page with charts: [uomoathens.github.io/b
 Everything the pipeline produces is in [`results/`](results/):
 
 - [`results/SUMMARY.md`](results/SUMMARY.md): the findings in plain language, with charts
-- `results/buaro_attica_step1.xlsx`: every result, by area, by week and by baseline, plus the adaptation test
+- `results/buaro_attica_step1.xlsx`: every result, by area, by week and by baseline, plus the adaptation test, the area features, the warming levels and the measures
 - `results/data_panel.xlsx`: every weekly number the model used (deaths, temperature, population), so anyone can check the results
 - `results/vulnerability.png`, `results/backtest_YYYY.png`, `results/skill.png`, `results/baseline_comparison.png`: the charts
 - `results/run_metadata.json`: what was run, on which data, and when
@@ -90,10 +90,20 @@ BUARO uses only official statistics, official Earth observation services and pee
 | Weekly deaths by NUTS 3 area | Eurostat `demo_r_mwk3_t` (fallback `demo_r_mwk3_ts`) | Eurostat reuse policy, free with attribution |
 | Population by age and NUTS 3 area | Eurostat `demo_r_pjangrp3` | Eurostat reuse policy, free with attribution |
 | Daily temperature | ERA5-Land (Copernicus Climate Change Service), served by the Open-Meteo archive API | Copernicus data licence; Open-Meteo CC BY 4.0 |
+| Residents and residents aged 65+ per 1 km cell | Eurostat Census 2021 population grid | Eurostat reuse policy, free with attribution |
+| Land use, sealing classes and street tree cover | Copernicus Land Monitoring Service, Urban Atlas 2021 and Street Tree Layer 2021 | Copernicus data policy, free and open |
+| Summer land surface temperature, 100 m | USGS Landsat 8 and 9 Collection 2 Level-2, via Microsoft Planetary Computer | No copyright restrictions (USGS) |
+| Elevation | Copernicus DEM GLO-30 | Licence for the use of the Copernicus WorldDEM-30, free |
+| Summer warming at 1.5°C, 2°C and 3°C | C3S Gridded dataset underpinning the Copernicus Interactive Climate Atlas (CMIP6), IPCC AR6 WGI Atlas warming levels | CC BY 4.0 |
+| Air cooling relative to surface cooling of urban trees | Du et al. 2024, Environmental Research Letters 19:044037 | CC BY 4.0 |
 
 Contains modified Copernicus Climate Change Service information. Neither the European Commission nor ECMWF is responsible for any use of this information. Weather data by [Open-Meteo.com](https://open-meteo.com/).
 
-## Honest limits of step 1.1
+Contains Copernicus Land Monitoring Service information (Urban Atlas 2021 and Street Tree Layer 2021), adapted and modified: summarised per 1 km census cell, per 100 m cell and per NUTS 3 area. This work is not endorsed by the European Union.
+
+Elevation produced using Copernicus WorldDEM-30 © DLR e.V. 2010-2014 and © Airbus Defence and Space GmbH 2014-2018 provided under COPERNICUS by the European Union and ESA; all rights reserved. The organisations in charge of the Copernicus programme by law or by delegation do not incur any liability for any use of the Copernicus WorldDEM-30.
+
+## Honest limits
 
 - Deaths are weekly and by NUTS 3 area, not daily or by neighbourhood. Weekly data are known to underestimate heat mortality by 5% to 20%.
 - Temperature is reanalysis at about 11 km (0.1°), not street level.
@@ -108,7 +118,7 @@ Contains modified Copernicus Climate Change Service information. Neither the Eur
 |---|---|---|---|
 | 1 and 1.1 | V(h, z) | Heat vulnerability by NUTS 3 area, adaptation test, tested on unseen summers | Eurostat, ERA5-Land |
 | 2 | E(z), A(z) | 1 km exposure (residents and residents aged 65+) and adaptive capacity (street tree cover, green urban areas, sealed urban fabric), weighted by where people live, and a random-effects meta-regression of each area's heat effect on these features | Eurostat Census Grid 2021, Copernicus Urban Atlas 2021 and Street Tree Layer 2021 |
-| 3.0 | LST(c, t) | Summer land surface temperature on a 100 m grid from every clear Landsat 8 and 9 scene since 2014 (USGS Collection 2 Level-2, band ST_B10, cloud and water masked with QA_PIXEL), set against 100 m tree cover, green urban areas, sealed fabric and elevation, compared only within each 1 km cell so that coast, hills and wind cannot pose as cooling, trained on 2014 to 2022 and tested on the unseen summers 2023 to 2025 | USGS Landsat Collection 2 via Microsoft Planetary Computer, Copernicus DEM GLO-30, Urban Atlas 2021, Street Tree Layer 2021 |
+| 3.0 | LST(c, t) | Summer land surface temperature on a 100 m grid from every clear Landsat 8 and 9 scene since 2014 (USGS Collection 2 Level-2, band ST_B10, cloud and water masked with QA_PIXEL), set against 100 m tree cover, green urban areas, sealed fabric and elevation, compared only within each 1 km cell so that coast, hills and wind cannot pose as cooling, trained on 2014 to 2022 and tested on every unseen summer from 2023 onwards | USGS Landsat Collection 2 via Microsoft Planetary Computer, Copernicus DEM GLO-30, Urban Atlas 2021, Street Tree Layer 2021 |
 | 3.2 | P(h \| θ) | Heat deaths per summer at the 1.5°C, 2°C and 3°C reference levels of the Climate Resilience Law: observed summers shifted by the CMIP6 monthly change in daily maximum temperature at each level (delta method), today's population and vulnerability | C3S Atlas dataset (CMIP6), IPCC AR6 Atlas warming levels |
 | 4 (this release) | s*, C(s) | Heat deaths avoided by street trees and green urban areas, per area and at each warming level, from two independent lines of evidence: cooling measured from space turned into air cooling with the published European air-to-surface ratio, and the difference in heat risk between areas, kept inside the range Attica already shows | Steps 1 to 3.2, Du et al. 2024 (Environmental Research Letters 19:044037) |
 

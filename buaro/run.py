@@ -210,6 +210,9 @@ def main(argv=None):
     adaptation["robust"] = not flips
     adaptation["depends_on"] = flips
     response = summer_response(panel, vuln)
+    model_summers = future.per_summer(panel, vuln, tuple(int(w) for w in study["summer_weeks"]))
+    pop65 = pop.dropna(subset=["population_65plus"]) if "population_65plus" in pop.columns else pop.iloc[0:0]
+    share_year = int(pop65["year"].max()) if not pop65.empty else None
     mods, areas = modifiers.analyse(vuln, modifiers.load(args.static))
     ensemble = future.load(args.climate)
     outlook, outlook_areas = future.project(panel, vuln, ensemble)
@@ -241,6 +244,10 @@ def main(argv=None):
         "i2": pooled["i2"],
         "adaptation": adaptation,
         "reference_attica_2024": ref_attica,
+        "model_summer_weeks": [int(w) for w in study["summer_weeks"]],
+        "model_summers": {str(int(y)): float(v) for y, v in model_summers.items()},
+        "model_attica_2024": float(model_summers.loc[2024]) if 2024 in model_summers.index else None,
+        "share_65plus_year": share_year,
         "modifiers_available": bool(not mods.empty),
     }
 
@@ -274,7 +281,7 @@ def main(argv=None):
     report.workbook(
         out / "buaro_attica_step1.xlsx",
         [
-            ("Summary", meta_frame, ["BUARO step 1: heat vulnerability and backtest for Attica."]),
+            ("Summary", meta_frame, ["BUARO results for Attica: heat vulnerability, forecast test, area features, warming levels and measures."]),
             ("Vulnerability", vuln, ["rr_per_degree: relative risk of weekly death per 1°C of weekly mean Tmax above the area threshold, summed over lag 0 and lag 1, after empirical Bayes shrinkage."]),
             ("Backtest summary", summary, ["Each summer forecast uses only data up to 31 May of that year. skill_score = 1 - MSE(with heat) / MSE(without heat)."]),
             ("Baseline comparison", comparison, [f"Selected baseline: {winner}. Rule: lowest mean RMSE of the heat model over all tested summers."]),

@@ -275,7 +275,7 @@ def surface_markdown(surface):
         else:
             lines.append("Verdict: the cooling from street trees learned on past summers is not confirmed on every unseen summer, so it is not yet reported as a finding.")
     if "green_urban_share" in train.index:
-        lines.append("Green urban areas add no cooling of their own once their trees are counted, most likely because open, dry grass in an Athens summer heats up much like bare ground. The link between green areas and lower heat mortality found between areas is therefore most likely carried by their trees, and by the shade and cooler air they offer to people, which surface temperature does not measure.")
+        lines.append("Green urban areas add no cooling of their own once their trees are counted, most likely because open, dry grass in an Athens summer heats up much like bare ground. The link between green areas and lower heat mortality found between areas may therefore be carried in part by their trees, and by the shade and cooler air they offer to people, which surface temperature does not measure; the link between tree cover and heat mortality across the seven areas is not clear on its own.")
     if "dense_fabric_share" in train.index:
         lines.append("Dense, highly sealed fabric is slightly cooler at the surface in late morning than open, low-density or industrial land in the same square, most likely because tall buildings shade the streets while bare land and large flat roofs heat fastest. This is a daytime surface effect; dense fabric releases its heat at night, which Landsat does not see.")
     lines.append("")
@@ -321,11 +321,17 @@ def measures_markdown(measures):
     lines.append("")
     lines.append("| Measure | Evidence | Heat deaths avoided per summer, today's climate | Range | Share of heat deaths | New cover needed |")
     lines.append("|---|---|---|---|---|---|")
-    for r in today.sort_values(["kind", "measure"], ascending=[False, True]).itertuples():
-        lines.append(f"| {r.measure} | {r.evidence} | {r.deaths_avoided:,.0f} | {r.deaths_avoided_low:,.0f} to {r.deaths_avoided_high:,.0f} | {r.share_avoided * 100:.1f}% | {r.new_cover_ha:,.0f} ha |")
+    supported = today["supported"] if "supported" in today.columns else pd.Series(True, index=today.index)
+    for r in today.assign(supported=supported).sort_values(["kind", "measure"], ascending=[False, True]).itertuples():
+        evidence = r.evidence if r.supported else f"{r.evidence}, not supported by the data"
+        lines.append(f"| {r.measure} | {evidence} | {r.deaths_avoided:,.0f} | {r.deaths_avoided_low:,.0f} to {r.deaths_avoided_high:,.0f} | {r.share_avoided * 100:.1f}% | {r.new_cover_ha:,.0f} ha |")
     lines.append("")
     phys = today[today["kind"] == "physical"]
-    assoc = today[today["kind"] == "association"]
+    assoc = today[(today["kind"] == "association") & supported]
+    if not today[(today["kind"] == "association") & ~supported].empty:
+        names = ", ".join(f"“{m}”" for m in today[(today["kind"] == "association") & ~supported]["measure"])
+        lines.append(f"{names} rests on a difference between areas that the seven areas do not support, so its numbers show only what the data allow, not an expected gain.")
+        lines.append("")
     if not phys.empty and not assoc.empty:
         p = phys.sort_values("deaths_avoided").iloc[-1]
         a = assoc.sort_values("deaths_avoided").iloc[-1]
@@ -338,7 +344,7 @@ def summary_markdown(meta, vuln, summary, comparison, reference, response=None, 
     winner = meta["baseline_selected"]
     best = summary[summary["baseline"] == winner] if not summary.empty else summary
     lines = []
-    lines.append("# BUARO results: Attica, step 2")
+    lines.append("# BUARO results: Attica")
     lines.append("")
     lines.append(f"Run date: {meta['run_date']}. Data up to week {meta['last_week']}. Deaths dataset: `{meta['deaths_dataset']}`.")
     lines.append("")
@@ -360,6 +366,7 @@ def summary_markdown(meta, vuln, summary, comparison, reference, response=None, 
             lines.append(f"| {BASELINE_LABEL.get(r.baseline, r.baseline)} | {r.summers} | {fmt(r.mean_rmse_with_heat, 1)} | {r.summers_improved} of {r.summers} |")
         lines.append("")
         lines.append(f"Selected: **{BASELINE_LABEL.get(winner, winner)}** (rule fixed in advance: lowest mean weekly error over all tested summers).")
+        lines.append("The same summers are used to choose the baseline and to report its forecast skill, so the skill of the selected baseline may be slightly optimistic.")
         lines.append("")
         lines.append("![Baseline comparison](baseline_comparison.png)")
         lines.append("")
@@ -373,7 +380,8 @@ def summary_markdown(meta, vuln, summary, comparison, reference, response=None, 
     else:
         lines.append("Verdict: with the data available, the heat effect cannot be told apart from zero.")
     lines.append("")
-    lines.append("| Area | Extra deaths per +1°C | 95% range | Share aged 65+ | Threshold (°C) |")
+    share_label = f"Share aged 65+ (Eurostat, 1 January {meta['share_65plus_year']})" if meta.get("share_65plus_year") else "Share aged 65+ (Eurostat)"
+    lines.append(f"| Area | Extra deaths per +1°C | 95% range | {share_label} | Threshold (°C) |")
     lines.append("|---|---|---|---|---|")
     for r in vuln.sort_values("rr_per_degree", ascending=False).itertuples():
         share = fmt(r.share_65plus * 100, 1) + "%" if np.isfinite(r.share_65plus) else "n/a"
@@ -419,13 +427,14 @@ def summary_markdown(meta, vuln, summary, comparison, reference, response=None, 
     if best.empty:
         lines.append("No summer could be tested yet with the data available.")
     else:
-        lines.append("| Summer | Recorded deaths | Forecast with heat | Forecast without heat | Heat-attributable deaths | Skill score |")
+        lines.append("| Summer | Recorded deaths | Forecast with heat | Forecast without heat | Heat-attributable deaths in the forecast | Skill score |")
         lines.append("|---|---|---|---|---|---|")
         for r in best.itertuples():
             lines.append(f"| {r.year} | {fmt(r.observed_deaths)} | {fmt(r.predicted_with_heat)} | {fmt(r.predicted_without_heat)} | {fmt(r.heat_attributable_deaths)} | {fmt(r.skill_score, 2)} |")
         lines.append("")
         better = int((best["skill_score"] > 0).sum())
         lines.append(f"Knowing about heat improved the forecast in {better} of {len(best)} summers tested.")
+        lines.append("The heat-attributable deaths in this table come from forecasts made with data up to 31 May of each summer. The estimate of each summer's heat deaths is the one of the model fitted on all summers, given in the cross-check below.")
         lines.append("")
         for year in best["year"]:
             lines.append(f"![Summer {year}](backtest_{year}.png)")
@@ -435,9 +444,14 @@ def summary_markdown(meta, vuln, summary, comparison, reference, response=None, 
     lines.append("## Cross-check against published research")
     lines.append("")
     lines.append(f"{reference['label']}: {fmt(reference['greece_heat_deaths_2024'])} heat-related deaths in Greece. Scaled to Attica's population share, that is about {fmt(meta['reference_attica_2024'])}.")
+    weeks = meta.get("model_summer_weeks") or [23, 39]
+    model_2024 = meta.get("model_attica_2024")
+    if model_2024:
+        gap = (model_2024 / meta["reference_attica_2024"] - 1) * 100
+        lines.append(f"This model, fitted on all summers, estimates {fmt(model_2024)} heat-related deaths for Attica in summer 2024 (weeks {weeks[0]} to {weeks[1]}), {fmt(abs(gap), 0)}% {'below' if gap < 0 else 'above'} the scaled ISGlobal figure.")
     row = best[best["year"] == 2024] if not best.empty else best
     if not row.empty:
-        lines.append(f"This model estimates {fmt(float(row['heat_attributable_deaths'].iloc[0]))} for Attica in summer 2024.")
+        lines.append(f"The forecast made with data up to 31 May 2024 put it at {fmt(float(row['heat_attributable_deaths'].iloc[0]))}.")
     lines.append(reference["note"])
     lines.append("")
     lines.append("## Data")
