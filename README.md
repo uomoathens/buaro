@@ -4,7 +4,7 @@
 
 **Bayesian Urban Adaptation and Resilience Optimization, built on real European data.**
 
-BUARO turns the Bayesian Urban Adaptation and Resilience Optimization Model from Dimitrios Sargiotis, *AI for Planetary Resilience* (Springer, 2027, Section 1.5.2, Table 1.29, [doi:10.1007/978-3-032-35540-9](https://doi.org/10.1007/978-3-032-35540-9)) into open software that runs on real data.
+BUARO turns the Bayesian Urban Adaptation and Resilience Optimization Model from Dimitrios Sargiotis, *AI for Planetary Resilience* (Springer, 2027, Section 1.5.2, Table 1.29, [link.springer.com/book/9783032355393](https://link.springer.com/book/9783032355393)) into open software that runs on real data.
 
 The book's model scores every urban zone for climate resilience and picks the adaptation measure that gives the most resilience for the money:
 
