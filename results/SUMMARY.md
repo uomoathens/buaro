@@ -112,14 +112,14 @@ The features explain 9% of the differences between cells of the same square in t
 
 ## Heat deaths at 1.5°C, 2°C and 3°C of global warming
 
-The summers 2015 to 2025, outside the pandemic years, are replayed at the three reference levels of the EU Climate Resilience Law. Each week's maximum temperature is raised by the summer warming that the CMIP6 models of the Copernicus Interactive Climate Atlas project for Athens at that level, month by month, relative to 2011-2030. Population and vulnerability stay as they are today, so the numbers show what warming alone would do if nothing else changed.
+The summers 2015 to 2019 and 2023 to 2025, all those fully outside the pandemic period, are replayed at the three reference levels of the proposed European Climate Resilience Law (COM(2026) 730). Each week's maximum temperature is raised by the summer warming that the CMIP6 models of the Copernicus Interactive Climate Atlas project for Athens at that level, month by month, relative to 2011-2030. Population and vulnerability stay as they are today, so the numbers show what warming alone would do if nothing else changed.
 
 | Global warming | Summer warming in Athens | Heat-related deaths per summer | Range | Compared with today | Weeks above the threshold, per area |
 |---|---|---|---|---|---|
-| Today | +0.0°C | 963 | 775 to 1,158 | 1.00× | 11.0 |
-| 1.5°C | +0.4°C | 1,143 | 729 to 1,698 | 1.19× | 11.6 |
-| 2°C | +0.9°C | 1,426 | 953 to 2,345 | 1.48× | 12.8 |
-| 3°C | +2.3°C | 2,204 | 1,427 to 3,315 | 2.29× | 14.2 |
+| Today | +0.0°C | 962 | 774 to 1,156 | 1.00× | 10.9 |
+| 1.5°C | +0.4°C | 1,141 | 728 to 1,694 | 1.19× | 11.5 |
+| 2°C | +0.9°C | 1,423 | 951 to 2,339 | 1.48× | 12.6 |
+| 3°C | +2.3°C | 2,197 | 1,424 to 3,297 | 2.28× | 13.9 |
 
 Verdict: at 3°C of global warming, the same summers would bring about 2.3 times today's heat deaths in Attica, unless vulnerability falls. Step 4 measures how much of that street trees and green areas can prevent.
 
@@ -128,18 +128,19 @@ Verdict: at 3°C of global warming, the same summers would bring about 2.3 times
 Two independent lines of evidence are set side by side, because they answer different questions.
 
 - **Cooling measured from space** (step 3): more street trees where people live lower the surface temperature. Only part of that reaches the air people breathe: across 392 European urban areas, trees cool the daytime air about 12 times less than the surface (Du et al. 2024, Environmental Research Letters). The low end uses that ratio, the high end assumes the air cools as much as the surface.
-- **Difference between areas** (step 2): areas with more green and more trees lose fewer people per degree of heat. Bringing each area up to the best-covered area of Attica stays inside what Attica already shows; it includes everything that comes with greener neighbourhoods, so it is an upper bound.
+- **Difference between areas** (step 2): the difference in heat risk between greener and less green areas. Bringing each area up to the best-covered area of Attica stays inside what Attica already shows; it includes everything that comes with greener neighbourhoods, so it is an upper bound. The table marks the links that the seven areas do not support.
 
 | Measure | Evidence | Heat deaths avoided per summer, today's climate | Range | Share of heat deaths | New cover needed |
 |---|---|---|---|---|---|
 | Street trees +10 points | cooling measured from space | 9 | 8 to 111 | 1.0% | 6,080 ha |
-| Street trees +5 points | cooling measured from space | 5 | 4 to 57 | 0.5% | 3,040 ha |
+| Street trees +5 points | cooling measured from space | 5 | 4 to 56 | 0.5% | 3,040 ha |
+| Street trees up to the best area of Attica, cooler air only | cooling measured from space | 3 | 3 to 41 | 0.3% | 1,578 ha |
 | Green urban areas up to the best area of Attica | difference between areas | 301 | 167 to 431 | 31.3% | 3,395 ha |
 | Street trees up to the best area of Attica | difference between areas, not supported by the data | 234 | -2 to 458 | 24.3% | 1,578 ha |
 
 “Street trees up to the best area of Attica” rests on a difference between areas that the seven areas do not support, so its numbers show only what the data allow, not an expected gain.
 
-Verdict: the cooling that trees bring to the air explains only a small part of the protection seen in greener areas (9 deaths a summer for “Street trees +10 points”, against 301 for “Green urban areas up to the best area of Attica”). Greener neighbourhoods most likely protect people in other ways as well, such as shade where people walk and wait, cooler homes, and the housing and health that often come with them; with seven areas these cannot yet be told apart. Trees are worth planting for cooling, but most of the gain seen between areas lies in what makes green neighbourhoods safer.
+Verdict: cooler air explains only a small part of the protection seen in greener areas. Bringing every area up to the best street tree cover of Attica would prevent about 3 deaths a summer through cooler air (3 to 41), while the difference between areas corresponds to about 301 for “Green urban areas up to the best area of Attica”. Greener neighbourhoods most likely protect people in other ways as well, such as shade where people walk and wait, cooler homes, and the housing and health that often come with them; with seven areas these cannot yet be told apart.
 
 ## Is Attica adapting?
 
@@ -188,7 +189,7 @@ The heat-attributable deaths in this table come from forecasts made with data up
 ISGlobal (Janoš et al. 2025, Nature Medicine), Greece, summer 2024: 5,980 heat-related deaths in Greece. Scaled to Attica's population share, that is about 2,176.
 This model, fitted on all summers, estimates 1,808 heat-related deaths for Attica in summer 2024 (weeks 23 to 39), 17% below the scaled ISGlobal figure.
 The forecast made with data up to 31 May 2024 put it at 2,106.
-Order-of-magnitude cross-check only. ISGlobal uses daily data and a different model; weekly data are known to underestimate heat mortality by 5% to 20%.
+Order-of-magnitude cross-check only. ISGlobal uses daily data and a different model; in a comparison across 147 European regions, weekly data underestimated heat-related mortality by about 10% to 22% compared with daily data (Ballester et al. 2023, The Lancet Regional Health Europe).
 
 ## Data
 
