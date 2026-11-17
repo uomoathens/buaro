@@ -1,6 +1,6 @@
-# BUARO results: Attica, step 2
+# BUARO results: Attica
 
-Run date: 2026-11-14. Data up to week 2026-W27. Deaths dataset: `demo_r_mwk3_t`.
+Run date: 2026-11-17. Data up to week 2026-W27. Deaths dataset: `demo_r_mwk3_t`.
 
 ## What this step answers
 
@@ -19,6 +19,7 @@ Heat deaths are measured against a normal level of deaths. The pipeline tests tw
 | All-weeks baseline | 3 | 83.4 | 2 of 3 |
 
 Selected: **EuroMOMO-style baseline** (rule fixed in advance: lowest mean weekly error over all tested summers).
+The same summers are used to choose the baseline and to report its forecast skill, so the skill of the selected baseline may be slightly optimistic.
 
 ![Baseline comparison](baseline_comparison.png)
 
@@ -29,7 +30,7 @@ Across Attica, each extra 1°C above that threshold raises weekly deaths by abou
 Differences between areas beyond chance (I²): 83%.
 Verdict: the data show a clear heat effect on mortality.
 
-| Area | Extra deaths per +1°C | 95% range | Share aged 65+ | Threshold (°C) |
+| Area | Extra deaths per +1°C | 95% range | Share aged 65+ (Eurostat, 1 January 2025) | Threshold (°C) |
 |---|---|---|---|---|
 | Western Athens | 6.1% | 5.1% to 7.2% | 20.8% | 31.5 |
 | Piraeus, Islands | 6.0% | 5.1% to 7.0% | 22.4% | 31.3 |
@@ -102,7 +103,7 @@ Surface temperature by street tree cover, compared with cells with almost no tre
 | 2026 | -0.24°C | -0.27 to -0.21 |
 
 Verdict: street trees cool the city surface. Each +10 percentage points of tree cover lowers late-morning surface temperature by about 0.27°C, and the unseen summers confirm it (-0.23°C), every one of them on its own. Cells with more than 40% tree cover are about 1.4°C cooler than cells with almost none.
-Green urban areas add no cooling of their own once their trees are counted, most likely because open, dry grass in an Athens summer heats up much like bare ground. The link between green areas and lower heat mortality found between areas is therefore most likely carried by their trees, and by the shade and cooler air they offer to people, which surface temperature does not measure.
+Green urban areas add no cooling of their own once their trees are counted, most likely because open, dry grass in an Athens summer heats up much like bare ground. The link between green areas and lower heat mortality found between areas may therefore be carried in part by their trees, and by the shade and cooler air they offer to people, which surface temperature does not measure; the link between tree cover and heat mortality across the seven areas is not clear on its own.
 Dense, highly sealed fabric is slightly cooler at the surface in late morning than open, low-density or industrial land in the same square, most likely because tall buildings shade the streets while bare land and large flat roofs heat fastest. This is a daytime surface effect; dense fabric releases its heat at night, which Landsat does not see.
 
 The features explain 9% of the differences between cells of the same square in the unseen summers. The rest comes from roofs, materials and street shape, which no open European layer maps yet. The finding is the size of the tree effect and its stability from summer to summer, not a full map of the causes.
@@ -134,7 +135,9 @@ Two independent lines of evidence are set side by side, because they answer diff
 | Street trees +10 points | cooling measured from space | 9 | 8 to 111 | 1.0% | 6,080 ha |
 | Street trees +5 points | cooling measured from space | 5 | 4 to 57 | 0.5% | 3,040 ha |
 | Green urban areas up to the best area of Attica | difference between areas | 301 | 167 to 431 | 31.3% | 3,395 ha |
-| Street trees up to the best area of Attica | difference between areas | 234 | -2 to 458 | 24.3% | 1,578 ha |
+| Street trees up to the best area of Attica | difference between areas, not supported by the data | 234 | -2 to 458 | 24.3% | 1,578 ha |
+
+“Street trees up to the best area of Attica” rests on a difference between areas that the seven areas do not support, so its numbers show only what the data allow, not an expected gain.
 
 Verdict: the cooling that trees bring to the air explains only a small part of the protection seen in greener areas (9 deaths a summer for “Street trees +10 points”, against 301 for “Green urban areas up to the best area of Attica”). Greener neighbourhoods most likely protect people in other ways as well, such as shade where people walk and wait, cooler homes, and the housing and health that often come with them; with seven areas these cannot yet be told apart. Trees are worth planting for cooling, but most of the gain seen between areas lies in what makes green neighbourhoods safer.
 
@@ -163,13 +166,14 @@ A check that needs no model: how many extra summer deaths each degree of heat br
 For each summer, the model is trained only on data available up to 31 May of that year, then asked to predict June to September.
 A skill score above 0 means that knowing about heat made the forecast better.
 
-| Summer | Recorded deaths | Forecast with heat | Forecast without heat | Heat-attributable deaths | Skill score |
+| Summer | Recorded deaths | Forecast with heat | Forecast without heat | Heat-attributable deaths in the forecast | Skill score |
 |---|---|---|---|---|---|
 | 2023 | 14,232 | 14,481 | 13,378 | 1,724 | 0.67 |
 | 2024 | 14,712 | 14,213 | 12,687 | 2,106 | 0.73 |
 | 2025 | 13,229 | 13,676 | 12,912 | 1,362 | -0.46 |
 
 Knowing about heat improved the forecast in 2 of 3 summers tested.
+The heat-attributable deaths in this table come from forecasts made with data up to 31 May of each summer. The estimate of each summer's heat deaths is the one of the model fitted on all summers, given in the cross-check below.
 
 ![Summer 2023](backtest_2023.png)
 
@@ -182,7 +186,8 @@ Knowing about heat improved the forecast in 2 of 3 summers tested.
 ## Cross-check against published research
 
 ISGlobal (Janoš et al. 2025, Nature Medicine), Greece, summer 2024: 5,980 heat-related deaths in Greece. Scaled to Attica's population share, that is about 2,176.
-This model estimates 2,106 for Attica in summer 2024.
+This model, fitted on all summers, estimates 1,808 heat-related deaths for Attica in summer 2024 (weeks 23 to 39), 17% below the scaled ISGlobal figure.
+The forecast made with data up to 31 May 2024 put it at 2,106.
 Order-of-magnitude cross-check only. ISGlobal uses daily data and a different model; weekly data are known to underestimate heat mortality by 5% to 20%.
 
 ## Data
