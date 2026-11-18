@@ -189,7 +189,7 @@ The heat-attributable deaths in this table come from forecasts made with data up
 ISGlobal (Janoš et al. 2025, Nature Medicine), Greece, summer 2024: 5,980 heat-related deaths in Greece. Scaled to Attica's population share, that is about 2,176.
 This model, fitted on all summers, estimates 1,808 heat-related deaths for Attica in summer 2024 (weeks 23 to 39), 17% below the scaled ISGlobal figure.
 The forecast made with data up to 31 May 2024 put it at 2,106.
-Order-of-magnitude cross-check only. ISGlobal uses daily data and a different model; in a comparison across 147 European regions, weekly data underestimated heat-related mortality by about 10% to 22% compared with daily data (Ballester et al. 2023, The Lancet Regional Health Europe).
+Order-of-magnitude cross-check only. ISGlobal uses daily data and a different model; in a comparison across 147 European regions, weekly data underestimated heat-related mortality by 21.6% compared with daily data, and for summer 2022 across Europe the same authors put the gap at about 10%, within 6% to 21% (Ballester et al. 2023, The Lancet Regional Health Europe).
 
 ## Data
 

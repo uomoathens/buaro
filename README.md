@@ -105,7 +105,7 @@ Elevation produced using Copernicus WorldDEM-30 © DLR e.V. 2010-2014 and © Air
 
 ## Honest limits
 
-- Deaths are weekly and by NUTS 3 area, not daily or by neighbourhood. In a comparison across 147 European regions, weekly data underestimated heat-related mortality by about 10% to 22% compared with daily data (Ballester et al. 2023, The Lancet Regional Health Europe, [doi.org/10.1016/j.lanepe.2023.100779](https://doi.org/10.1016/j.lanepe.2023.100779)).
+- Deaths are weekly and by NUTS 3 area, not daily or by neighbourhood. In a comparison across 147 European regions, weekly data underestimated heat-related mortality by 21.6% compared with daily data, and for summer 2022 across Europe the same authors put the gap at about 10%, within 6% to 21% (Ballester et al. 2023, The Lancet Regional Health Europe, [doi.org/10.1016/j.lanepe.2023.100779](https://doi.org/10.1016/j.lanepe.2023.100779)).
 - Temperature is reanalysis at about 11 km (0.1°), not street level.
 - Shrinkage is empirical Bayes, a first step towards the fully Bayesian layer of the framework.
 - The adaptation test assumes a straight-line change over time and has few post-pandemic summers, so it is a first signal, not proof.

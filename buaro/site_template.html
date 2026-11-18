@@ -404,7 +404,7 @@ const M0=D.meta;const O=D.outlook||[];const M=(D.measures||[]).filter(m=>m.level
 const base=O.length?O.find(o=>o.level===0):null;const today=base?base.heat_deaths_central:(M.length?M[0].heat_deaths_without_measure:null);
 if(today)document.getElementById('imp-today').textContent='about '+fmt(Math.round(today/10)*10,0);
 if(D.best2024)document.getElementById('imp-2024').textContent=fmt(D.best2024,0);
-if(D.best2024&&M0.reference_attica_2024){const g=D.best2024/M0.reference_attica_2024-1;document.getElementById('imp-ref').textContent=', '+fmt(Math.abs(g)*100,0)+'% '+(g<0?'below':'above')+' the independent estimate of ISGlobal published in Nature Medicine, scaled to Attica ('+fmt(M0.reference_attica_2024,0)+')'+(g<=-0.1&&g>=-0.22?', in line with the 10% to 22% by which weekly data underestimated heat-related mortality compared with daily data across 147 European regions (Ballester et al. 2023)':'')}
+if(D.best2024&&M0.reference_attica_2024){const g=D.best2024/M0.reference_attica_2024-1;document.getElementById('imp-ref').textContent=', '+fmt(Math.abs(g)*100,0)+'% '+(g<0?'below':'above')+' the independent estimate of ISGlobal published in Nature Medicine, scaled to Attica ('+fmt(M0.reference_attica_2024,0)+')'+(g<=-0.06&&g>=-0.22?', in line with the underestimate of heat-related mortality from weekly instead of daily data reported by Ballester et al. (2023): 21.6% across 147 European regions, and about 10% (6% to 21%) for Europe in summer 2022':'')}
 const V=(D.vuln||[]).slice().sort((a,b)=>b.rr_per_degree-a.rr_per_degree);
 if(V.length>1){const hi=V[0],lo=V[V.length-1];document.getElementById('imp-gap').textContent='each extra degree raises deaths by '+pct(hi.rr_per_degree)+' in '+hi.name_en+' and by '+pct(lo.rr_per_degree)+' in '+lo.name_en}
 }
