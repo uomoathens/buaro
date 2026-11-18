@@ -1,6 +1,6 @@
 {
-  "run_date": "2026-11-17",
-  "end_date": "2026-11-10",
+  "run_date": "2026-11-18",
+  "end_date": "2026-11-11",
   "deaths_dataset": "demo_r_mwk3_t",
   "spatial_level": "NUTS3",
   "regions": [

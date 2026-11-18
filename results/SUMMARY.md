@@ -1,6 +1,6 @@
 # BUARO results: Attica
 
-Run date: 2026-11-17. Data up to week 2026-W27. Deaths dataset: `demo_r_mwk3_t`.
+Run date: 2026-11-18. Data up to week 2026-W27. Deaths dataset: `demo_r_mwk3_t`.
 
 ## What this step answers
 
